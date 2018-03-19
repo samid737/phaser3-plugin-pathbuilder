@@ -1,7 +1,7 @@
 {
   "name": "phaser3-plugin-pathbuilder",
   "version": "1.0.0",
-  "description": "Phaser 3 Plugin Curve Builder",
+  "description": "Phaser 3 Plugin Path Builder",
   "main": "src/PathBuilder.js",
   "scripts": {
     "build": "webpack",
@@ -13,14 +13,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/photonstorm/phaser3-plugin-template.git"
+    "url": "git+https://github.com/samid737/phaser3-plugin-pathbuilder"
   },
   "author": "samid737",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/photonstorm/phaser3-plugin-template/issues"
+    "url": "https://github.com/samid737/phaser3-plugin-pathbuilder/issues"
   },
-  "homepage": "https://github.com/photonstorm/phaser3-plugin-template#readme",
+  "homepage": "https://github.com/samid737/phaser3-plugin-pathbuilder#readme",
   "devDependencies": {
     "clean-webpack-plugin": "^0.1.18",
     "eslint": "^4.13.1",
