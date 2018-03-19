@@ -107,7 +107,7 @@ Scene.prototype = {
         this.drawpanel.elements = [];
         this.graphics.clear();
         //FIXME: destroy removes path, pointer. needs reset function.
-        this.path.destroy();
+        this.path.curves = [];
 
     },
     place: function (ui, x, y) {

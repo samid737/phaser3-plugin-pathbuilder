@@ -585,7 +585,7 @@ Scene.prototype = {
         this.drawpanel.elements = [];
         this.graphics.clear();
         //FIXME: destroy removes path, pointer. needs reset function.
-        this.path.destroy();
+        this.path.curves = [];
 
     },
     place: function (ui, x, y) {
@@ -751,6 +751,8 @@ Scene.prototype = {
 
     },
     preview: function () {
+
+        console.log(this.path);
         if(this.path.curves.length !== 0){
             var follower = this.add.follower(this.path, 0, 0, 'dude');
             
