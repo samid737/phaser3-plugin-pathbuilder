@@ -1,0 +1,35 @@
+{
+  "name": "phaser3-plugin-pathbuilder",
+  "version": "1.0.0",
+  "description": "Phaser 3 Plugin Curve Builder",
+  "main": "src/PathBuilder.js",
+  "scripts": {
+    "build": "webpack",
+    "watch": "webpack --watch",
+    "dist": "webpack --config webpack.dist.config.js",
+    "lint": "eslint --config .eslintrc.json \"src/**/*.js\"",
+    "lintfix": "eslint --config .eslintrc.json \"src/**/*.js\" --fix",
+    "sloc": "node-sloc './src' --include-extensions \"js\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/photonstorm/phaser3-plugin-template.git"
+  },
+  "author": "samid737",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/photonstorm/phaser3-plugin-template/issues"
+  },
+  "homepage": "https://github.com/photonstorm/phaser3-plugin-template#readme",
+  "devDependencies": {
+    "clean-webpack-plugin": "^0.1.18",
+    "eslint": "^4.13.1",
+    "fs-extra": "^5.0.0",
+    "node-sloc": "^0.1.10",
+    "raw-loader": "^0.5.1",
+    "uglifyjs-webpack-plugin": "^1.1.2",
+    "uuid": "^3.1.0",
+    "webpack": "^3.11.0",
+    "webpack-shell-plugin": "^0.5.0"
+  }
+}
