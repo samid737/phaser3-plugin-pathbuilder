@@ -51,14 +51,23 @@ Pointer.prototype.switchmode = function (mode) {
     if (mode == "draw") {
         this.setVisible(true);
         this.lbl.setVisible(true);
+        this.menu.forEach(function(element){ element.setVisible(false)});        
     }
     if (mode == "normal") {
         this.setVisible(false);
         this.menu.forEach(function(element){ element.setVisible(false)});
     }
     if (mode == "select"){
+        this.scene.undo();
+
         this.setVisible(false);  
         this.menu.forEach(function(element){ element.setVisible(true)});
+    
+        this.linebutton.setPosition(this.x - 50, this.y - 50);    
+        this.quadbutton.setPosition(this.x , this.y - 50);   
+        this.cubicbutton.setPosition(this.x +50, this.y - 50);        
+        this.splinebutton.setPosition(this.x -50, this.y + 50);        
+        this.ellipsebutton.setPosition(this.x , this.y + 50);  
     }
 }
 
@@ -70,34 +79,38 @@ Pointer.prototype.switchdrawmode = function (mode) {
 }
 
 Pointer.prototype.update = function () {
-    this.x = this.scene.input.activePointer.x;
-    this.y = this.scene.input.activePointer.y;
-
-    if(this.scene.input.activePointer.isDown && this.scene.input.activePointer.dragState ==0){
-        var down = (this.scene.time.now - this.scene.input.activePointer.downTime);
     
-        if(down>500&&this.scene.mode !== "select")
+        this.x = this.scene.input.activePointer.x;
+        this.y = this.scene.input.activePointer.y;
+    
+        if(this.scene.input.activePointer.isDown && this.scene.input.activePointer.dragState == 0)
         {
-            this.scene.switchmode("select");
+            var down = (this.scene.time.now - this.scene.input.activePointer.downTime);
+        
+            if(down>500&&this.scene.mode !== "select")
+            {   
+                this.lockX = this.x;
+                this.lockY = this.y;
+                this.scene.switchmode("select");
+            }
         }
-    }
-
-    if (this.snapkey.isDown) {
-        this.x = Math.round(this.x / this.snap) * this.snap;
-        this.y = Math.round(this.y / this.snap) * this.snap;
-    }
-
-    if(this.scene.mode !== "select"){
-        //TODO: move to container class
-        this.linebutton.setPosition(this.x - 50, this.y - 50);    
-        this.quadbutton.setPosition(this.x , this.y - 50);   
-        this.cubicbutton.setPosition(this.x +50, this.y - 50);        
-        this.splinebutton.setPosition(this.x -50, this.y + 50);        
-        this.ellipsebutton.setPosition(this.x , this.y + 50);                
-    }
     
-    this.lbl.setPosition(this.x + 20, this.y + 20);
-    this.lbl.setText("x: " + this.x + " y: " + this.y);
-}
+        if(this.scene.mode == "select"){
+            if(Phaser.Math.Distance.Between(this.x, this.y, this.lockX, this.lockY)>150){
+                this.scene.switchmode("draw");
+            } 
+        }    
+    
+        if(this.scene.mode !== "select"){
+        
+            if (this.snapkey.isDown) {
+                this.x = Math.round(this.x / this.snap) * this.snap;
+                this.y = Math.round(this.y / this.snap) * this.snap;
+            }
+            this.lbl.setPosition(this.x + 20, this.y + 20);
+            this.lbl.setText("x: " + this.x + " y: " + this.y);
+        }
+    
+    }
 
 module.exports = Pointer;

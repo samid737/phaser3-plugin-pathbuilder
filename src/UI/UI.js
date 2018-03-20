@@ -16,18 +16,18 @@ var UI = function (scene) {
             this.ui.scene.add.existing(tb);
             return tb;
         },
-        point: function (vector, key, mapping) {
-            var p = new Point(this.ui, vector, key, mapping);
+        point: function (vector, curve, key, mapping) {
+            var p = new Point(this.ui, vector, curve, key, mapping);
             this.ui.scene.add.existing(p);
             return p;
         },
-        endpoint: function (vector, key, mapping) {
-            var p = new EndPoint(this.ui, vector, key, mapping);
+        endpoint: function (vector, curve, key, mapping) {
+            var p = new EndPoint(this.ui, vector, curve, key, mapping);
             this.ui.scene.add.existing(p);
             return p;
         },
-        controlpoint: function (vector, key, mapping) {
-            var p = new ControlPoint(this.ui, vector, key, mapping);
+        controlpoint: function (vector, curve, key, mapping) {
+            var p = new ControlPoint(this.ui, vector, curve, key, mapping);
             this.ui.scene.add.existing(p);
             return p;
         },

@@ -128,8 +128,8 @@ module.exports = Element;
 
 
 var Element = __webpack_require__(0);
-
-var Point = function (ui, vector, key, mapping) {
+        
+var Point = function (ui, vector, curve,  key, mapping) {
     Element.call(this, ui, vector.x, vector.y);
     Phaser.GameObjects.Image.call(this, ui.scene, vector.x, vector.y, key);
 
@@ -138,6 +138,12 @@ var Point = function (ui, vector, key, mapping) {
 
     this.setData('vector', vector);
     this.scene.vectors.push(vector);
+
+    //TODO: abstract from point to A custom curve class.
+    if(curve !==null){
+        this.curve = curve;
+        this.curve.controlpoints.push(this);
+    }
 
     if (mapping) {
         this.mapping = mapping;
@@ -171,6 +177,7 @@ var Point = function (ui, vector, key, mapping) {
 
     this.lbl = this.ui.add.label(this.x + 10, this.y + 10, "").setFontStyle(PathBuilder.UI.fonts["Point"]);
 
+    return this;
 }
 
 Point.prototype = Object.create(Phaser.GameObjects.Image.prototype);
@@ -182,6 +189,12 @@ Point.prototype.update = function () {
     this.lbl.x = this.x + 10;
     this.lbl.y = this.y + 10;
     this.lbl.setText("x: " + this.x + " y: " + this.y);
+}
+
+Point.prototype.destroy = function(){
+    //this.scene.drawpanel.elements.pop();
+    this.lbl.destroy();
+    Phaser.GameObjects.Image.prototype.destroy.call(this);    
 }
 
 module.exports = Point;
@@ -209,18 +222,18 @@ var UI = function (scene) {
             this.ui.scene.add.existing(tb);
             return tb;
         },
-        point: function (vector, key, mapping) {
-            var p = new Point(this.ui, vector, key, mapping);
+        point: function (vector, curve, key, mapping) {
+            var p = new Point(this.ui, vector, curve, key, mapping);
             this.ui.scene.add.existing(p);
             return p;
         },
-        endpoint: function (vector, key, mapping) {
-            var p = new EndPoint(this.ui, vector, key, mapping);
+        endpoint: function (vector, curve, key, mapping) {
+            var p = new EndPoint(this.ui, vector, curve, key, mapping);
             this.ui.scene.add.existing(p);
             return p;
         },
-        controlpoint: function (vector, key, mapping) {
-            var p = new ControlPoint(this.ui, vector, key, mapping);
+        controlpoint: function (vector, curve, key, mapping) {
+            var p = new ControlPoint(this.ui, vector, curve, key, mapping);
             this.ui.scene.add.existing(p);
             return p;
         },
@@ -400,12 +413,12 @@ module.exports = Button;
 
 var Point = __webpack_require__(1);
 
-var EndPoint = function (ui, vector, key, mapping, kernel) {
-    Point.call(this, ui, vector, key, mapping, kernel);
+var EndPoint = function (ui, vector, curve, key, mapping) {
+    Point.call(this, ui, vector, curve, key, mapping);
     this.lbl.setFontStyle(PathBuilder.UI.fonts["EndPoint"]);
 }
 
-EndPoint.prototype = Point.prototype;
+EndPoint.prototype = Object.create(Point.prototype);
 EndPoint.prototype.constructor = EndPoint;
 
 module.exports = EndPoint;
@@ -418,8 +431,8 @@ module.exports = EndPoint;
 
 var Point = __webpack_require__(1);
 
-var ControlPoint = function (ui, vector, key, mapping, kernel) {
-    Point.call(this, ui, vector, key, mapping, kernel);
+var ControlPoint = function (ui, vector, curve, key, mapping) {
+    Point.call(this, ui, vector, curve, key, mapping);
     this.setScale(0.75, 0.75);
 
     this.lbl.setFontStyle(PathBuilder.UI.fonts["ControlPoint"]);
@@ -438,7 +451,7 @@ var ControlPoint = function (ui, vector, key, mapping, kernel) {
     });
 }
 
-ControlPoint.prototype = Point.prototype;
+ControlPoint.prototype = Object.create(Point.prototype);
 ControlPoint.prototype.constructor = ControlPoint;
 
 module.exports = ControlPoint;
@@ -527,6 +540,8 @@ Scene.prototype = {
         this.showbutton = this.top.add.text(10, 350, 'show', null, null, null, [this.drawpanel.show, this.middle.show], [], [this.drawpanel, this.middle]);
         this.drawbutton = this.middle.add.text(10, 200, 'draw', null, null, null, this.switchmode, ["draw"], this);
         this.clearbutton = this.middle.add.text(10,100,'clear',null,null,null, this.clear,[], this);  
+        this.undobutton = this.middle.add.text(10,50,'undo',null,null,null, this.undo,[], this);  
+        
         this.importbutton = this.middle.add.text(700, 400, 'import', null, null, null, this.import, [], this);
         this.exportbutton = this.middle.add.text(700, 500, 'export', null, null, null, this.export, [], this);
         this.previewbutton = this.middle.add.text(10, 500, 'preview', null, null, null, this.preview, [], this);
@@ -580,21 +595,37 @@ Scene.prototype = {
         this.events.emit('switchmode', this.mode);
     },
     clear: function () {
-        this.vectors = [];
+        var _this = this;
+        this.path.curves.forEach(function(curve){_this.undo()});
         this.drawpanel.elements.forEach(function (element) { element.destroy() });
+        this.vectors = [];
         this.drawpanel.elements = [];
+        this.path.curves = [];     
+        this.spline  = null;
+        
         this.graphics.clear();
-        //FIXME: destroy removes path, pointer. needs reset function.
-        this.path.curves = [];
-        this.spline = null;
-
+    },
+    undo: function() { 
+        //TODO: extend curve class  
+        if(this.vectors.length>1){
+            var _this = this;        
+            var lastcurve = this.path.curves[this.path.curves.length -1];
+            lastcurve.controlpoints.forEach(function(point){point.destroy();_this.vectors.pop()});
+            
+            this.path.curves.pop();
+            this.spline  = null;  
+    
+            this.graphics.clear();        
+            this.draw();
+        }    
     },
     place: function (ui, x, y) {
+        //TODO: extend A curve class for each case, add A factory entry for curves.
 
         var vector = new Phaser.Math.Vector2(x, y);
 
         if (this.vectors.length == 0) {
-            this.point = ui.add.endpoint(vector, 'endpoint');
+            this.point = ui.add.endpoint(vector, null,'endpoint');
             return;
         }
 
@@ -604,12 +635,14 @@ Scene.prototype = {
 
             var previous = this.vectors[this.vectors.length - 1];
 
-            if (this.vectors.length > 1) {
+            if (this.vectors.length > 0) {
                 var c = new this.curves[this.drawmode](previous, vector);
+                
                 this.path.add(c);
+                c.controlpoints = [];                
             }
 
-            this.point = ui.add.endpoint(vector, 'endpoint');
+            this.point = ui.add.endpoint(vector, c, 'endpoint');
 
         }
 
@@ -625,11 +658,13 @@ Scene.prototype = {
             control = control.divide(new Phaser.Math.Vector2(2, 2));
 
             var c = new this.curves[this.drawmode](previous, control, vector);
+            
             this.path.add(c);
+            c.controlpoints = [];
+            
+            this.point = ui.add.controlpoint(control, c, 'controlpoint');
 
-            this.point = ui.add.controlpoint(control, 'controlpoint');
-
-            this.point = ui.add.endpoint(vector, 'endpoint');
+            this.point = ui.add.endpoint(vector, c, 'endpoint');
 
         }
 
@@ -649,12 +684,15 @@ Scene.prototype = {
             control2.y = previous.y + (y - previous.y) * 0.75;
             
             var c = new this.curves[this.drawmode](previous, control1, control2, vector);
+            
             this.path.add(c);
+            c.controlpoints = [];
+            
+            this.point = ui.add.controlpoint(control1, c, 'controlpoint');
+            this.point = ui.add.controlpoint(control2, c, 'controlpoint');
 
-            this.point = ui.add.controlpoint(control1, 'controlpoint');
-            this.point = ui.add.controlpoint(control2, 'controlpoint');
+            this.point = ui.add.endpoint(vector, c, 'endpoint');
 
-            this.point = ui.add.endpoint(vector, 'endpoint');
         }
 
         if (this.drawmode == "Spline") {
@@ -664,23 +702,26 @@ Scene.prototype = {
             if (this.spline == null) {
                 var c = new this.curves[this.drawmode]([previous.x, previous.y, vector.x, vector.y]);
                 this.spline = c;
-                this.path.add(c);
 
+                this.path.add(c);
+                c.controlpoints = [];
+                
             }
 
             this.path.segments += 8;
 
             if (this.vectors.length == 1) {
 
-                this.point = ui.add.controlpoint(vector, 'controlpoint');
-
+                this.point = ui.add.controlpoint(vector, this.spline, 'controlpoint');
+                
             } else {
 
-                this.point = ui.add.controlpoint(vector, 'controlpoint');
-
+                this.point = ui.add.controlpoint(vector, this.spline, 'controlpoint');
+                
                 this.spline.addPoints([vector.x, vector.y]);
 
             }
+
             this.spline.points[this.spline.points.length - 1] = vector;
             this.spline.points[this.spline.points.length - 2] = previous;
 
@@ -693,15 +734,18 @@ Scene.prototype = {
             var previous = this.vectors[this.vectors.length - 1];
 
             var c = new this.curves[this.drawmode](vector.x, vector.y, 100,100);
+            
             this.path.add(c);
+            c.controlpoints = [];
+
             c.p0 = vector;
 
             var dist = new Phaser.Math.Vector2(vector.x + 100, vector.y + 100);
 
             //map control point coordinates to radii
-            this.point = ui.add.endpoint(vector, 'endpoint');
+            this.point = ui.add.endpoint(vector, c, 'endpoint');
 
-            this.point = ui.add.controlpoint(dist, 'controlpoint',
+            this.point = ui.add.controlpoint(dist, c, 'controlpoint',
                 {
                     "src": c,
                     "data":
@@ -752,8 +796,6 @@ Scene.prototype = {
 
     },
     preview: function () {
-
-        console.log(this.path);
         if(this.path.curves.length !== 0){
             var follower = this.add.follower(this.path, 0, 0, 'dude');
             
@@ -834,14 +876,23 @@ Pointer.prototype.switchmode = function (mode) {
     if (mode == "draw") {
         this.setVisible(true);
         this.lbl.setVisible(true);
+        this.menu.forEach(function(element){ element.setVisible(false)});        
     }
     if (mode == "normal") {
         this.setVisible(false);
         this.menu.forEach(function(element){ element.setVisible(false)});
     }
     if (mode == "select"){
+        this.scene.undo();
+
         this.setVisible(false);  
         this.menu.forEach(function(element){ element.setVisible(true)});
+    
+        this.linebutton.setPosition(this.x - 50, this.y - 50);    
+        this.quadbutton.setPosition(this.x , this.y - 50);   
+        this.cubicbutton.setPosition(this.x +50, this.y - 50);        
+        this.splinebutton.setPosition(this.x -50, this.y + 50);        
+        this.ellipsebutton.setPosition(this.x , this.y + 50);  
     }
 }
 
@@ -853,35 +904,39 @@ Pointer.prototype.switchdrawmode = function (mode) {
 }
 
 Pointer.prototype.update = function () {
-    this.x = this.scene.input.activePointer.x;
-    this.y = this.scene.input.activePointer.y;
-
-    if(this.scene.input.activePointer.isDown && this.scene.input.activePointer.dragState ==0){
-        var down = (this.scene.time.now - this.scene.input.activePointer.downTime);
     
-        if(down>500&&this.scene.mode !== "select")
+        this.x = this.scene.input.activePointer.x;
+        this.y = this.scene.input.activePointer.y;
+    
+        if(this.scene.input.activePointer.isDown && this.scene.input.activePointer.dragState == 0)
         {
-            this.scene.switchmode("select");
+            var down = (this.scene.time.now - this.scene.input.activePointer.downTime);
+        
+            if(down>500&&this.scene.mode !== "select")
+            {   
+                this.lockX = this.x;
+                this.lockY = this.y;
+                this.scene.switchmode("select");
+            }
         }
-    }
-
-    if (this.snapkey.isDown) {
-        this.x = Math.round(this.x / this.snap) * this.snap;
-        this.y = Math.round(this.y / this.snap) * this.snap;
-    }
-
-    if(this.scene.mode !== "select"){
-        //TODO: move to container class
-        this.linebutton.setPosition(this.x - 50, this.y - 50);    
-        this.quadbutton.setPosition(this.x , this.y - 50);   
-        this.cubicbutton.setPosition(this.x +50, this.y - 50);        
-        this.splinebutton.setPosition(this.x -50, this.y + 50);        
-        this.ellipsebutton.setPosition(this.x , this.y + 50);                
-    }
     
-    this.lbl.setPosition(this.x + 20, this.y + 20);
-    this.lbl.setText("x: " + this.x + " y: " + this.y);
-}
+        if(this.scene.mode == "select"){
+            if(Phaser.Math.Distance.Between(this.x, this.y, this.lockX, this.lockY)>150){
+                this.scene.switchmode("draw");
+            } 
+        }    
+    
+        if(this.scene.mode !== "select"){
+        
+            if (this.snapkey.isDown) {
+                this.x = Math.round(this.x / this.snap) * this.snap;
+                this.y = Math.round(this.y / this.snap) * this.snap;
+            }
+            this.lbl.setPosition(this.x + 20, this.y + 20);
+            this.lbl.setText("x: " + this.x + " y: " + this.y);
+        }
+    
+    }
 
 module.exports = Pointer;
 

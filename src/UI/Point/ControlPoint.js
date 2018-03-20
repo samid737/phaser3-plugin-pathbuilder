@@ -1,8 +1,8 @@
 
 var Point = require("./Point");
 
-var ControlPoint = function (ui, vector, key, mapping, kernel) {
-    Point.call(this, ui, vector, key, mapping, kernel);
+var ControlPoint = function (ui, vector, curve, key, mapping) {
+    Point.call(this, ui, vector, curve, key, mapping);
     this.setScale(0.75, 0.75);
 
     this.lbl.setFontStyle(PathBuilder.UI.fonts["ControlPoint"]);
@@ -21,7 +21,7 @@ var ControlPoint = function (ui, vector, key, mapping, kernel) {
     });
 }
 
-ControlPoint.prototype = Point.prototype;
+ControlPoint.prototype = Object.create(Point.prototype);
 ControlPoint.prototype.constructor = ControlPoint;
 
 module.exports = ControlPoint;

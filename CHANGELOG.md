@@ -2,13 +2,20 @@
 
 ## Unreleased
 
+### Features
+
+- Added curve undo option.
+
 ### Updates
+
+- Pointer selection becomes inactive when moving away from menu.
 
 ### Bug Fixes
 
 - Fixed issue where preview crashed after clearing path.
 - Fixed issue where Spline was not drawn after clearing path.
 - Fixed issue where Ellipse was not drawn when placing.
+- Unwanted curve when entering select mode fixed.
 
 ### Features
 
