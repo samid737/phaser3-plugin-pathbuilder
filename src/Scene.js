@@ -108,7 +108,7 @@ Scene.prototype = {
         this.graphics.clear();
         //FIXME: destroy removes path, pointer. needs reset function.
         this.path.curves = [];
-
+        this.spline  = null;
     },
     place: function (ui, x, y) {
 
@@ -213,7 +213,7 @@ Scene.prototype = {
             
             var previous = this.vectors[this.vectors.length - 1];
 
-            var c = new this.curves[this.drawmode]();
+            var c = new this.curves[this.drawmode](vector.x, vector.y, 100,100);
             this.path.add(c);
             c.p0 = vector;
 

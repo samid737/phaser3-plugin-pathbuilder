@@ -7,6 +7,8 @@
 ### Bug Fixes
 
 - Fixed issue where preview crashed after clearing path.
+- Fixed issue where Spline was not drawn after clearing path.
+- Fixed issue where Ellipse was not drawn when placing.
 
 ### Features
 
