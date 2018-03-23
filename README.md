@@ -1,10 +1,10 @@
 # Phaser 3 Plugin Path Builder
 
-A tool to build paths used for tweens and Pathfollowers. Draw and edit Lines, Bezier Curves, Splines and Ellipses during runtime and export them to Phaser. [Demo](https://samid737.github.io/pathbuilder/). 
+A tool to build paths used for Pathfollowers. Draw and edit Lines, Bezier Curves, Splines and Ellipses during runtime and export them to Phaser. [Demo](https://samid737.github.io/pathbuilder/). 
 
 ## Description
 
-* Path Builder is A useful tool for editing and building tween paths. 
+* Path Builder is A useful tool for editing and building paths. 
 * Draw your path in-game during runtime.
 * Export path as JSON Data.
 * Load them into Phaser and create awesome animations.
