@@ -1,6 +1,4 @@
-# Changelog
-
-## Unreleased
+## Version 1.1.0 - March 25th 2018
 
 ### Features
 
@@ -17,18 +15,9 @@
 - Fixed issue where Ellipse was not drawn when placing.
 - Unwanted curve when entering select mode fixed.
 
-### Features
-
-* Snap holding S key.
-* Clear path option.
-
-### Updates
-
-### Bug Fixes
-
 ### Thanks
 
-@samid737
+-
 
 ## Version 1.0.0 - March 19th 2018
 
