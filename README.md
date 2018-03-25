@@ -35,7 +35,7 @@ function create ()
 
 1. Click show to display main panel.
 2. Click draw to enter draw mode. 
-3. Click anywhere add points, default draw mode is Cubic Bezier (which is pretty common to use).
+3. Click anywhere to add points,the default draw mode is Cubic Bezier (which allows you to draw almost any shape).
 4. Hold mouse button 0.5s to select different curves. 
 5. Hold S to snap while drawing.
 
