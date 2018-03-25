@@ -13,13 +13,16 @@ A tool to build paths for [Pathfollowers](https://labs.phaser.io/index.html?dir=
 
 ## Usage
 
+1. Grab the `PathBuilder.js` or `PathBuilder.min.js` file inside the `dist` folder.
+
+2 Load it in Phaser.
 ```
 function preload ()
 {
     this.load.plugin('PathBuilder', 'path/to/PathBuilder.js');
 }
 ```
-Then: 
+3.
 ```
 
 function create ()
