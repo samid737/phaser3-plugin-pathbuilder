@@ -287,10 +287,10 @@ Scene.prototype = {
         this.path.draw(this.graphics, this.path.segments);
     },
     freeze: function () {
-        this.parent.scene.manager.scenes[0].scene.pause();
+        this.scene.manager.scenes[0].scene.pause();
     },
     unfreeze: function () {
-        this.parent.scene.manager.scenes[0].scene.resume();
+        this.scene.manager.scenes[0].scene.resume();
     },
     import: function () {
         var data = this.cache.json.get('data');
