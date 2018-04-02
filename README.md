@@ -39,11 +39,14 @@ function create ()
 4. Hold mouse button 0.5s to select different curves. 
 5. Hold S to snap while drawing.
 
+### Having problems with usage? Please submit an [Issue](https://github.com/samid737/phaser3-plugin-pathbuilder/issues/new).
+
 ## Requirements:
 
 * Phaser 3
 
 ## Dev notes
+
 Run `npm install` and then `npm run build` to build the plugin.
 The plugin is in active development and features will be added over time. Ideas, contributions, optimizations, suggestions are very welcome. All changes are found in the [Changelog](https://github.com/samid737/phaser3-plugin-pathbuilder/blob/master/CHANGELOG.md);
 
