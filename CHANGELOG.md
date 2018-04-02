@@ -1,3 +1,22 @@
+## Version 1.1.3 - April 2th 2018
+
+### Features
+
+- Added main scene pause resume buttons.
+
+### Updates
+
+- Update to Phaser 3.3.0
+- UI aligned with canvas size.
+
+### Bug Fixes
+
+- Fixed issue with preview button calling .start instead of .startFollow.
+
+### Thanks
+
+-
+
 ## Version 1.1.0 - March 25th 2018
 
 ### Features

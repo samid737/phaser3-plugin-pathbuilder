@@ -265,7 +265,7 @@ UI.prototype = {
     hide: function () {
         this.elements.forEach(function (element) { element.visible = false });
         this.scene.switchmode("normal");
-        this.translate(0, 800, 400, this.scene.unfreeze);
+        this.translate(0, this.scene.cameras.main.height, 400, this.scene.unfreeze);
     },
     show: function () {
         this.elements.forEach(function (element) { element.visible = true });
@@ -278,10 +278,9 @@ UI.prototype = {
             scrollX: x,
             scrollY: y,
             duration: speed,
-            ease: "Cubic.easeOut",
-            onComplete: callback,
-            onCompleteParams: [this.scene]
+            ease: "Cubic.easeOut"
         });
+        this.scene.time.delayedCall(speed, callback, [], this.scene);
     },
     update: function () {
         this.elements.forEach(function (element) { element.update() });
@@ -510,6 +509,8 @@ Scene.prototype = {
 
         this.events.emit('switchmode', this.mode);
 
+        this.W = this.cameras.main.width;
+        this.H = this.cameras.main.height;
         this.drawmode = "CubicBezier";
 
         //TODO: seperate class  
@@ -542,9 +543,13 @@ Scene.prototype = {
         this.clearbutton = this.middle.add.text(10,100,'clear',null,null,null, this.clear,[], this);  
         this.undobutton = this.middle.add.text(10,50,'undo',null,null,null, this.undo,[], this);  
         
-        this.importbutton = this.middle.add.text(700, 400, 'import', null, null, null, this.import, [], this);
-        this.exportbutton = this.middle.add.text(700, 500, 'export', null, null, null, this.export, [], this);
-        this.previewbutton = this.middle.add.text(10, 500, 'preview', null, null, null, this.preview, [], this);
+        this.importbutton = this.middle.add.text(this.W -100, this.H - 200, 'import', null, null, null, this.import, [], this);
+        this.exportbutton = this.middle.add.text(this.W -100, this.H - 100, 'export', null, null, null, this.export, [], this);
+
+        this.pausebutton = this.middle.add.text(10, this.H - 200,'pause',null,null,null, this.freeze,[], this);  
+        this.resumebutton = this.middle.add.text(10, this.H - 150,'resume',null,null,null, this.unfreeze,[], this);  
+        
+        this.previewbutton = this.middle.add.text(10, this.H - 100, 'preview', null, null, null, this.preview, [], this);
 
         this.modelabel = this.middle.add.label(100, 20, 'mode: ', null, null, null, null, this);
         this.drawmodelabel = this.middle.add.label(400, 20, 'curve: ' +this.drawmode, null, null, null, null, this);
@@ -573,7 +578,6 @@ Scene.prototype = {
         //this.cameras.main.setZoom(Math.sin(this.time.now/100000)+1);
         //this.middle.camera.setZoom(Math.sin(this.time.now/100000)+1);
         //this.top.camera.setZoom(Math.sin(this.time.now/100000)+1);
-
     },
     setCameras: function () {
         this.drawpanel.camera.ignore(this.middle.elements);
@@ -772,12 +776,11 @@ Scene.prototype = {
         this.graphics.fillStyle(0xffffff, 1);
         this.path.draw(this.graphics, this.path.segments);
     },
-    freeze: function (tw, s, ui) {
-        //TODO:rewrite
-        ui.scene.manager.scenes[0].scene.pause();
+    freeze: function () {
+        this.scene.manager.scenes[0].scene.pause();
     },
-    unfreeze: function (tw, s, ui) {
-        ui.scene.manager.scenes[0].scene.resume();
+    unfreeze: function () {
+        this.scene.manager.scenes[0].scene.resume();
     },
     import: function () {
         var data = this.cache.json.get('data');
@@ -838,7 +841,7 @@ var Pointer = function (ui, x, y, key, frame) {
     this.scene.input.on('pointerdown', function (pointer, gameObject) {
 
         if (this.scene.mode == "draw" && pointer.dragState ==0) {
-            if (gameObject.length ==0 && (pointer.x > 50 && pointer.x < 700)) {
+            if (gameObject.length ==0 && (pointer.x > 50 && pointer.x < this.scene.W - 100)) {
                 this.scene.place(this.scene.drawpanel, this.x, this.y);
             }
         } 
