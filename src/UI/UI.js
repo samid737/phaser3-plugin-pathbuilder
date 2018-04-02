@@ -72,10 +72,9 @@ UI.prototype = {
             scrollX: x,
             scrollY: y,
             duration: speed,
-            ease: "Cubic.easeOut",
-            onComplete: callback,
-            onCompleteParams: [this.scene]
+            ease: "Cubic.easeOut"
         });
+        this.scene.time.delayedCall(speed, callback, [], this.scene);
     },
     update: function () {
         this.elements.forEach(function (element) { element.update() });
