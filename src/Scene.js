@@ -19,6 +19,8 @@ Scene.prototype = {
 
         this.events.emit('switchmode', this.mode);
 
+        this.W = this.cameras.main.width;
+        this.H = this.cameras.main.height;
         this.drawmode = "CubicBezier";
 
         //TODO: seperate class  
@@ -51,9 +53,9 @@ Scene.prototype = {
         this.clearbutton = this.middle.add.text(10,100,'clear',null,null,null, this.clear,[], this);  
         this.undobutton = this.middle.add.text(10,50,'undo',null,null,null, this.undo,[], this);  
         
-        this.importbutton = this.middle.add.text(700, 400, 'import', null, null, null, this.import, [], this);
-        this.exportbutton = this.middle.add.text(700, 500, 'export', null, null, null, this.export, [], this);
-        this.previewbutton = this.middle.add.text(10, 500, 'preview', null, null, null, this.preview, [], this);
+        this.importbutton = this.middle.add.text(this.W -100, this.H - 200, 'import', null, null, null, this.import, [], this);
+        this.exportbutton = this.middle.add.text(this.W -100, this.H - 100, 'export', null, null, null, this.export, [], this);
+        this.previewbutton = this.middle.add.text(10, this.H - 100, 'preview', null, null, null, this.preview, [], this);
 
         this.modelabel = this.middle.add.label(100, 20, 'mode: ', null, null, null, null, this);
         this.drawmodelabel = this.middle.add.label(400, 20, 'curve: ' +this.drawmode, null, null, null, null, this);
@@ -82,7 +84,6 @@ Scene.prototype = {
         //this.cameras.main.setZoom(Math.sin(this.time.now/100000)+1);
         //this.middle.camera.setZoom(Math.sin(this.time.now/100000)+1);
         //this.top.camera.setZoom(Math.sin(this.time.now/100000)+1);
-
     },
     setCameras: function () {
         this.drawpanel.camera.ignore(this.middle.elements);

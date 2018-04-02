@@ -59,7 +59,7 @@ UI.prototype = {
     hide: function () {
         this.elements.forEach(function (element) { element.visible = false });
         this.scene.switchmode("normal");
-        this.translate(0, 800, 400, this.scene.unfreeze);
+        this.translate(0, this.scene.cameras.main.height, 400, this.scene.unfreeze);
     },
     show: function () {
         this.elements.forEach(function (element) { element.visible = true });

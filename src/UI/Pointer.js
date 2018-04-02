@@ -13,7 +13,7 @@ var Pointer = function (ui, x, y, key, frame) {
     this.scene.input.on('pointerdown', function (pointer, gameObject) {
 
         if (this.scene.mode == "draw" && pointer.dragState ==0) {
-            if (gameObject.length ==0 && (pointer.x > 50 && pointer.x < 700)) {
+            if (gameObject.length ==0 && (pointer.x > 50 && pointer.x < this.scene.W - 100)) {
                 this.scene.place(this.scene.drawpanel, this.x, this.y);
             }
         } 
