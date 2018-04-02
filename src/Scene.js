@@ -308,7 +308,7 @@ Scene.prototype = {
         if(this.path.curves.length !== 0){
             var follower = this.add.follower(this.path, 0, 0, 'dude');
             
-            follower.start({
+            follower.startFollow({
                 duration: 2000,
                 rotateToPath: true,
                 yoyo: true,
