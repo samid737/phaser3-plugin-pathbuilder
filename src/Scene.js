@@ -286,12 +286,11 @@ Scene.prototype = {
         this.graphics.fillStyle(0xffffff, 1);
         this.path.draw(this.graphics, this.path.segments);
     },
-    freeze: function (tw, s, ui) {
-        //TODO:rewrite
-        ui.scene.manager.scenes[0].scene.pause();
+    freeze: function () {
+        this.parent.scene.manager.scenes[0].scene.pause();
     },
-    unfreeze: function (tw, s, ui) {
-        ui.scene.manager.scenes[0].scene.resume();
+    unfreeze: function () {
+        this.parent.scene.manager.scenes[0].scene.resume();
     },
     import: function () {
         var data = this.cache.json.get('data');
