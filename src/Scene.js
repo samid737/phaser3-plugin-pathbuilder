@@ -20,7 +20,7 @@ Scene.prototype = {
         this.events.emit('switchmode', this.mode);
 
 
-        this.zoomIn = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
+        this.zoomIn = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.T);
         this.zoomOut = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
         this.release = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
 
@@ -89,7 +89,8 @@ Scene.prototype = {
     update: function () {
         this.drawpanel.update();
         this.pointer.update();
-        this.look(this.cameras.main);
+        this.look(this.drawpanel.camera);
+        this.look(this.supercamera);        
         //this.drawpanel.camera.setZoom(Math.sin(this.time.now/100000)+1);
         //this.cameras.main.setZoom(Math.sin(this.time.now/100000)+1);
         //this.middle.camera.setZoom(Math.sin(this.time.now/100000)+1);
@@ -108,6 +109,11 @@ Scene.prototype = {
         this.top.camera.ignore(this.drawpanel.elements);
 
         this.cameras.main.ignore(this.children.list);
+
+        //TODO: move/ rewrite
+        this.supercamera = this.sys.game.scene.scenes[0].cameras.main;
+        this.supercamera._speedX = 0;
+        this.supercamera._speedY = 0;
     },
     switchmode: function (mode) {
         this.mode = mode;
@@ -292,18 +298,20 @@ Scene.prototype = {
         this.graphics.fillStyle(0xffffff, 1);
         this.path.draw(this.graphics, this.path.segments);
     },
-    look = function (camera) {
+    look : function (camera) {
         camera.zoomSpeed = 0.02;
         
-        if (cam.scene.release.isDown) {
+        if (this.release.isDown) {
             //  Camera zoom
-    
-            var axisX =-(this.input.activePointer.x-(camera.width/2))/10; 
-            var axisY =-(this.input.activePointer.y-(camera.height/2))/10;
+            var axisX =-(this.input.activePointer.x-(camera.width/2))/1000; 
+            var axisY =-(this.input.activePointer.y-(camera.height/2))/1000;
             
             camera._speedX +=axisX;
             camera._speedY +=axisY;
     
+            console.log(camera._speedX);
+            
+
             if (this.zoomIn && this.zoomIn.isDown) {
                 camera._zoom = -camera.zoomSpeed;
             } else if (this.zoomOut && this.zoomOut.isDown) {
@@ -324,18 +332,19 @@ Scene.prototype = {
             if (camera._zoom !== 0) {
                 camera.zoom += camera._zoom;
     
-                if (cam.zoom < 0.1) {
-                    cam.zoom = 0.1;
+                if (camera.zoom < 0.1) {
+                    camera.zoom = 0.1;
                 }
-                if (cam.zoom > 2) {
-                    cam.zoom = 2;
+                if (camera.zoom > 2) {
+                    camera.zoom = 2;
                 }    
             }
         }else{
             camera._speedX/=1.1;
             camera._speedY/=1.1;
-            cam.scrollX -= ((camera._speedX) | 0);
-            cam.scrollY -= ((camera._speedY) | 0);
+            camera.scrollX = 0;
+            camera.scrollY = 0;
+
             if(camera.zoom>1.001){
                 camera.zoom/=1.1;
             }
