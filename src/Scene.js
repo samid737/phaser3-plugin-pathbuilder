@@ -19,6 +19,11 @@ Scene.prototype = {
 
         this.events.emit('switchmode', this.mode);
 
+
+        this.zoomIn = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
+        this.zoomOut = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
+        this.release = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
+
         this.W = this.cameras.main.width;
         this.H = this.cameras.main.height;
         this.drawmode = "CubicBezier";
@@ -84,6 +89,7 @@ Scene.prototype = {
     update: function () {
         this.drawpanel.update();
         this.pointer.update();
+        this.look(this.cameras.main);
         //this.drawpanel.camera.setZoom(Math.sin(this.time.now/100000)+1);
         //this.cameras.main.setZoom(Math.sin(this.time.now/100000)+1);
         //this.middle.camera.setZoom(Math.sin(this.time.now/100000)+1);
@@ -285,6 +291,58 @@ Scene.prototype = {
         this.graphics.lineStyle(2, 0xffffff, 1);
         this.graphics.fillStyle(0xffffff, 1);
         this.path.draw(this.graphics, this.path.segments);
+    },
+    look = function (camera) {
+        camera.zoomSpeed = 0.02;
+        
+        if (cam.scene.release.isDown) {
+            //  Camera zoom
+    
+            var axisX =-(this.input.activePointer.x-(camera.width/2))/10; 
+            var axisY =-(this.input.activePointer.y-(camera.height/2))/10;
+            
+            camera._speedX +=axisX;
+            camera._speedY +=axisY;
+    
+            if (this.zoomIn && this.zoomIn.isDown) {
+                camera._zoom = -camera.zoomSpeed;
+            } else if (this.zoomOut && this.zoomOut.isDown) {
+                camera._zoom = camera.zoomSpeed;
+            } else {
+                camera._zoom = 0;
+            }
+    
+            //  Apply to Camera
+            if (camera._speedX !== 0) {
+                camera.scrollX -= ((camera._speedX) | 0);
+            }
+    
+            if (camera._speedY !== 0) {
+                camera.scrollY -= ((camera._speedY) | 0);
+            }
+    
+            if (camera._zoom !== 0) {
+                camera.zoom += camera._zoom;
+    
+                if (cam.zoom < 0.1) {
+                    cam.zoom = 0.1;
+                }
+                if (cam.zoom > 2) {
+                    cam.zoom = 2;
+                }    
+            }
+        }else{
+            camera._speedX/=1.1;
+            camera._speedY/=1.1;
+            cam.scrollX -= ((camera._speedX) | 0);
+            cam.scrollY -= ((camera._speedY) | 0);
+            if(camera.zoom>1.001){
+                camera.zoom/=1.1;
+            }
+            if(camera.zoom<1.001){
+                camera.zoom*=1.1;
+            }      
+        } 
     },
     freeze: function () {
         this.scene.manager.scenes[0].scene.pause();
