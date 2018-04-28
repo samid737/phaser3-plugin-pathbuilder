@@ -302,44 +302,7 @@ Scene.prototype = {
         camera.zoomSpeed = 0.02;
         
         if (this.release.isDown) {
-            //  Camera zoom
-            var axisX =-(this.input.activePointer.x-(camera.width/2))/1000; 
-            var axisY =-(this.input.activePointer.y-(camera.height/2))/1000;
-            
-            camera._speedX +=axisX;
-            camera._speedY +=axisY;
-    
-            console.log(camera._speedX);
-            
 
-            if (this.zoomIn && this.zoomIn.isDown) {
-                camera._zoom = -camera.zoomSpeed;
-            } else if (this.zoomOut && this.zoomOut.isDown) {
-                camera._zoom = camera.zoomSpeed;
-            } else {
-                camera._zoom = 0;
-            }
-    
-            //  Apply to Camera
-            if (camera._speedX !== 0) {
-                camera.scrollX -= ((camera._speedX) | 0);
-            }
-    
-            if (camera._speedY !== 0) {
-                camera.scrollY -= ((camera._speedY) | 0);
-            }
-    
-            if (camera._zoom !== 0) {
-                camera.zoom += camera._zoom;
-    
-                if (camera.zoom < 0.1) {
-                    camera.zoom = 0.1;
-                }
-                if (camera.zoom > 2) {
-                    camera.zoom = 2;
-                }    
-            }
-        }else{
             camera._speedX/=1.1;
             camera._speedY/=1.1;
             camera.scrollX = 0;
@@ -350,8 +313,47 @@ Scene.prototype = {
             }
             if(camera.zoom<1.001){
                 camera.zoom*=1.1;
-            }      
-        } 
+            } 
+
+            return;
+        }
+
+        //  Camera zoom
+        var axisX =-(this.input.activePointer.x-(camera.width/2))/1000; 
+        var axisY =-(this.input.activePointer.y-(camera.height/2))/1000;
+        
+        camera._speedX +=axisX;
+        camera._speedY +=axisY;
+
+        console.log(camera._speedX);
+        
+        if (this.zoomIn && this.zoomIn.isDown) {
+            camera._zoom = -camera.zoomSpeed;
+        } else if (this.zoomOut && this.zoomOut.isDown) {
+            camera._zoom = camera.zoomSpeed;
+        } else {
+            camera._zoom = 0;
+        }
+
+        //  Apply to Camera
+        if (camera._speedX !== 0) {
+            camera.scrollX -= ((camera._speedX) | 0);
+        }
+
+        if (camera._speedY !== 0) {
+            camera.scrollY -= ((camera._speedY) | 0);
+        }
+
+        if (camera._zoom !== 0) {
+            camera.zoom += camera._zoom;
+
+            if (camera.zoom < 0.1) {
+                camera.zoom = 0.1;
+            }
+            if (camera.zoom > 2) {
+                camera.zoom = 2;
+            }    
+        }
     },
     freeze: function () {
         this.scene.manager.scenes[0].scene.pause();

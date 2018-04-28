@@ -82,7 +82,21 @@ Pointer.prototype.update = function () {
     
         this.x = this.scene.input.activePointer.x;
         this.y = this.scene.input.activePointer.y;
-    
+ 
+        if(this.scene.input.activePointer.isDown && this.scene.input.activePointer.dragState == 0)
+        {
+
+            console.log(this.scene.input.activePointer);
+            // var down = (this.scene.time.now - this.scene.input.activePointer.downTime);
+        
+            // if(down>500&&this.scene.mode !== "select")
+            // {   
+            //     this.lockX = this.x;
+            //     this.lockY = this.y;
+            //     //this.scene.switchmode("hand");
+            // }
+        }        
+
         if(this.scene.input.activePointer.isDown && this.scene.input.activePointer.dragState == 0)
         {
             var down = (this.scene.time.now - this.scene.input.activePointer.downTime);
