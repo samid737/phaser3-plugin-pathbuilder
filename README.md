@@ -43,7 +43,7 @@ function create ()
 
 ## Requirements:
 
-* Phaser 3
+* Phaser 3 (at least 3.3.0).
 
 ## Dev notes
 
