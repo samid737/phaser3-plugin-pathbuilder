@@ -19,6 +19,7 @@ Scene.prototype = {
 
         this.events.emit('switchmode', this.mode);
 
+        this.input.mouse.disableContextMenu();      
 
         this.zoomIn = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.T);
         this.zoomOut = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
@@ -88,9 +89,7 @@ Scene.prototype = {
     },
     update: function () {
         this.drawpanel.update();
-        this.pointer.update();
-        this.look(this.drawpanel.camera);
-        this.look(this.supercamera);        
+        this.pointer.update();     
         //this.drawpanel.camera.setZoom(Math.sin(this.time.now/100000)+1);
         //this.cameras.main.setZoom(Math.sin(this.time.now/100000)+1);
         //this.middle.camera.setZoom(Math.sin(this.time.now/100000)+1);
@@ -112,8 +111,6 @@ Scene.prototype = {
 
         //TODO: move/ rewrite
         this.supercamera = this.sys.game.scene.scenes[0].cameras.main;
-        this.supercamera._speedX = 0;
-        this.supercamera._speedY = 0;
     },
     switchmode: function (mode) {
         this.mode = mode;
@@ -147,7 +144,7 @@ Scene.prototype = {
     },
     place: function (ui, x, y) {
         //TODO: extend A curve class for each case, add A factory entry for curves.
-
+        
         var vector = new Phaser.Math.Vector2(x, y);
 
         if (this.vectors.length == 0) {
@@ -318,42 +315,9 @@ Scene.prototype = {
             return;
         }
 
-        //  Camera zoom
-        var axisX =-(this.input.activePointer.x-(camera.width/2))/1000; 
-        var axisY =-(this.input.activePointer.y-(camera.height/2))/1000;
-        
-        camera._speedX +=axisX;
-        camera._speedY +=axisY;
+        camera.scrollY = (this.pointer.lockY - this.input.activePointer.y);
+        camera.scrollX = (this.pointer.lockX - this.input.activePointer.x);
 
-        console.log(camera._speedX);
-        
-        if (this.zoomIn && this.zoomIn.isDown) {
-            camera._zoom = -camera.zoomSpeed;
-        } else if (this.zoomOut && this.zoomOut.isDown) {
-            camera._zoom = camera.zoomSpeed;
-        } else {
-            camera._zoom = 0;
-        }
-
-        //  Apply to Camera
-        if (camera._speedX !== 0) {
-            camera.scrollX -= ((camera._speedX) | 0);
-        }
-
-        if (camera._speedY !== 0) {
-            camera.scrollY -= ((camera._speedY) | 0);
-        }
-
-        if (camera._zoom !== 0) {
-            camera.zoom += camera._zoom;
-
-            if (camera.zoom < 0.1) {
-                camera.zoom = 0.1;
-            }
-            if (camera.zoom > 2) {
-                camera.zoom = 2;
-            }    
-        }
     },
     freeze: function () {
         this.scene.manager.scenes[0].scene.pause();

@@ -44,8 +44,6 @@ var UI = function (scene) {
     }
     this.add.ui = this;
     this.camera = this.scene.cameras.add();
-    this.camera._speedX = 0;
-    this.camera._speedY = 0;
 }
 
 //TODO: link classes

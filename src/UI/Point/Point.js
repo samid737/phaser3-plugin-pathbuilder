@@ -26,6 +26,7 @@ var Point = function (ui, vector, curve,  key, mapping) {
     });
 
     this.on('drag', function (pointer, gameObject) {
+        
         this.x = this.scene.pointer.x;
         this.y = this.scene.pointer.y;
 

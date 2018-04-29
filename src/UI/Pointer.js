@@ -10,16 +10,49 @@ var Pointer = function (ui, x, y, key, frame) {
     this.snap = 50;
     
     //global input listener 
+
+    this.scene.input.on('gameobjectdown', function (pointer, gameObject) {
+
+        console.log(gameObject);
+    }, this);
+    
+
     this.scene.input.on('pointerdown', function (pointer, gameObject) {
 
         if (this.scene.mode == "draw" && pointer.dragState ==0) {
             if (gameObject.length ==0 && (pointer.x > 50 && pointer.x < this.scene.W - 100)) {
-                this.scene.place(this.scene.drawpanel, this.x, this.y);
+                
+                var _dx = this.scene.drawpanel.camera.scrollX;
+                var _dy = this.scene.drawpanel.camera.scrollY;
+                
+                this.scene.place(this.scene.drawpanel, this.x + _dx, this.y +_dy);
             }
         } 
 
+
+        if(pointer.rightButtonDown() && this.scene.input.activePointer.dragState == 0)
+        {
+            this.scene.switchmode("select");     
+        } 
+
+
+        if(pointer.middleButtonDown())
+        {
+            this.lockX = pointer.x + this.scene.drawpanel.camera.scrollX;
+            this.lockY = pointer.y + this.scene.drawpanel.camera.scrollY;
+            this.scene.switchmode("hand");
+        }  
+
     }, this);
 
+    this.scene.input.on('pointerup', function (pointer, gameObject) {
+        if(pointer.middleButtonDown())
+        {
+            console.log("up");
+            this.scene.switchmode("normal");
+        }          
+    }, this);
+    
     this.snapkey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
 
     this.lbl = this.ui.add.label(x + 20, y + 20, "").setFontStyle(PathBuilder.UI.fonts["Label"]);
@@ -69,6 +102,11 @@ Pointer.prototype.switchmode = function (mode) {
         this.splinebutton.setPosition(this.x -50, this.y + 50);        
         this.ellipsebutton.setPosition(this.x , this.y + 50);  
     }
+    if(mode == "hand"){
+        this.setVisible(true);
+        this.lbl.setVisible(true);
+
+    }
 }
 
 Pointer.prototype.switchdrawmode = function (mode) {
@@ -82,33 +120,15 @@ Pointer.prototype.update = function () {
     
         this.x = this.scene.input.activePointer.x;
         this.y = this.scene.input.activePointer.y;
- 
-        if(this.scene.input.activePointer.isDown && this.scene.input.activePointer.dragState == 0)
-        {
-
-            console.log(this.scene.input.activePointer);
-            // var down = (this.scene.time.now - this.scene.input.activePointer.downTime);
         
-            // if(down>500&&this.scene.mode !== "select")
-            // {   
-            //     this.lockX = this.x;
-            //     this.lockY = this.y;
-            //     //this.scene.switchmode("hand");
-            // }
-        }        
 
-        if(this.scene.input.activePointer.isDown && this.scene.input.activePointer.dragState == 0)
-        {
-            var down = (this.scene.time.now - this.scene.input.activePointer.downTime);
-        
-            if(down>500&&this.scene.mode !== "select")
-            {   
-                this.lockX = this.x;
-                this.lockY = this.y;
-                this.scene.switchmode("select");
-            }
-        }
-    
+        if(this.scene.mode == "hand"){
+            this.scene.look(this.scene.drawpanel.camera);
+            this.scene.look(this.scene.supercamera);
+            //this.scene.look(this.scene.cameras.main);
+            
+        }  
+
         if(this.scene.mode == "select"){
             if(Phaser.Math.Distance.Between(this.x, this.y, this.lockX, this.lockY)>150){
                 this.scene.switchmode("draw");
