@@ -8,6 +8,7 @@ A tool to build paths for [Pathfollowers](https://labs.phaser.io/index.html?dir=
 
 * Path Builder is A useful tool for editing and building paths. 
 * Draw your path in-game during runtime.
+* Explore your scene while building paths.
 * Export path as JSON Data.
 * Load them into Phaser and create awesome animations.
 * 90% Phaser API code.
