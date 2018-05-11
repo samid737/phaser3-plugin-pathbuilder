@@ -10,6 +10,7 @@ A tool to build paths for [Pathfollowers](https://labs.phaser.io/index.html?dir=
 * Draw your path in-game during runtime.
 * Export path as JSON Data.
 * Load them into Phaser and create awesome animations.
+* 90% Phaser API code.
 
 ## Usage
 
@@ -33,20 +34,39 @@ function create ()
 
 * UI:
 
-1. Click show to display main panel.
-2. Click draw to enter draw mode. 
-3. Click anywhere to add points,the default draw mode is Cubic Bezier (which allows you to draw almost any shape).
-4. Hold mouse button 0.5s to select different curves. 
-5. Hold S to snap while drawing.
+    * Controls: 
+        * Use left mouse to draw.
+        * Zoom and move trough scene using middle mouse and mousewheel.
+        * Use right mouse to select different curves.
+
+        * S key: Snap the mouse to fixed distance.
+        
+    * Buttons:
+        * Undo          : Undo the previous path draw.
+        * Clear         : Clear the entire path.
+        * Draw          : Enter draw mode.
+        * Hide          : Hide Plugin.
+        * Show          : Show Plugin.
+        * Pause         : Pause main scene.
+        * Resume        : Resume main scene.
+        * Reset view    : Reset the camera.
+        * Import        : Import existing path (JSON).
+        * Export        : Save the current path as JSON file.  
+
+
 
 ### Having problems with usage? Please submit an [Issue](https://github.com/samid737/phaser3-plugin-pathbuilder/issues/new).
 
 ## Requirements:
 
 * Phaser 3 (at least 3.3.0).
+* Mouse with middle mouse button click.
+* Chrome browser recommended.
 
 ## Dev notes
 
 Run `npm install` and then `npm run build` to build the plugin.
-The plugin is in active development and features will be added over time. Ideas, contributions, optimizations, suggestions are very welcome. All changes are found in the [Changelog](https://github.com/samid737/phaser3-plugin-pathbuilder/blob/master/CHANGELOG.md);
+The plugin is in active development and features will be added over time. Contributions, optimizations, suggestions are very welcome. All changes are found in the [Changelog](https://github.com/samid737/phaser3-plugin-pathbuilder/blob/master/CHANGELOG.md);
+
+Honour the [Phaser Code](https://github.com/photonstorm/phaser). 
 
