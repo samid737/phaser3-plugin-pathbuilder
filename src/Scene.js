@@ -61,6 +61,8 @@ Scene.prototype = {
         //TODO: adjust to game size
         this.hidebutton = this.top.add.text(10, 300, 'hide', null, null, null, [this.drawpanel.hide, this.middle.hide], [], [this.drawpanel, this.middle]);
         this.showbutton = this.top.add.text(10, 350, 'show', null, null, null, [this.drawpanel.show, this.middle.show], [], [this.drawpanel, this.middle]);
+        this.viewbutton = this.top.add.text(this.W -100, this.H * 0.1, 'reset view', null, null, null, this.resetView, [], this);
+                
         this.drawbutton = this.middle.add.text(10, 200, 'draw', null, null, null, this.switchmode, ["draw"], this);
         this.clearbutton = this.middle.add.text(10,100,'clear',null,null,null, this.clear,[], this);  
         this.undobutton = this.middle.add.text(10,50,'undo',null,null,null, this.undo,[], this);  
