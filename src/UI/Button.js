@@ -35,11 +35,13 @@ Button.prototype.click = function () {
 }
 
 Button.prototype.hover = function () {
+    game.canvas.style.cursor = "pointer";
     Element.prototype.hover.call(this);
     this.setScale(1.1, 1.1);
 }
 
 Button.prototype.out = function () {
+    this.scene.pointer.switchCursor();                       
     Element.prototype.out.call(this);
     this.setScale(1, 1);
 }

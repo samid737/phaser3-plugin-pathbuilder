@@ -22,13 +22,16 @@ var Point = function (ui, vector, curve,  key, mapping) {
     }
 
     this.on('pointerout', function (pointer, gameObject) {
+        this.scene.pointer.switchCursor();                      
+        
         this.scene.pointer.lbl.visible = true;
     });
 
     this.on('drag', function (pointer, gameObject) {
+        game.canvas.style.cursor = "pointer";                        
         
-        this.x = this.scene.pointer.x;
-        this.y = this.scene.pointer.y;
+        this.x = this.scene.pointer.x + this.scene.drawpanel.camera.scrollX;
+        this.y = this.scene.pointer.y + this.scene.drawpanel.camera.scrollY;
 
         this.scene.pointer.lbl.visible = false;
 

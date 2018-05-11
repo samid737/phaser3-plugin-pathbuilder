@@ -26,14 +26,20 @@ var Pointer = function (ui, x, y, key, frame) {
 
         if(pointer.rightButtonDown() && this.scene.input.activePointer.dragState == 0)
         {
+            this.lockX = pointer.x;
+            this.lockY = pointer.y;
+
+            //game.canvas.style.cursor = "default";                        
+            
             this.scene.switchmode("select");     
         } 
 
 
         if(pointer.middleButtonDown())
         {
-            this.lockX = pointer.x + this.scene.drawpanel.camera.scrollX;
-            this.lockY = pointer.y + this.scene.drawpanel.camera.scrollY;
+            this.lastX = pointer.x + this.scene.drawpanel.camera.scrollX;
+            this.lastY = pointer.y + this.scene.drawpanel.camera.scrollY;
+            
             this.scene.switchmode("hand");
         }  
 
@@ -75,15 +81,18 @@ Pointer.prototype.constructor = Pointer;
 Pointer.prototype.switchmode = function (mode) {
 
     if (mode == "draw") {
+        // TODO: abstraction
+        
         this.setVisible(true);
         this.lbl.setVisible(true);
         this.menu.forEach(function(element){ element.setVisible(false)});        
     }
-    if (mode == "normal") {
+    if (mode == "normal") {        
+        
         this.setVisible(false);
         this.menu.forEach(function(element){ element.setVisible(false)});
     }
-    if (mode == "select"){
+    if (mode == "select"){        
         this.scene.undo();
 
         this.setVisible(false);  
@@ -96,10 +105,15 @@ Pointer.prototype.switchmode = function (mode) {
         this.ellipsebutton.setPosition(this.x , this.y + 50);  
     }
     if(mode == "hand"){
+        game.canvas.style.cursor = "grab";
+        
         this.setVisible(true);
         this.lbl.setVisible(true);
 
     }
+}
+Pointer.prototype.switchCursor = function(){
+    game.canvas.style.cursor = this.scene.cursors[this.scene.mode];
 }
 
 Pointer.prototype.switchdrawmode = function (mode) {

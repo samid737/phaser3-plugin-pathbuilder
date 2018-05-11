@@ -20,16 +20,12 @@ Scene.prototype = {
     create: function () {
         this.tool = { "normal": null, "draw": this.place};
         this.mode = "normal";
-
+        this.cursors = {"normal": "default", "draw": "copy", "select": "default", "hand": "move"};
         this.curves = {"Line": Phaser.Curves.Line, "Ellipse": Phaser.Curves.Ellipse, "QuadraticBezier": Phaser.Curves.QuadraticBezier, "CubicBezier": Phaser.Curves.CubicBezier, "Spline": Phaser.Curves.Spline };
 
         this.events.emit('switchmode', this.mode);
 
         this.input.mouse.disableContextMenu();      
-
-        this.zoomIn = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.T);
-        this.zoomOut = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
-        this.release = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
 
         this.W = this.cameras.main.width;
         this.H = this.cameras.main.height;
@@ -70,6 +66,8 @@ Scene.prototype = {
         this.importbutton = this.middle.add.text(this.W -100, this.H - 200, 'import', null, null, null, this.import, [], this);
         this.exportbutton = this.middle.add.text(this.W -100, this.H - 100, 'export', null, null, null, this.export, [], this);
 
+
+        
         this.pausebutton = this.middle.add.text(10, this.H - 200,'pause',null,null,null, this.freeze,[], this);  
         this.resumebutton = this.middle.add.text(10, this.H - 150,'resume',null,null,null, this.unfreeze,[], this);  
         
@@ -123,6 +121,7 @@ Scene.prototype = {
     switchmode: function (mode) {
         this.mode = mode;
         this.modelabel.setText("mode: " + this.mode);
+        this.pointer.switchCursor();        
         this.events.emit('switchmode', this.mode);
     },
     clear: function () {
