@@ -1,3 +1,27 @@
+## Version 1.3.0 - April 2th 2018
+
+### Features
+
+- Added Scene explorer.
+- Added reset view button.
+- Added camera zooming using mouse scroll.
+- Added mouse cursors for UX.
+
+### Updates
+
+- Update to Phaser 3.7.1
+- Added DOM mousewheel scroll.
+- Right mouse button for selection.
+- Middle mouse button for hand tool.
+
+### Bug Fixes
+
+- Duplicate tween previews.
+
+### Thanks
+
+-
+
 ## Version 1.1.3 - April 2th 2018
 
 ### Features
