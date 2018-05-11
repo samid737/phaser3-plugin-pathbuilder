@@ -4,6 +4,12 @@ var Pointer = require("./UI/Pointer");
 
 var Scene = function () {
 
+    if (window.addEventListener)
+    {
+        window.addEventListener('DOMMouseScroll', this.scroll, false);
+        window.onmousewheel = this.scroll.bind(this);
+    }
+
 }
 
 Scene.prototype = {
@@ -296,28 +302,37 @@ Scene.prototype = {
         this.path.draw(this.graphics, this.path.segments);
     },
     look : function (camera) {
-        camera.zoomSpeed = 0.02;
-        
-        if (this.release.isDown) {
-
-            camera._speedX/=1.1;
-            camera._speedY/=1.1;
-            camera.scrollX = 0;
-            camera.scrollY = 0;
-
-            if(camera.zoom>1.001){
-                camera.zoom/=1.1;
-            }
-            if(camera.zoom<1.001){
-                camera.zoom*=1.1;
-            } 
-
-            return;
+        camera.scrollY = (this.pointer.lastY - this.input.activePointer.y);
+        camera.scrollX = (this.pointer.lastX - this.input.activePointer.x);
+    },
+    scroll: function(event)
+    {
+        var delta = 0;
+        if (event.wheelDelta) {
+            delta = event.wheelDelta/120; 
+        } else if (event.detail) {
+            delta = -event.detail/3;
+        }
+        // TODO: move to pointer 
+        if(delta>0){
+            game.canvas.style.cursor = "zoom-in";
+        }
+        if(delta<0){
+            game.canvas.style.cursor = "zoom-out";
         }
 
-        camera.scrollY = (this.pointer.lockY - this.input.activePointer.y);
-        camera.scrollX = (this.pointer.lockX - this.input.activePointer.x);
+        this.time.delayedCall(250, this.pointer.switchCursor, [], this.pointer);
 
+        this.drawpanel.camera.zoom += delta*0.1;
+        this.supercamera.zoom += delta*0.1;
+        
+        return delta;
+    },
+    resetView(){
+        this.drawpanel.camera.zoom = 1;
+        this.supercamera.zoom = 1;        
+        this.drawpanel.camera.setScroll(0,0);
+        this.supercamera.setScroll(0,0);
     },
     freeze: function () {
         this.scene.manager.scenes[0].scene.pause();
