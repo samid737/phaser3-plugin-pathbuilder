@@ -1,4 +1,4 @@
-## Version 1.3.0 - April 2th 2018
+## Version 1.5.0 - May 11th 2018
 
 ### Features
 
@@ -9,7 +9,7 @@
 
 ### Updates
 
-- Update to Phaser 3.7.1
+- Update to Phaser 3.6.0.
 - Added DOM mousewheel scroll.
 - Right mouse button for selection.
 - Middle mouse button for hand tool.

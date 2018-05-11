@@ -59,7 +59,7 @@ function create ()
 
 ## Requirements:
 
-* Phaser 3 (at least 3.3.0).
+* Phaser 3 (at least 3.3.0, not working in 3.7.1).
 * Mouse with middle mouse button click.
 * Chrome browser recommended.
 
