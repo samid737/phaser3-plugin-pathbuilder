@@ -361,7 +361,11 @@ Scene.prototype = {
     preview: function () {
         if(this.path.curves.length !== 0){
             var follower = this.add.follower(this.path, 0, 0, 'dude');
-            
+
+            this.cameras.main.ignore(follower);
+            this.middle.camera.ignore(follower);
+            this.top.camera.ignore(follower);
+
             follower.startFollow({
                 duration: 2000,
                 rotateToPath: true,
