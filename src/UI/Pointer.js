@@ -8,14 +8,8 @@ var Pointer = function (ui, x, y, key, frame) {
     this.alpha = 0.5;
 
     this.snap = 50;
-    
+
     //global input listener 
-
-    this.scene.input.on('gameobjectdown', function (pointer, gameObject) {
-
-        console.log(gameObject);
-    }, this);
-    
 
     this.scene.input.on('pointerdown', function (pointer, gameObject) {
 
@@ -48,7 +42,6 @@ var Pointer = function (ui, x, y, key, frame) {
     this.scene.input.on('pointerup', function (pointer, gameObject) {
         if(pointer.middleButtonDown())
         {
-            console.log("up");
             this.scene.switchmode("normal");
         }          
     }, this);
@@ -121,12 +114,9 @@ Pointer.prototype.update = function () {
         this.x = this.scene.input.activePointer.x;
         this.y = this.scene.input.activePointer.y;
         
-
         if(this.scene.mode == "hand"){
             this.scene.look(this.scene.drawpanel.camera);
-            this.scene.look(this.scene.supercamera);
-            //this.scene.look(this.scene.cameras.main);
-            
+            this.scene.look(this.scene.supercamera);            
         }  
 
         if(this.scene.mode == "select"){
