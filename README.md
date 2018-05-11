@@ -2,7 +2,7 @@
 
 A tool to build paths for [Pathfollowers](https://labs.phaser.io/index.html?dir=paths/followers/) and path [tweens](https://labs.phaser.io/index.html?dir=paths/). Draw and edit Lines, Bezier Curves, Splines and Ellipses during runtime and export them to Phaser. [Demo](https://samid737.github.io/pathbuilder/). 
 
-![](http://www.html5gamedevs.com/uploads/monthly_2018_03/Y90fuqTin8.gif.2170746140c892ed279d26dfa2afeb84.gif)
+![](http://www.html5gamedevs.com/uploads/monthly_2018_05/v1.5.0.gif.9608ab3ed025ab0be4400793aa1f22ea.gif)
 
 ## Description
 
