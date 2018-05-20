@@ -13,7 +13,7 @@ var Pointer = function (ui, x, y, key, frame) {
 
     this.scene.input.on('pointerdown', function (pointer, gameObject) {
 
-        if (this.scene.mode == "draw" && pointer.dragState ==0) {
+        if (this.scene.mode == "draw" && pointer.dragState ==0 && pointer.leftButtonDown()) {
             if (gameObject.length ==0 && (pointer.x > 50 && pointer.x < this.scene.W - 100)) {
                 
                 var _dx = this.scene.drawpanel.camera.scrollX;
@@ -24,7 +24,7 @@ var Pointer = function (ui, x, y, key, frame) {
         } 
 
 
-        if(pointer.rightButtonDown() && this.scene.input.activePointer.dragState == 0)
+        if(pointer.rightButtonDown() && pointer.dragState == 0)
         {
             this.lockX = pointer.x;
             this.lockY = pointer.y;
@@ -93,8 +93,6 @@ Pointer.prototype.switchmode = function (mode) {
         this.menu.forEach(function(element){ element.setVisible(false)});
     }
     if (mode == "select"){        
-        this.scene.undo();
-
         this.setVisible(false);  
         this.menu.forEach(function(element){ element.setVisible(true)});
     

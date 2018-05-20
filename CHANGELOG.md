@@ -1,3 +1,24 @@
+## Version 1.6.0 - May 20th 2018
+
+### Features
+
+- 
+
+### Updates
+
+- Update to Phaser 3.8.0.
+- Integrate API changes.
+- Added ES5 Branch. 
+
+### Bug Fixes
+
+- Fixed issue where middle mouse button press would place A point.
+- Fixed issue where right mouse button press would undo A placement.
+
+### Thanks
+
+-
+
 ## Version 1.5.0 - May 11th 2018
 
 ### Features

@@ -21,18 +21,9 @@ A tool to build paths for [Pathfollowers](https://labs.phaser.io/index.html?dir=
 ```
 function preload ()
 {
-    this.load.plugin('PathBuilder', 'path/to/PathBuilder.js');
+    this.load.scenePlugin('PathBuilder', 'path/to/PathBuilder.js');
 }
 ```
-3.
-```
-
-function create ()
-{
-    this.sys.install('PathBuilder');
-}
-```
-
 * UI:
 
     * Controls: 
@@ -60,8 +51,8 @@ function create ()
 
 ## Requirements:
 
-* Phaser 3 (at least 3.3.0, not working in 3.7.1).
-* Mouse with middle mouse button click.
+* Phaser 3, latest recommended to guarantee matching API.     
+* Mouse with middle mouse button if you want to explore A scene.
 * Chrome browser recommended.
 
 ## Dev notes

@@ -310,18 +310,10 @@ var PathBuilder = function (scene) {
     this.scene = scene;
     this.systems = scene.sys;
 
-    if (!scene.sys.settings.isBooted) {
-        scene.sys.events.on('boot', this.boot, this);
-    }
 };
 
 PathBuilder.UI = __webpack_require__(2);
 PathBuilder.Scene = __webpack_require__(8);
-
-PathBuilder.register = function (PluginManager) {
-
-    PluginManager.register('PathBuilder', PathBuilder, 'curveGenerator');
-};
 
 PathBuilder.prototype = {
 
@@ -330,10 +322,9 @@ PathBuilder.prototype = {
 
         eventEmitter.on('shutdown', this.shutdown, this);
         eventEmitter.on('destroy', this.destroy, this);
-
-        //TODO: rewrite game variable
-        this.scene.sys.game.scene.add('UI', PathBuilder.Scene, true);
-
+                
+        //TODO: rewrite according API
+        this.systems.scenePlugin.add('UI', PathBuilder.Scene, true);
     },
 
     //  Called when a Scene shuts down, it may then come back again later (which will invoke the 'start' event) but should be considered dormant.
@@ -901,7 +892,7 @@ var Pointer = function (ui, x, y, key, frame) {
 
     this.scene.input.on('pointerdown', function (pointer, gameObject) {
 
-        if (this.scene.mode == "draw" && pointer.dragState ==0) {
+        if (this.scene.mode == "draw" && pointer.dragState ==0 && pointer.leftButtonDown()) {
             if (gameObject.length ==0 && (pointer.x > 50 && pointer.x < this.scene.W - 100)) {
                 
                 var _dx = this.scene.drawpanel.camera.scrollX;
@@ -912,7 +903,7 @@ var Pointer = function (ui, x, y, key, frame) {
         } 
 
 
-        if(pointer.rightButtonDown() && this.scene.input.activePointer.dragState == 0)
+        if(pointer.rightButtonDown() && pointer.dragState == 0)
         {
             this.lockX = pointer.x;
             this.lockY = pointer.y;
@@ -981,8 +972,6 @@ Pointer.prototype.switchmode = function (mode) {
         this.menu.forEach(function(element){ element.setVisible(false)});
     }
     if (mode == "select"){        
-        this.scene.undo();
-
         this.setVisible(false);  
         this.menu.forEach(function(element){ element.setVisible(true)});
     
