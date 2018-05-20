@@ -21,14 +21,13 @@ function preload()
     this.load.image('dude', 'assets/sprites/phaser-dude.png');
     this.load.json('data', 'assets/paths/data.json');
 
-    this.load.plugin('PathBuilder', 'dist/PathBuilder.min.js');
+    this.load.scenePlugin('PathBuilder', 'dist/PathBuilder.min.js');
 
 }
 
 function create() 
 {
     this.cameras.main.setBackgroundColor(0x11155);
-    this.sys.install('PathBuilder');
 
     player = this.add.image(400, 300, 'dude').setScale(6, 6);
 }
