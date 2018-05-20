@@ -93,8 +93,6 @@ Pointer.prototype.switchmode = function (mode) {
         this.menu.forEach(function(element){ element.setVisible(false)});
     }
     if (mode == "select"){        
-        this.scene.undo();
-
         this.setVisible(false);  
         this.menu.forEach(function(element){ element.setVisible(true)});
     
