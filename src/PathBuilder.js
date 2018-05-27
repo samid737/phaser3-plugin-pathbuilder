@@ -20,7 +20,6 @@ PathBuilder.register = function (PluginManager) {
 PathBuilder.prototype = {
 
     boot: function () {
-        
         var eventEmitter = this.systems.events;
 
         eventEmitter.on('shutdown', this.shutdown, this);
