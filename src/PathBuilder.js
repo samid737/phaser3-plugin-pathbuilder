@@ -12,6 +12,7 @@ PathBuilder.Scene = require("./Scene");
 PathBuilder.prototype = {
 
     boot: function () {
+        
         var eventEmitter = this.systems.events;
 
         eventEmitter.on('shutdown', this.shutdown, this);
