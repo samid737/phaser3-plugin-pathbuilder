@@ -149,49 +149,4 @@ Pointer.prototype.update = function () {
     
     }
 
-Pointer.prototype.hitTestPointer = function (pointer)
-    {
-        var camera = this.cameras.getCameraBelowPointer(pointer);
-    
-        if (camera)
-        {
-            var over = [];
-            
-            // Do A hitTest for each camera
-            for (var i = this.cameras.cameras.length - 1; i >= 0; i--)
-            {
-                var c = this.cameras.cameras[i];
-                pointer.camera = c;
-
-                //  Get a list of all objects that can be seen by the camera below the pointer in the scene and store in 'output' array.
-                //  All objects in this array are input enabled, as checked by the hitTest method, so we don't need to check later on as well.
-                over = this.manager.hitTest(pointer.x, pointer.y, this._list, c);
-
-                if(over.length > 0)
-                {
-
-                    //  Filter out the drop zones
-                    for (var s = 0; s < over.length; s++)
-                    {
-                        var obj = over[s];
-
-                        if (obj.input.dropZone)
-                        {
-                            this._tempZones.push(obj);
-                        }
-                    }
-
-                    return over;
-                }
-                
-            }
-            
-            return over;
-        }
-        else
-        {
-            return [];
-        }
-    },
-
 module.exports = Pointer;

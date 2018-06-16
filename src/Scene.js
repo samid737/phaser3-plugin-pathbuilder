@@ -9,8 +9,6 @@ var Scene = function () {
         window.addEventListener('DOMMouseScroll', this.scroll, false);
         window.onmousewheel = this.scroll.bind(this);
     }
-    //inject multi hitTest.
-    Phaser.Input.InputPlugin.prototype.hitTestPointer = Pointer.prototype.hitTestPointer;
 }
 
 Scene.prototype = {
