@@ -56,16 +56,13 @@ var Pointer = function (ui, x, y, key, frame) {
 
     this.lbl = this.ui.add.label(x + 20, y + 20, "").setFontStyle(PathBuilder.UI.fonts["Label"]);
     
-    //TODO: implement container
-    this.linebutton = this.ui.add.text(x, y, "Line",null,null,null,this.switchdrawmode,["Line"],this).setFontStyle(PathBuilder.UI.fonts["Button"]);
-    this.quadbutton = this.ui.add.text(x, y, "Quadratic",null,null,null,this.switchdrawmode,["QuadraticBezier"],this).setFontStyle(PathBuilder.UI.fonts["Button"]);
-    this.cubicbutton = this.ui.add.text(x, y, "Cubic",null,null,null,this.switchdrawmode,["CubicBezier"],this).setFontStyle(PathBuilder.UI.fonts["Button"]);
-    this.splinebutton = this.ui.add.text(x, y, "Spline",null,null,null,this.switchdrawmode,["Spline"],this).setFontStyle(PathBuilder.UI.fonts["Button"]);
-    this.ellipsebutton = this.ui.add.text(x, y, "Ellipse",null,null,null,this.switchdrawmode,["Ellipse"],this).setFontStyle(PathBuilder.UI.fonts["Button"]);
+    this.menu = this.ui.add.menu(x, y);
 
-    this.menu = [this.linebutton, this.quadbutton, this.cubicbutton, this.splinebutton, this.ellipsebutton  ];
-
-    this.menu.forEach(function(element){ element.setVisible(false)});
+    this.menu.add(-50, -50, "Line", this.switchdrawmode,["Line"],this);
+    this.menu.add(0, -50, "Quadratic", this.switchdrawmode,["Quadratic"],this);
+    this.menu.add(50, -50, "Cubic", this.switchdrawmode,["Cubic"],this);
+    this.menu.add(-50, 50, "Spline", this.switchdrawmode,["Spline"],this);
+    this.menu.add(0, 50, "Ellipse", this.switchdrawmode,["Ellipse"],this);
 
     this.scene.events.on('switchmode', this.switchmode, this);
 
@@ -85,22 +82,21 @@ Pointer.prototype.switchmode = function (mode) {
         
         this.setVisible(true);
         this.lbl.setVisible(true);
-        this.menu.forEach(function(element){ element.setVisible(false)});        
+        this.menu.hide();
+
     }
     if (mode == "normal") {        
         
         this.setVisible(false);
-        this.menu.forEach(function(element){ element.setVisible(false)});
+        this.menu.hide();        
+
     }
     if (mode == "select"){        
         this.setVisible(false);  
-        this.menu.forEach(function(element){ element.setVisible(true)});
-    
-        this.linebutton.setPosition(this.x - 50, this.y - 50);    
-        this.quadbutton.setPosition(this.x , this.y - 50);   
-        this.cubicbutton.setPosition(this.x +50, this.y - 50);        
-        this.splinebutton.setPosition(this.x -50, this.y + 50);        
-        this.ellipsebutton.setPosition(this.x , this.y + 50);  
+
+        this.menu.setPosition(this.x , this.y);
+        this.menu.show();        
+
     }
     if(mode == "hand"){
         game.canvas.style.cursor = "grab";
@@ -117,7 +113,7 @@ Pointer.prototype.switchCursor = function(){
 Pointer.prototype.switchdrawmode = function (mode) {
     this.scene.drawmode = mode;
     this.scene.drawmodelabel.setText("curve: " + mode);
-    this.menu.forEach(function(element){ element.setVisible(false)});    
+    this.menu.hide();            
     this.scene.switchmode("draw");
 }
 

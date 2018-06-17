@@ -1,4 +1,4 @@
-
+var Menu = require("./Menu");
 var Button = require("./Button");
 var Point = require("./Point/Point");
 var EndPoint = require("./Point/EndPoint");
@@ -11,6 +11,11 @@ var UI = function (scene) {
     this.elements = [];
 
     this.add = {
+        menu: function (x, y) {
+            var m = new Menu(this.ui, x, y);
+            this.ui.scene.add.existing(m);
+            return m;
+        },
         text: function (x, y, text, key, frame, target, callback, args, context) {
             var tb = new Button(this.ui, x, y, text, key, frame, target, callback, args, context);
             this.ui.scene.add.existing(tb);
