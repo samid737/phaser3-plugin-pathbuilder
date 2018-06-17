@@ -28,8 +28,6 @@ var Pointer = function (ui, x, y, key, frame) {
         {
             this.lockX = pointer.x;
             this.lockY = pointer.y;
-
-            //game.canvas.style.cursor = "default";                        
             
             this.scene.switchmode("select");     
         } 
