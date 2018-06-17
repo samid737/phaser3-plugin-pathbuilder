@@ -1,3 +1,25 @@
+## Version 1.6.1 - June 17th 2018
+
+### Features
+
+- 
+
+### Updates
+
+- Update to Phaser 3.10.1
+- Integrate API changes.
+- Added a Menu class (container).
+- Remove obsolete pointer override code. 
+
+### Bug Fixes
+
+-
+
+### Thanks
+
+-
+
+
 ## Version 1.6.0 - May 20th 2018
 
 ### Features

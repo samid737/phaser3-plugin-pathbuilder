@@ -64,8 +64,6 @@ Scene.prototype = {
         
         this.importbutton = this.middle.add.text(this.W -100, this.H - 200, 'import', null, null, null, this.import, [], this);
         this.exportbutton = this.middle.add.text(this.W -100, this.H - 100, 'export', null, null, null, this.export, [], this);
-
-
         
         this.pausebutton = this.middle.add.text(10, this.H - 200,'pause',null,null,null, this.freeze,[], this);  
         this.resumebutton = this.middle.add.text(10, this.H - 150,'resume',null,null,null, this.unfreeze,[], this);  

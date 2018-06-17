@@ -19,7 +19,6 @@ Menu.prototype.update = function(){
 }
 
 Menu.prototype.hide = function(){
-    console.log(this);
     this.list.forEach(function(element){ element.setVisible(false)});    
 }
 
@@ -30,6 +29,5 @@ Menu.prototype.show = function(){
 Menu.prototype.divide = function(){
     
 }
-
 
 module.exports = Menu;
