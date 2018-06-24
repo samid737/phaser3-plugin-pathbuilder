@@ -70,11 +70,12 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 52);
 /******/ })
 /************************************************************************/
-/******/ ([
-/* 0 */
+/******/ ({
+
+/***/ 10:
 /***/ (function(module, exports) {
 
 
@@ -123,11 +124,12 @@ module.exports = Element;
 
 
 /***/ }),
-/* 1 */
+
+/***/ 23:
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var Element = __webpack_require__(0);
+var Element = __webpack_require__(10);
         
 var Point = function (ui, vector, curve,  key, mapping) {
     Element.call(this, ui, vector.x, vector.y);
@@ -205,15 +207,16 @@ module.exports = Point;
 
 
 /***/ }),
-/* 2 */
+
+/***/ 34:
 /***/ (function(module, exports, __webpack_require__) {
 
-var Menu = __webpack_require__(4);
-var Button = __webpack_require__(5);
-var Point = __webpack_require__(1);
-var EndPoint = __webpack_require__(6);
-var ControlPoint = __webpack_require__(7);
-var Label = __webpack_require__(8);
+var Menu = __webpack_require__(53);
+var Button = __webpack_require__(54);
+var Point = __webpack_require__(23);
+var EndPoint = __webpack_require__(55);
+var ControlPoint = __webpack_require__(56);
+var Label = __webpack_require__(57);
 //var Image = require("./Image");
 
 var UI = function (scene) {
@@ -306,7 +309,8 @@ module.exports = UI;
 
 
 /***/ }),
-/* 3 */
+
+/***/ 52:
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -317,8 +321,8 @@ var PathBuilder = function (scene) {
 
 };
 
-PathBuilder.UI = __webpack_require__(2);
-PathBuilder.Scene = __webpack_require__(9);
+PathBuilder.UI = __webpack_require__(34);
+PathBuilder.Scene = __webpack_require__(58);
 
 PathBuilder.prototype = {
 
@@ -353,10 +357,11 @@ module.exports = PathBuilder;
 
 
 /***/ }),
-/* 4 */
+
+/***/ 53:
 /***/ (function(module, exports, __webpack_require__) {
 
-var Element = __webpack_require__(0);
+var Element = __webpack_require__(10);
 
 var Menu = function(ui, x, y){
     Element.call(this, ui, x, y);
@@ -391,11 +396,12 @@ Menu.prototype.divide = function(){
 module.exports = Menu;
 
 /***/ }),
-/* 5 */
+
+/***/ 54:
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var Element = __webpack_require__(0);
+var Element = __webpack_require__(10);
 
 var Button = function (ui, x, y, text, key, frame, target, callbacks, args, context) {
     Element.call(this, ui, x, y);
@@ -446,11 +452,12 @@ module.exports = Button;
 
 
 /***/ }),
-/* 6 */
+
+/***/ 55:
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var Point = __webpack_require__(1);
+var Point = __webpack_require__(23);
 
 var EndPoint = function (ui, vector, curve, key, mapping) {
     Point.call(this, ui, vector, curve, key, mapping);
@@ -464,11 +471,12 @@ module.exports = EndPoint;
 
 
 /***/ }),
-/* 7 */
+
+/***/ 56:
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var Point = __webpack_require__(1);
+var Point = __webpack_require__(23);
 
 var ControlPoint = function (ui, vector, curve, key, mapping) {
     Point.call(this, ui, vector, curve, key, mapping);
@@ -497,11 +505,12 @@ module.exports = ControlPoint;
 
 
 /***/ }),
-/* 8 */
+
+/***/ 57:
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var Element = __webpack_require__(0);
+var Element = __webpack_require__(10);
 
 var Label = function (ui, x, y, text, target, callbacks, args, context) {
     Element.call(this, ui, x, y);
@@ -525,12 +534,13 @@ module.exports = Label;
 
 
 /***/ }),
-/* 9 */
+
+/***/ 58:
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var UI = __webpack_require__(2);
-var Pointer = __webpack_require__(10);
+var UI = __webpack_require__(34);
+var Pointer = __webpack_require__(59);
 
 var Scene = function () {
 
@@ -913,11 +923,12 @@ module.exports = Scene;
 
 
 /***/ }),
-/* 10 */
+
+/***/ 59:
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var Element = __webpack_require__(0);
+var Element = __webpack_require__(10);
 
 var Pointer = function (ui, x, y, key, frame) {
     Element.call(this, ui, x, y);
@@ -1065,5 +1076,6 @@ module.exports = Pointer;
 
 
 /***/ })
-/******/ ]);
+
+/******/ });
 });

@@ -9,8 +9,13 @@ module.exports = {
     context: `${__dirname}/src/`,
 
     entry: {
+        app: [
+            'babel-polyfill',
+            path.resolve(__dirname, 'src/PathBuilder.js')
+        ],
+
         PathBuilder: './PathBuilder.js',
-        
+
         'PathBuilder.min': './PathBuilder.js'
     },
 
