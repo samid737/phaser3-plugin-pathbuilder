@@ -2,6 +2,10 @@
 let Element = (superclass) => class extends superclass{
 
     constructor(ui, x, y){
+        super(ui, x, y);
+        console.log(this);
+        Object.assign(this.prototype, Element.prototype);
+        
         this.ui = ui;
         this.scene = ui.scene;
         this.x = x;

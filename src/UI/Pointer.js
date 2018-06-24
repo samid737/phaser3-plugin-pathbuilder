@@ -1,11 +1,11 @@
 
 import Element from "./Element";
 
-export default class Pointer extends Phaser.GameObjects.Image(Element){
+export default class Pointer extends Phaser.GameObjects.Image{
 
     constructor(ui, x, y, key, frame){
-        Element.call(this, ui, x, y);
         super(ui.scene, x, y, key);
+        Element.call(this, ui, x, y);
 
         this.alpha = 0.5;
 

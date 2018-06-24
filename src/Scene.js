@@ -1,21 +1,18 @@
-
-//var UI = require("./UI/UI");
-//var Pointer = require("./UI/Pointer");
-
 import UI from "./UI/UI";
 import Pointer from "./UI/Pointer";
 
-export default class Scene extends Phaser.Scene {
+export default class Scene extends Phaser.Scene{
 
     constructor (config)
     {
         super(config);
-
         if (window.addEventListener)
         {
             window.addEventListener('DOMMouseScroll', this.scroll, false);
             window.onmousewheel = this.scroll.bind(this);
         }
+        console.log(this);
+
 
     }
 
@@ -28,7 +25,6 @@ export default class Scene extends Phaser.Scene {
         this.mode = "normal";
         this.cursors = {"normal": "default", "draw": "copy", "select": "default", "hand": "move"};
         this.curves = {"Line": Phaser.Curves.Line, "Ellipse": Phaser.Curves.Ellipse, "QuadraticBezier": Phaser.Curves.QuadraticBezier, "CubicBezier": Phaser.Curves.CubicBezier, "Spline": Phaser.Curves.Spline };
-
         this.events.emit('switchmode', this.mode);
 
         this.input.mouse.disableContextMenu();      

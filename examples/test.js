@@ -6,6 +6,9 @@ var config = {
         create: create,
         update: update
     },
+    // plugins:{
+    //     scene:[{ key: 'PathBuilder', plugin: PathBuilder.PathBuilder, mapping: 'PathBuilder', start:true }]
+    // },    
 
     width: 800,
     height: 600
@@ -21,12 +24,13 @@ function preload()
     this.load.image('dude', 'assets/sprites/phaser-dude.png');
     this.load.json('data', 'assets/paths/data.json');
 
-    this.load.scenePlugin('PathBuilder', 'dist/app.js');
+    this.load.plugin('PathBuilder', PathBuilder.PathBuilder,'PathBuilder');
 
 }
 
 function create() 
 {
+    
     this.cameras.main.setBackgroundColor(0x11155);
 
     player = this.add.image(400, 300, 'dude').setScale(6, 6);

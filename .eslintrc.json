@@ -71,5 +71,8 @@
         "wrap-regex": "error",
         "spaced-comment": [ "error", "always", { "block": { "balanced": true, "exceptions": ["*", "!"] }} ]
 
+    },
+    "parserOptions": { 
+        "sourceType": "module"
     }
 }

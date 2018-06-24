@@ -1,16 +1,8 @@
-// var Menu = require("./Menu");
-// var Button = require("./Button");
-// var Point = require("./Point/Point");
-// var EndPoint = require("./Point/EndPoint");
-// var ControlPoint = require("./Point/ControlPoint");
-// var Label = require("./Label");
-//var Image = require("./Image");
-
 import Menu from "./Menu";
 import Button from "./Button";
-import Point from "./Point";
-import EndPoint from "./EndPoint";
-import ControlPoint from "./ControlPoint";
+import Point from "./Point/Point";
+import EndPoint from "./Point/EndPoint";
+import ControlPoint from "./Point/ControlPoint";
 import Label from "./Label";
 
 export default class UI {
@@ -60,14 +52,6 @@ export default class UI {
         this.camera = this.scene.cameras.add();
     }
 
-    fonts = {
-        "Button": { fontFamily: 'Arial', fontSize: 16, color: '#00ff00' },
-        "Point": { fontFamily: 'Arial', fontSize: 12, color: '#00ff00' },
-        "EndPoint": { fontFamily: 'Arial', fontSize: 12, color: '#00ff00' },
-        "ControlPoint": { fontFamily: 'Arial', fontSize: 10, color: '#00ff00' },
-        "Label": { fontFamily: 'Arial', fontSize: 16, color: '#ffff00' },
-    };
-
     hide() {
         this.elements.forEach(function (element) { element.visible = false });
         this.scene.switchmode("normal");
@@ -96,3 +80,13 @@ export default class UI {
     }
 
 }
+
+//TODO: find sol
+UI.fonts = {
+    "Button": { fontFamily: 'Arial', fontSize: 16, color: '#00ff00' },
+    "Point": { fontFamily: 'Arial', fontSize: 12, color: '#00ff00' },
+    "EndPoint": { fontFamily: 'Arial', fontSize: 12, color: '#00ff00' },
+    "ControlPoint": { fontFamily: 'Arial', fontSize: 10, color: '#00ff00' },
+    "Label": { fontFamily: 'Arial', fontSize: 16, color: '#ffff00' },
+};
+

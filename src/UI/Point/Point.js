@@ -1,12 +1,11 @@
 
-import Element from "./Element";
+import Element from "../Element";
 
-export default class Point extends Phaser.GameObjects.Image(Element){
+export default class Point extends Phaser.GameObjects.Image{
 
     constructor(ui, vector, curve,  key, mapping){
-        Element.call(this, ui, vector.x, vector.y);
         super(ui.scene, vector.x, vector.y, key);
-
+        Element.call(this, ui, vector.x, vector.y);
 
         this.setInteractive();
         this.scene.input.setDraggable(this);

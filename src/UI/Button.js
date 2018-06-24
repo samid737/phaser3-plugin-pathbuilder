@@ -1,11 +1,14 @@
 
 import Element from "./Element";
+import UI from "./UI";
 
-export default class Button extends Phaser.GameObjects.Text(Element) {
+
+export default class Button extends Phaser.GameObjects.Text{
 
     constructor(ui, x, y, text, key, frame, target, callbacks, args, context){
+        super(ui.scene, x, y, text, UI.fonts["Button"]);
+
         Element.call(this,ui, x, y);
-        super(ui.scene, x, y, text, PathBuilder.UI.fonts["Button"]);
 
         this.target = target;
         this.callbacks = callbacks;

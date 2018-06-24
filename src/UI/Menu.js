@@ -1,11 +1,11 @@
 import Element from "./Element";
 
-export default class Menu extends Phaser.GameObjects.Container(Element) {
+export default class Menu extends Phaser.GameObjects.Container {
 
     constructor(ui, x, y)
     {
-        Element.call(this, ui, x, y);
         super(ui.scene, x, y);
+        Element.call(this, ui, x, y);
     }
 
     add(x, y, item, callback, args, context)
@@ -30,7 +30,7 @@ export default class Menu extends Phaser.GameObjects.Container(Element) {
         this.list.forEach(function (element) { element.setVisible(true) });
     }
 
-    divide = function ()
+    divide()
     {
 
     }

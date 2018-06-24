@@ -14,9 +14,9 @@ module.exports = {
             path.resolve(__dirname, 'src/PathBuilder.js')
         ],
 
-        PathBuilder: './PathBuilder.js',
+        //PathBuilder: './PathBuilder.js',
 
-        'PathBuilder.min': './PathBuilder.js'
+        //'PathBuilder.min': './PathBuilder.js'
     },
 
     output: {
