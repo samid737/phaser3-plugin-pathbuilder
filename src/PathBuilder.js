@@ -1,41 +1,43 @@
+import "UI";
+import "Scene";
 
-var PathBuilder = function (scene) {
+export class PathBuilder extends Phaser.Plugins.ScenePlugin
+{
 
-    this.scene = scene;
-    this.systems = scene.sys;
+    constructor(scene, pluginManager)
+    {
+        super(scene, pluginManager);
+        this.scene = scene;
+        this.systems = scene.sys;
+    }
 
-};
-
-PathBuilder.UI = require("./UI/UI");
-PathBuilder.Scene = require("./Scene");
-
-PathBuilder.prototype = {
-
-    boot: function () {
+    boot()
+    {
         var eventEmitter = this.systems.events;
 
         eventEmitter.on('shutdown', this.shutdown, this);
         eventEmitter.on('destroy', this.destroy, this);
-                
+
         //TODO: rewrite according API
         this.systems.scenePlugin.add('UI', PathBuilder.Scene, true);
-    },
+    }
 
     //  Called when a Scene shuts down, it may then come back again later (which will invoke the 'start' event) but should be considered dormant.
-    shutdown: function () {
-    },
+    shutdown()
+    {
+    }
 
     //  Called when a Scene is destroyed by the Scene Manager. There is no coming back from a destroyed Scene, so clear up all resources here.
-    destroy: function () {
+    destroy()
+    {
         this.shutdown();
 
         this.scene = undefined;
     }
 
-};
+}
 
-PathBuilder.prototype.constructor = PathBuilder;
-
-module.exports = PathBuilder;
+//PathBuilder.UI = import { UI } from "./UI/UI";
+//module.exports = PathBuilder;
 
 

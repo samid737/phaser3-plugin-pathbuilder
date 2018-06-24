@@ -241,10 +241,12 @@ module.exports = function (it) {
 
 /***/ }),
 /* 10 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 
 
-var Element = function (ui, x, y) {
+var Element = function Element(ui, x, y) {
     this.ui = ui;
     this.scene = ui.scene;
     this.x = x;
@@ -256,37 +258,32 @@ var Element = function (ui, x, y) {
     this.cameraFilter = l & ~this.ui.camera._id;
 
     return this;
-}
+};
 
-Element.prototype.update = function () {
-
-}
+Element.prototype.update = function () {};
 
 Element.prototype.toggle = function () {
     this.visible = !this.visible;
-}
+};
 
 Element.prototype.click = function () {
     var callbackcontext = this.callbackcontext;
     var args = this.args;
 
     if (this.callbacks instanceof Array) {
-        this.callbacks.forEach(function (callback, index) { callback.apply(callbackcontext[index], args) });
+        this.callbacks.forEach(function (callback, index) {
+            callback.apply(callbackcontext[index], args);
+        });
     } else {
         this.callbacks.apply(this.callbackcontext, this.args);
     }
-}
+};
 
-Element.prototype.hover = function () {
+Element.prototype.hover = function () {};
 
-}
-
-Element.prototype.out = function () {
-
-}
+Element.prototype.out = function () {};
 
 module.exports = Element;
-
 
 /***/ }),
 /* 11 */
@@ -502,10 +499,12 @@ module.exports = function (method, arg) {
 /* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
 
 var Element = __webpack_require__(10);
-        
-var Point = function (ui, vector, curve,  key, mapping) {
+
+var Point = function Point(ui, vector, curve, key, mapping) {
     Element.call(this, ui, vector.x, vector.y);
     Phaser.GameObjects.Image.call(this, ui.scene, vector.x, vector.y, key);
 
@@ -516,7 +515,7 @@ var Point = function (ui, vector, curve,  key, mapping) {
     this.scene.vectors.push(vector);
 
     //TODO: abstract from point to A custom curve class.
-    if(curve !==null){
+    if (curve !== null) {
         this.curve = curve;
         this.curve.controlpoints.push(this);
     }
@@ -526,14 +525,14 @@ var Point = function (ui, vector, curve,  key, mapping) {
     }
 
     this.on('pointerout', function (pointer, gameObject) {
-        this.scene.pointer.switchCursor();                      
-        
+        this.scene.pointer.switchCursor();
+
         this.scene.pointer.lbl.visible = true;
     });
 
     this.on('drag', function (pointer, gameObject) {
-        game.canvas.style.cursor = "pointer";                        
-        
+        game.canvas.style.cursor = "pointer";
+
         this.x = this.scene.pointer.x + this.scene.drawpanel.camera.scrollX;
         this.y = this.scene.pointer.y + this.scene.drawpanel.camera.scrollY;
 
@@ -552,13 +551,12 @@ var Point = function (ui, vector, curve,  key, mapping) {
 
         this.scene.graphics.clear();
         this.scene.draw();
-
     });
 
     this.lbl = this.ui.add.label(this.x + 10, this.y + 10, "").setFontStyle(PathBuilder.UI.fonts["Point"]);
 
     return this;
-}
+};
 
 Point.prototype = Object.create(Phaser.GameObjects.Image.prototype);
 Object.assign(Point.prototype, Element.prototype);
@@ -569,16 +567,15 @@ Point.prototype.update = function () {
     this.lbl.x = this.x + 10;
     this.lbl.y = this.y + 10;
     this.lbl.setText("x: " + this.x + " y: " + this.y);
-}
+};
 
-Point.prototype.destroy = function(){
+Point.prototype.destroy = function () {
     //this.scene.drawpanel.elements.pop();
     this.lbl.destroy();
-    Phaser.GameObjects.Image.prototype.destroy.call(this);    
-}
+    Phaser.GameObjects.Image.prototype.destroy.call(this);
+};
 
 module.exports = Point;
-
 
 /***/ }),
 /* 24 */
@@ -1314,6 +1311,9 @@ module.exports = function (key) {
 /* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
+
 var Menu = __webpack_require__(53);
 var Button = __webpack_require__(54);
 var Point = __webpack_require__(23);
@@ -1322,50 +1322,50 @@ var ControlPoint = __webpack_require__(56);
 var Label = __webpack_require__(57);
 //var Image = require("./Image");
 
-var UI = function (scene) {
+var UI = function UI(scene) {
     this.scene = scene;
     this.elements = [];
 
     this.add = {
-        menu: function (x, y) {
+        menu: function menu(x, y) {
             var m = new Menu(this.ui, x, y);
             this.ui.scene.add.existing(m);
             return m;
         },
-        text: function (x, y, text, key, frame, target, callback, args, context) {
-            var tb = new Button(this.ui, x, y, text, key, frame, target, callback, args, context);
+        text: function text(x, y, _text, key, frame, target, callback, args, context) {
+            var tb = new Button(this.ui, x, y, _text, key, frame, target, callback, args, context);
             this.ui.scene.add.existing(tb);
             return tb;
         },
-        point: function (vector, curve, key, mapping) {
+        point: function point(vector, curve, key, mapping) {
             var p = new Point(this.ui, vector, curve, key, mapping);
             this.ui.scene.add.existing(p);
             return p;
         },
-        endpoint: function (vector, curve, key, mapping) {
+        endpoint: function endpoint(vector, curve, key, mapping) {
             var p = new EndPoint(this.ui, vector, curve, key, mapping);
             this.ui.scene.add.existing(p);
             return p;
         },
-        controlpoint: function (vector, curve, key, mapping) {
+        controlpoint: function controlpoint(vector, curve, key, mapping) {
             var p = new ControlPoint(this.ui, vector, curve, key, mapping);
             this.ui.scene.add.existing(p);
             return p;
         },
-        label: function (x, y, text, target, callback, args, context) {
+        label: function label(x, y, text, target, callback, args, context) {
             var l = new Label(this.ui, x, y, text, target, callback, args, context);
             this.ui.scene.add.existing(l);
             return l;
-        },
+        }
         // image: function (x, y, key, frame) {
         //     var i = new Image(this.ui, x, y, key, frame);
         //     this.ui.scene.add.existing(i);
         //     return i;
         // }
-    }
+    };
     this.add.ui = this;
     this.camera = this.scene.cameras.add();
-}
+};
 
 //TODO: link classes
 UI.fonts = {
@@ -1373,21 +1373,25 @@ UI.fonts = {
     "Point": { fontFamily: 'Arial', fontSize: 12, color: '#00ff00' },
     "EndPoint": { fontFamily: 'Arial', fontSize: 12, color: '#00ff00' },
     "ControlPoint": { fontFamily: 'Arial', fontSize: 10, color: '#00ff00' },
-    "Label": { fontFamily: 'Arial', fontSize: 16, color: '#ffff00' },
+    "Label": { fontFamily: 'Arial', fontSize: 16, color: '#ffff00' }
 };
 
 UI.prototype = {
-    hide: function () {
-        this.elements.forEach(function (element) { element.visible = false });
+    hide: function hide() {
+        this.elements.forEach(function (element) {
+            element.visible = false;
+        });
         this.scene.switchmode("normal");
         this.translate(0, this.scene.cameras.main.height, 400, this.scene.unfreeze);
     },
-    show: function () {
-        this.elements.forEach(function (element) { element.visible = true });
+    show: function show() {
+        this.elements.forEach(function (element) {
+            element.visible = true;
+        });
         this.scene.switchmode("normal");
         this.translate(0, 0, 400, this.scene.freeze);
     },
-    translate: function (x, y, speed, callback) {
+    translate: function translate(x, y, speed, callback) {
         this.scene.tweens.add({
             targets: this.camera,
             scrollX: x,
@@ -1397,19 +1401,21 @@ UI.prototype = {
         });
         this.scene.time.delayedCall(speed, callback, [], this.scene);
     },
-    update: function () {
-        this.elements.forEach(function (element) { element.update() });
+    update: function update() {
+        this.elements.forEach(function (element) {
+            element.update();
+        });
     },
-    destroy: function () {
-        this.elements.forEach(function (element) { element.destroy() });
-
+    destroy: function destroy() {
+        this.elements.forEach(function (element) {
+            element.destroy();
+        });
     }
-}
+};
 
 UI.prototype.constructor = UI;
 
 module.exports = UI;
-
 
 /***/ }),
 /* 35 */
@@ -1714,12 +1720,13 @@ module.exports = function (it) {
 /* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
 
-var PathBuilder = function (scene) {
+
+var PathBuilder = function PathBuilder(scene) {
 
     this.scene = scene;
     this.systems = scene.sys;
-
 };
 
 PathBuilder.UI = __webpack_require__(34);
@@ -1727,22 +1734,21 @@ PathBuilder.Scene = __webpack_require__(58);
 
 PathBuilder.prototype = {
 
-    boot: function () {
+    boot: function boot() {
         var eventEmitter = this.systems.events;
 
         eventEmitter.on('shutdown', this.shutdown, this);
         eventEmitter.on('destroy', this.destroy, this);
-                
+
         //TODO: rewrite according API
         this.systems.scenePlugin.add('UI', PathBuilder.Scene, true);
     },
 
     //  Called when a Scene shuts down, it may then come back again later (which will invoke the 'start' event) but should be considered dormant.
-    shutdown: function () {
-    },
+    shutdown: function shutdown() {},
 
     //  Called when a Scene is destroyed by the Scene Manager. There is no coming back from a destroyed Scene, so clear up all resources here.
-    destroy: function () {
+    destroy: function destroy() {
         this.shutdown();
 
         this.scene = undefined;
@@ -1754,44 +1760,44 @@ PathBuilder.prototype.constructor = PathBuilder;
 
 module.exports = PathBuilder;
 
-
-
-
 /***/ }),
 /* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
+
 var Element = __webpack_require__(10);
 
-var Menu = function(ui, x, y){
+var Menu = function Menu(ui, x, y) {
     Element.call(this, ui, x, y);
-    Phaser.GameObjects.Container.call(this, ui.scene, x , y);
-}
+    Phaser.GameObjects.Container.call(this, ui.scene, x, y);
+};
 
 Menu.prototype = Object.create(Phaser.GameObjects.Container.prototype);
 Object.assign(Menu.prototype, Element.prototype);
 
-Menu.prototype.add = function(x,y, item, callback, args, context){
-    this[item] =  this.ui.add.text(x, y, item, null, null, null, callback, args, context).setFontStyle(PathBuilder.UI.fonts["Button"]);
+Menu.prototype.add = function (x, y, item, callback, args, context) {
+    this[item] = this.ui.add.text(x, y, item, null, null, null, callback, args, context).setFontStyle(PathBuilder.UI.fonts["Button"]);
     Phaser.GameObjects.Container.prototype.add.call(this, this[item]);
     return this[item];
-}
+};
 
-Menu.prototype.update = function(){
+Menu.prototype.update = function () {};
 
-}
+Menu.prototype.hide = function () {
+    this.list.forEach(function (element) {
+        element.setVisible(false);
+    });
+};
 
-Menu.prototype.hide = function(){
-    this.list.forEach(function(element){ element.setVisible(false)});    
-}
+Menu.prototype.show = function () {
+    this.list.forEach(function (element) {
+        element.setVisible(true);
+    });
+};
 
-Menu.prototype.show = function(){
-    this.list.forEach(function(element){ element.setVisible(true)});    
-}
-
-Menu.prototype.divide = function(){
-    
-}
+Menu.prototype.divide = function () {};
 
 module.exports = Menu;
 
@@ -1799,10 +1805,12 @@ module.exports = Menu;
 /* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
 
 var Element = __webpack_require__(10);
 
-var Button = function (ui, x, y, text, key, frame, target, callbacks, args, context) {
+var Button = function Button(ui, x, y, text, key, frame, target, callbacks, args, context) {
     Element.call(this, ui, x, y);
     Phaser.GameObjects.Text.call(this, ui.scene, x, y, text, PathBuilder.UI.fonts["Button"]);
 
@@ -1825,7 +1833,7 @@ var Button = function (ui, x, y, text, key, frame, target, callbacks, args, cont
     });
 
     return this;
-}
+};
 
 Button.prototype = Object.create(Phaser.GameObjects.Text.prototype);
 Object.assign(Button.prototype, Element.prototype);
@@ -1833,49 +1841,51 @@ Object.assign(Button.prototype, Element.prototype);
 Button.prototype.click = function () {
     Element.prototype.click.call(this);
     this.tween = this.scene.tweens.add({ targets: this, scaleX: 1.2, scaleY: 1.2, duration: 100, ease: 'Linear', yoyo: true });
-}
+};
 
 Button.prototype.hover = function () {
     game.canvas.style.cursor = "pointer";
     Element.prototype.hover.call(this);
     this.setScale(1.1, 1.1);
-}
+};
 
 Button.prototype.out = function () {
-    this.scene.pointer.switchCursor();                       
+    this.scene.pointer.switchCursor();
     Element.prototype.out.call(this);
     this.setScale(1, 1);
-}
+};
 
 module.exports = Button;
-
 
 /***/ }),
 /* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
 
 var Point = __webpack_require__(23);
 
-var EndPoint = function (ui, vector, curve, key, mapping) {
+var EndPoint = function EndPoint(ui, vector, curve, key, mapping) {
     Point.call(this, ui, vector, curve, key, mapping);
     this.lbl.setFontStyle(PathBuilder.UI.fonts["EndPoint"]);
-}
+};
 
 EndPoint.prototype = Object.create(Point.prototype);
 EndPoint.prototype.constructor = EndPoint;
 
 module.exports = EndPoint;
 
-
 /***/ }),
 /* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
 
 var Point = __webpack_require__(23);
 
-var ControlPoint = function (ui, vector, curve, key, mapping) {
+var ControlPoint = function ControlPoint(ui, vector, curve, key, mapping) {
     Point.call(this, ui, vector, curve, key, mapping);
     this.setScale(0.75, 0.75);
 
@@ -1893,22 +1903,23 @@ var ControlPoint = function (ui, vector, curve, key, mapping) {
     this.on('dragend', function (pointer, gameObject) {
         this.lbl.visible = false;
     });
-}
+};
 
 ControlPoint.prototype = Object.create(Point.prototype);
 ControlPoint.prototype.constructor = ControlPoint;
 
 module.exports = ControlPoint;
 
-
 /***/ }),
 /* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
 
 var Element = __webpack_require__(10);
 
-var Label = function (ui, x, y, text, target, callbacks, args, context) {
+var Label = function Label(ui, x, y, text, target, callbacks, args, context) {
     Element.call(this, ui, x, y);
     Phaser.GameObjects.Text.call(this, ui.scene, x, y, text, PathBuilder.UI.fonts["Label"]);
 
@@ -1921,45 +1932,43 @@ var Label = function (ui, x, y, text, target, callbacks, args, context) {
     this.setInteractive();
 
     return this;
-}
+};
 
 Label.prototype = Object.create(Phaser.GameObjects.Text.prototype);
 Object.assign(Label.prototype, Element.prototype);
 
 module.exports = Label;
 
-
 /***/ }),
 /* 58 */
 /***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 
 
 var UI = __webpack_require__(34);
 var Pointer = __webpack_require__(59);
 
-var Scene = function () {
+var Scene = function Scene() {
 
-    if (window.addEventListener)
-    {
+    if (window.addEventListener) {
         window.addEventListener('DOMMouseScroll', this.scroll, false);
         window.onmousewheel = this.scroll.bind(this);
     }
-}
+};
 
 Scene.prototype = {
-    preload: function () {
+    preload: function preload() {},
 
-    },
-
-    create: function () {
-        this.tool = { "normal": null, "draw": this.place};
+    create: function create() {
+        this.tool = { "normal": null, "draw": this.place };
         this.mode = "normal";
-        this.cursors = {"normal": "default", "draw": "copy", "select": "default", "hand": "move"};
-        this.curves = {"Line": Phaser.Curves.Line, "Ellipse": Phaser.Curves.Ellipse, "QuadraticBezier": Phaser.Curves.QuadraticBezier, "CubicBezier": Phaser.Curves.CubicBezier, "Spline": Phaser.Curves.Spline };
+        this.cursors = { "normal": "default", "draw": "copy", "select": "default", "hand": "move" };
+        this.curves = { "Line": Phaser.Curves.Line, "Ellipse": Phaser.Curves.Ellipse, "QuadraticBezier": Phaser.Curves.QuadraticBezier, "CubicBezier": Phaser.Curves.CubicBezier, "Spline": Phaser.Curves.Spline };
 
         this.events.emit('switchmode', this.mode);
 
-        this.input.mouse.disableContextMenu();      
+        this.input.mouse.disableContextMenu();
 
         this.W = this.cameras.main.width;
         this.H = this.cameras.main.height;
@@ -1979,11 +1988,11 @@ Scene.prototype = {
         this.top = new UI(this);
 
         //this.drawpanel.elements.push(this.graphics);
-        this.graphics.fillStyle(0xff0000,1);
-        this.graphics.fillCircle(10,10,8);
+        this.graphics.fillStyle(0xff0000, 1);
+        this.graphics.fillCircle(10, 10, 8);
         this.graphics.generateTexture('endpoint', 32, 32);
-        this.graphics.fillStyle(0x00ff00,1);
-        this.graphics.fillCircle(10,10,8);
+        this.graphics.fillStyle(0x00ff00, 1);
+        this.graphics.fillCircle(10, 10, 8);
         this.graphics.generateTexture('controlpoint', 32, 32);
         this.graphics.clear();
 
@@ -1991,23 +2000,23 @@ Scene.prototype = {
         //TODO: adjust to game size
         this.hidebutton = this.top.add.text(10, 300, 'hide', null, null, null, [this.drawpanel.hide, this.middle.hide], [], [this.drawpanel, this.middle]);
         this.showbutton = this.top.add.text(10, 350, 'show', null, null, null, [this.drawpanel.show, this.middle.show], [], [this.drawpanel, this.middle]);
-        this.viewbutton = this.top.add.text(this.W -100, this.H * 0.1, 'reset view', null, null, null, this.resetView, [], this);
-                
+        this.viewbutton = this.top.add.text(this.W - 100, this.H * 0.1, 'reset view', null, null, null, this.resetView, [], this);
+
         this.drawbutton = this.middle.add.text(10, 200, 'draw', null, null, null, this.switchmode, ["draw"], this);
-        this.clearbutton = this.middle.add.text(10,100,'clear',null,null,null, this.clear,[], this);  
-        this.undobutton = this.middle.add.text(10,50,'undo',null,null,null, this.undo,[], this);  
-        
-        this.importbutton = this.middle.add.text(this.W -100, this.H - 200, 'import', null, null, null, this.import, [], this);
-        this.exportbutton = this.middle.add.text(this.W -100, this.H - 100, 'export', null, null, null, this.export, [], this);
-        
-        this.pausebutton = this.middle.add.text(10, this.H - 200,'pause',null,null,null, this.freeze,[], this);  
-        this.resumebutton = this.middle.add.text(10, this.H - 150,'resume',null,null,null, this.unfreeze,[], this);  
-        
+        this.clearbutton = this.middle.add.text(10, 100, 'clear', null, null, null, this.clear, [], this);
+        this.undobutton = this.middle.add.text(10, 50, 'undo', null, null, null, this.undo, [], this);
+
+        this.importbutton = this.middle.add.text(this.W - 100, this.H - 200, 'import', null, null, null, this.import, [], this);
+        this.exportbutton = this.middle.add.text(this.W - 100, this.H - 100, 'export', null, null, null, this.export, [], this);
+
+        this.pausebutton = this.middle.add.text(10, this.H - 200, 'pause', null, null, null, this.freeze, [], this);
+        this.resumebutton = this.middle.add.text(10, this.H - 150, 'resume', null, null, null, this.unfreeze, [], this);
+
         this.previewbutton = this.middle.add.text(10, this.H - 100, 'preview', null, null, null, this.preview, [], this);
 
         this.modelabel = this.middle.add.label(100, 20, 'mode: ', null, null, null, null, this);
-        this.drawmodelabel = this.middle.add.label(400, 20, 'curve: ' +this.drawmode, null, null, null, null, this);
-        
+        this.drawmodelabel = this.middle.add.label(400, 20, 'curve: ' + this.drawmode, null, null, null, null, this);
+
         this.pointer = new Pointer(this.middle, 100, 100, 'controlpoint');
 
         this.setCameras();
@@ -2023,17 +2032,16 @@ Scene.prototype = {
         // gui.add(this.drawpanel, 'hide');
         // gui.add(this.drawpanel, 'show');
         // gui.add(this.pointer, 'snap', 1, 100, 2);
-
     },
-    update: function () {
+    update: function update() {
         this.drawpanel.update();
-        this.pointer.update();     
+        this.pointer.update();
         //this.drawpanel.camera.setZoom(Math.sin(this.time.now/100000)+1);
         //this.cameras.main.setZoom(Math.sin(this.time.now/100000)+1);
         //this.middle.camera.setZoom(Math.sin(this.time.now/100000)+1);
         //this.top.camera.setZoom(Math.sin(this.time.now/100000)+1);
     },
-    setCameras: function () {
+    setCameras: function setCameras() {
         this.drawpanel.camera.ignore(this.middle.elements);
         this.drawpanel.camera.ignore(this.top.elements);
 
@@ -2050,44 +2058,50 @@ Scene.prototype = {
         //TODO: move/ rewrite
         this.supercamera = this.sys.game.scene.scenes[0].cameras.main;
     },
-    switchmode: function (mode) {
+    switchmode: function switchmode(mode) {
         this.mode = mode;
         this.modelabel.setText("mode: " + this.mode);
-        this.pointer.switchCursor();        
+        this.pointer.switchCursor();
         this.events.emit('switchmode', this.mode);
     },
-    clear: function () {
+    clear: function clear() {
         var _this = this;
-        this.path.curves.forEach(function(curve){_this.undo()});
-        this.drawpanel.elements.forEach(function (element) { element.destroy() });
+        this.path.curves.forEach(function (curve) {
+            _this.undo();
+        });
+        this.drawpanel.elements.forEach(function (element) {
+            element.destroy();
+        });
         this.vectors = [];
         this.drawpanel.elements = [];
-        this.path.curves = [];     
-        this.spline  = null;
-        
+        this.path.curves = [];
+        this.spline = null;
+
         this.graphics.clear();
     },
-    undo: function() { 
+    undo: function undo() {
         //TODO: extend curve class  
-        if(this.vectors.length>1){
-            var _this = this;        
-            var lastcurve = this.path.curves[this.path.curves.length -1];
-            lastcurve.controlpoints.forEach(function(point){point.destroy();_this.vectors.pop()});
-            
+        if (this.vectors.length > 1) {
+            var _this = this;
+            var lastcurve = this.path.curves[this.path.curves.length - 1];
+            lastcurve.controlpoints.forEach(function (point) {
+                point.destroy();_this.vectors.pop();
+            });
+
             this.path.curves.pop();
-            this.spline  = null;  
-    
-            this.graphics.clear();        
+            this.spline = null;
+
+            this.graphics.clear();
             this.draw();
-        }    
+        }
     },
-    place: function (ui, x, y) {
+    place: function place(ui, x, y) {
         //TODO: extend A curve class for each case, add A factory entry for curves.
-        
+
         var vector = new Phaser.Math.Vector2(x, y);
 
         if (this.vectors.length == 0) {
-            this.point = ui.add.endpoint(vector, null,'endpoint');
+            this.point = ui.add.endpoint(vector, null, 'endpoint');
             return;
         }
 
@@ -2099,19 +2113,18 @@ Scene.prototype = {
 
             if (this.vectors.length > 0) {
                 var c = new this.curves[this.drawmode](previous, vector);
-                
+
                 this.path.add(c);
-                c.controlpoints = [];                
+                c.controlpoints = [];
             }
 
             this.point = ui.add.endpoint(vector, c, 'endpoint');
-
         }
 
         if (this.drawmode == "QuadraticBezier") {
 
             this.spline = null;
-            
+
             var control = new Phaser.Math.Vector2(x, y);
 
             var previous = this.vectors[this.vectors.length - 1];
@@ -2120,20 +2133,19 @@ Scene.prototype = {
             control = control.divide(new Phaser.Math.Vector2(2, 2));
 
             var c = new this.curves[this.drawmode](previous, control, vector);
-            
+
             this.path.add(c);
             c.controlpoints = [];
-            
+
             this.point = ui.add.controlpoint(control, c, 'controlpoint');
 
             this.point = ui.add.endpoint(vector, c, 'endpoint');
-
         }
 
         if (this.drawmode == "CubicBezier") {
 
             this.spline = null;
-            
+
             var control1 = new Phaser.Math.Vector2(x, y);
             var control2 = new Phaser.Math.Vector2(x, y);
 
@@ -2144,17 +2156,16 @@ Scene.prototype = {
 
             control2.x = previous.x + (x - previous.x) * 0.75;
             control2.y = previous.y + (y - previous.y) * 0.75;
-            
+
             var c = new this.curves[this.drawmode](previous, control1, control2, vector);
-            
+
             this.path.add(c);
             c.controlpoints = [];
-            
+
             this.point = ui.add.controlpoint(control1, c, 'controlpoint');
             this.point = ui.add.controlpoint(control2, c, 'controlpoint');
 
             this.point = ui.add.endpoint(vector, c, 'endpoint');
-
         }
 
         if (this.drawmode == "Spline") {
@@ -2167,7 +2178,6 @@ Scene.prototype = {
 
                 this.path.add(c);
                 c.controlpoints = [];
-                
             }
 
             this.path.segments += 8;
@@ -2175,28 +2185,25 @@ Scene.prototype = {
             if (this.vectors.length == 1) {
 
                 this.point = ui.add.controlpoint(vector, this.spline, 'controlpoint');
-                
             } else {
 
                 this.point = ui.add.controlpoint(vector, this.spline, 'controlpoint');
-                
-                this.spline.addPoints([vector.x, vector.y]);
 
+                this.spline.addPoints([vector.x, vector.y]);
             }
 
             this.spline.points[this.spline.points.length - 1] = vector;
             this.spline.points[this.spline.points.length - 2] = previous;
-
         }
 
         if (this.drawmode == "Ellipse") {
 
             this.spline = null;
-            
+
             var previous = this.vectors[this.vectors.length - 1];
 
-            var c = new this.curves[this.drawmode](vector.x, vector.y, 100,100);
-            
+            var c = new this.curves[this.drawmode](vector.x, vector.y, 100, 100);
+
             this.path.add(c);
             c.controlpoints = [];
 
@@ -2207,78 +2214,77 @@ Scene.prototype = {
             //map control point coordinates to radii
             this.point = ui.add.endpoint(vector, c, 'endpoint');
 
-            this.point = ui.add.controlpoint(dist, c, 'controlpoint',
-                {
-                    "src": c,
-                    "data":
-                    {
-                        "x": { "property": "xRadius", "operator": function (src, x) { return src.p0.x - x } },
-                        "y": { "property": "yRadius", "operator": function (src, y) { return src.p0.y - y } }
-                    }
-                });
+            this.point = ui.add.controlpoint(dist, c, 'controlpoint', {
+                "src": c,
+                "data": {
+                    "x": { "property": "xRadius", "operator": function operator(src, x) {
+                            return src.p0.x - x;
+                        } },
+                    "y": { "property": "yRadius", "operator": function operator(src, y) {
+                            return src.p0.y - y;
+                        } }
+                }
+            });
 
             var anglevec = new Phaser.Math.Vector2(c.p0.x, c.p0.y + c.yRadius);
-
         }
 
         this.draw();
 
         this.setCameras();
     },
-    move: function (graphics, vector) {
-
-    },
-    draw: function () {
+    move: function move(graphics, vector) {},
+    draw: function draw() {
         this.graphics.clear();
         this.graphics.lineStyle(2, 0xffffff, 1);
         this.graphics.fillStyle(0xffffff, 1);
         this.path.draw(this.graphics, this.path.segments);
     },
-    look : function (camera) {
-        camera.scrollY = (this.pointer.lastY - this.input.activePointer.y);
-        camera.scrollX = (this.pointer.lastX - this.input.activePointer.x);
+    look: function look(camera) {
+        camera.scrollY = this.pointer.lastY - this.input.activePointer.y;
+        camera.scrollX = this.pointer.lastX - this.input.activePointer.x;
     },
-    scroll: function(event)
-    {
+    scroll: function scroll(event) {
         var delta = 0;
         if (event.wheelDelta) {
-            delta = event.wheelDelta/120; 
+            delta = event.wheelDelta / 120;
         } else if (event.detail) {
-            delta = -event.detail/3;
+            delta = -event.detail / 3;
         }
         // TODO: move to pointer 
-        if(delta>0){
+        if (delta > 0) {
             game.canvas.style.cursor = "zoom-in";
         }
-        if(delta<0){
+        if (delta < 0) {
             game.canvas.style.cursor = "zoom-out";
         }
 
         this.time.delayedCall(250, this.pointer.switchCursor, [], this.pointer);
 
-        this.drawpanel.camera.zoom += delta*0.1;
-        this.supercamera.zoom += delta*0.1;
-        
+        this.drawpanel.camera.zoom += delta * 0.1;
+        this.supercamera.zoom += delta * 0.1;
+
         return delta;
     },
-    resetView(){
+    resetView: function resetView() {
         this.drawpanel.camera.zoom = 1;
-        this.supercamera.zoom = 1;        
-        this.drawpanel.camera.setScroll(0,0);
-        this.supercamera.setScroll(0,0);
+        this.supercamera.zoom = 1;
+        this.drawpanel.camera.setScroll(0, 0);
+        this.supercamera.setScroll(0, 0);
     },
-    freeze: function () {
+
+    freeze: function freeze() {
         this.scene.manager.scenes[0].scene.pause();
     },
-    unfreeze: function () {
+    unfreeze: function unfreeze() {
         this.scene.manager.scenes[0].scene.resume();
     },
-    import: function () {
+    import: function _import() {
         var data = this.cache.json.get('data');
         this.path = this.path.fromJSON(data);
         this.draw();
     },
-    export: function () {
+    export: function _export() {
         var data = JSON.stringify(this.path.toJSON());
         console.log(data);
         var file = new Blob([data], ["data.json"]);
@@ -2287,10 +2293,9 @@ Scene.prototype = {
         link.href = url;
         link.download = "data.json";
         link.click();
-
     },
-    preview: function () {
-        if(this.path.curves.length !== 0){
+    preview: function preview() {
+        if (this.path.curves.length !== 0) {
             var follower = this.add.follower(this.path, 0, 0, 'dude');
 
             this.cameras.main.ignore(follower);
@@ -2301,30 +2306,31 @@ Scene.prototype = {
                 duration: 2000,
                 rotateToPath: true,
                 yoyo: true,
-                onComplete: function (t, s, w) { w.destroy() },
+                onComplete: function onComplete(t, s, w) {
+                    w.destroy();
+                },
                 onCompleteParams: [follower],
                 ease: 'Cubic.easeInOut'
-            });   
+            });
         }
     },
-    destroy: function () {
-    }
+    destroy: function destroy() {}
 };
 
 // Scene.prototype.constructor = Scene;
 
 module.exports = Scene;
 
-
-
 /***/ }),
 /* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
 
 var Element = __webpack_require__(10);
 
-var Pointer = function (ui, x, y, key, frame) {
+var Pointer = function Pointer(ui, x, y, key, frame) {
     Element.call(this, ui, x, y);
     Phaser.GameObjects.Image.call(this, ui.scene, x, y, key);
 
@@ -2336,60 +2342,53 @@ var Pointer = function (ui, x, y, key, frame) {
 
     this.scene.input.on('pointerdown', function (pointer, gameObject) {
 
-        if (this.scene.mode == "draw" && pointer.dragState ==0 && pointer.leftButtonDown()) {
-            if (gameObject.length ==0 && (pointer.x > 50 && pointer.x < this.scene.W - 100)) {
-                
+        if (this.scene.mode == "draw" && pointer.dragState == 0 && pointer.leftButtonDown()) {
+            if (gameObject.length == 0 && pointer.x > 50 && pointer.x < this.scene.W - 100) {
+
                 var _dx = this.scene.drawpanel.camera.scrollX;
                 var _dy = this.scene.drawpanel.camera.scrollY;
-                
-                this.scene.place(this.scene.drawpanel, this.x + _dx, this.y +_dy);
+
+                this.scene.place(this.scene.drawpanel, this.x + _dx, this.y + _dy);
             }
-        } 
+        }
 
-
-        if(pointer.rightButtonDown() && pointer.dragState == 0)
-        {
+        if (pointer.rightButtonDown() && pointer.dragState == 0) {
             this.lockX = pointer.x;
             this.lockY = pointer.y;
-            
-            this.scene.switchmode("select");     
-        } 
 
+            this.scene.switchmode("select");
+        }
 
-        if(pointer.middleButtonDown())
-        {
+        if (pointer.middleButtonDown()) {
             this.lastX = pointer.x + this.scene.drawpanel.camera.scrollX;
             this.lastY = pointer.y + this.scene.drawpanel.camera.scrollY;
-            
-            this.scene.switchmode("hand");
-        }  
 
+            this.scene.switchmode("hand");
+        }
     }, this);
 
     this.scene.input.on('pointerup', function (pointer, gameObject) {
-        if(pointer.middleButtonDown())
-        {
+        if (pointer.middleButtonDown()) {
             this.scene.switchmode("normal");
-        }          
+        }
     }, this);
-    
+
     this.snapkey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
 
     this.lbl = this.ui.add.label(x + 20, y + 20, "").setFontStyle(PathBuilder.UI.fonts["Label"]);
-    
+
     this.menu = this.ui.add.menu(x, y);
 
-    this.menu.add(-50, -50, "Line", this.switchdrawmode,["Line"],this);
-    this.menu.add(0, -50, "Quadratic", this.switchdrawmode,["Quadratic"],this);
-    this.menu.add(50, -50, "Cubic", this.switchdrawmode,["Cubic"],this);
-    this.menu.add(-50, 50, "Spline", this.switchdrawmode,["Spline"],this);
-    this.menu.add(0, 50, "Ellipse", this.switchdrawmode,["Ellipse"],this);
+    this.menu.add(-50, -50, "Line", this.switchdrawmode, ["Line"], this);
+    this.menu.add(0, -50, "Quadratic", this.switchdrawmode, ["Quadratic"], this);
+    this.menu.add(50, -50, "Cubic", this.switchdrawmode, ["Cubic"], this);
+    this.menu.add(-50, 50, "Spline", this.switchdrawmode, ["Spline"], this);
+    this.menu.add(0, 50, "Ellipse", this.switchdrawmode, ["Ellipse"], this);
 
     this.scene.events.on('switchmode', this.switchmode, this);
 
     this.scene.add.existing(this);
-
-}
+};
 
 Pointer.prototype = Object.create(Phaser.GameObjects.Image.prototype);
 Object.assign(Pointer.prototype, Element.prototype);
@@ -2400,74 +2399,68 @@ Pointer.prototype.switchmode = function (mode) {
 
     if (mode == "draw") {
         // TODO: abstraction
-        
+
         this.setVisible(true);
         this.lbl.setVisible(true);
         this.menu.hide();
-
     }
-    if (mode == "normal") {        
-        
+    if (mode == "normal") {
+
         this.setVisible(false);
-        this.menu.hide();        
-
+        this.menu.hide();
     }
-    if (mode == "select"){        
-        this.setVisible(false);  
+    if (mode == "select") {
+        this.setVisible(false);
 
-        this.menu.setPosition(this.x , this.y);
-        this.menu.show();        
-
+        this.menu.setPosition(this.x, this.y);
+        this.menu.show();
     }
-    if(mode == "hand"){
+    if (mode == "hand") {
         game.canvas.style.cursor = "grab";
-        
+
         this.setVisible(true);
         this.lbl.setVisible(true);
-
     }
-}
-Pointer.prototype.switchCursor = function(){
+};
+Pointer.prototype.switchCursor = function () {
     game.canvas.style.cursor = this.scene.cursors[this.scene.mode];
-}
+};
 
 Pointer.prototype.switchdrawmode = function (mode) {
     this.scene.drawmode = mode;
     this.scene.drawmodelabel.setText("curve: " + mode);
-    this.menu.hide();            
+    this.menu.hide();
     this.scene.switchmode("draw");
-}
+};
 
 Pointer.prototype.update = function () {
-    
-        this.x = this.scene.input.activePointer.x;
-        this.y = this.scene.input.activePointer.y;
-        
-        if(this.scene.mode == "hand"){
-            this.scene.look(this.scene.drawpanel.camera);
-            this.scene.look(this.scene.supercamera);            
-        }  
 
-        if(this.scene.mode == "select"){
-            if(Phaser.Math.Distance.Between(this.x, this.y, this.lockX, this.lockY)>150){
-                this.scene.switchmode("draw");
-            } 
-        }    
-    
-        if(this.scene.mode !== "select"){
-        
-            if (this.snapkey.isDown) {
-                this.x = Math.round(this.x / this.snap) * this.snap;
-                this.y = Math.round(this.y / this.snap) * this.snap;
-            }
-            this.lbl.setPosition(this.x + 20, this.y + 20);
-            this.lbl.setText("x: " + this.x + " y: " + this.y);
-        }
-    
+    this.x = this.scene.input.activePointer.x;
+    this.y = this.scene.input.activePointer.y;
+
+    if (this.scene.mode == "hand") {
+        this.scene.look(this.scene.drawpanel.camera);
+        this.scene.look(this.scene.supercamera);
     }
 
-module.exports = Pointer;
+    if (this.scene.mode == "select") {
+        if (Phaser.Math.Distance.Between(this.x, this.y, this.lockX, this.lockY) > 150) {
+            this.scene.switchmode("draw");
+        }
+    }
 
+    if (this.scene.mode !== "select") {
+
+        if (this.snapkey.isDown) {
+            this.x = Math.round(this.x / this.snap) * this.snap;
+            this.y = Math.round(this.y / this.snap) * this.snap;
+        }
+        this.lbl.setPosition(this.x + 20, this.y + 20);
+        this.lbl.setText("x: " + this.x + " y: " + this.y);
+    }
+};
+
+module.exports = Pointer;
 
 /***/ }),
 /* 60 */

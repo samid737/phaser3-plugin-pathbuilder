@@ -1,22 +1,21 @@
 
-var Element = require("./Element");
+import Element from "./Element";
 
-var Label = function (ui, x, y, text, target, callbacks, args, context) {
-    Element.call(this, ui, x, y);
-    Phaser.GameObjects.Text.call(this, ui.scene, x, y, text, PathBuilder.UI.fonts["Label"]);
+export default class Label extends Phaser.GameObjects.Text(Element){
 
-    this.target = target;
-    this.callbacks = callbacks;
-    this.callbackcontext = context;
-    this.args = args;
-    this.tween = null;
+    constructor(ui, x, y, text, target, callbacks, args, context){
+        Element.call(this, ui, x, y);
+        super(ui.scene, x, y, text, PathBuilder.UI.fonts["Label"]) 
 
-    this.setInteractive();
-
-    return this;
+        this.target = target;
+        this.callbacks = callbacks;
+        this.callbackcontext = context;
+        this.args = args;
+        this.tween = null;
+    
+        this.setInteractive();
+    
+        return this;
+        
+    } 
 }
-
-Label.prototype = Object.create(Phaser.GameObjects.Text.prototype);
-Object.assign(Label.prototype, Element.prototype);
-
-module.exports = Label;

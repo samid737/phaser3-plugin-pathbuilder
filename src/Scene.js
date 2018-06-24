@@ -1,22 +1,29 @@
 
-var UI = require("./UI/UI");
-var Pointer = require("./UI/Pointer");
+//var UI = require("./UI/UI");
+//var Pointer = require("./UI/Pointer");
 
-var Scene = function () {
+import UI from "./UI/UI";
+import Pointer from "./UI/Pointer";
 
-    if (window.addEventListener)
+export default class Scene extends Phaser.Scene {
+
+    constructor (config)
     {
-        window.addEventListener('DOMMouseScroll', this.scroll, false);
-        window.onmousewheel = this.scroll.bind(this);
+        super(config);
+
+        if (window.addEventListener)
+        {
+            window.addEventListener('DOMMouseScroll', this.scroll, false);
+            window.onmousewheel = this.scroll.bind(this);
+        }
+
     }
-}
 
-Scene.prototype = {
-    preload: function () {
+    preload() {
 
-    },
+    }
 
-    create: function () {
+    create() {
         this.tool = { "normal": null, "draw": this.place};
         this.mode = "normal";
         this.cursors = {"normal": "default", "draw": "copy", "select": "default", "hand": "move"};
@@ -89,16 +96,16 @@ Scene.prototype = {
         // gui.add(this.drawpanel, 'show');
         // gui.add(this.pointer, 'snap', 1, 100, 2);
 
-    },
-    update: function () {
+    }
+    update() {
         this.drawpanel.update();
         this.pointer.update();     
         //this.drawpanel.camera.setZoom(Math.sin(this.time.now/100000)+1);
         //this.cameras.main.setZoom(Math.sin(this.time.now/100000)+1);
         //this.middle.camera.setZoom(Math.sin(this.time.now/100000)+1);
         //this.top.camera.setZoom(Math.sin(this.time.now/100000)+1);
-    },
-    setCameras: function () {
+    }
+    setCameras() {
         this.drawpanel.camera.ignore(this.middle.elements);
         this.drawpanel.camera.ignore(this.top.elements);
 
@@ -114,14 +121,14 @@ Scene.prototype = {
 
         //TODO: move/ rewrite
         this.supercamera = this.sys.game.scene.scenes[0].cameras.main;
-    },
-    switchmode: function (mode) {
+    }
+    switchmode(mode) {
         this.mode = mode;
         this.modelabel.setText("mode: " + this.mode);
         this.pointer.switchCursor();        
         this.events.emit('switchmode', this.mode);
-    },
-    clear: function () {
+    }
+    clear() {
         var _this = this;
         this.path.curves.forEach(function(curve){_this.undo()});
         this.drawpanel.elements.forEach(function (element) { element.destroy() });
@@ -131,8 +138,8 @@ Scene.prototype = {
         this.spline  = null;
         
         this.graphics.clear();
-    },
-    undo: function() { 
+    }
+    undo() { 
         //TODO: extend curve class  
         if(this.vectors.length>1){
             var _this = this;        
@@ -145,8 +152,8 @@ Scene.prototype = {
             this.graphics.clear();        
             this.draw();
         }    
-    },
-    place: function (ui, x, y) {
+    }
+    place(ui, x, y) {
         //TODO: extend A curve class for each case, add A factory entry for curves.
         
         var vector = new Phaser.Math.Vector2(x, y);
@@ -289,21 +296,21 @@ Scene.prototype = {
         this.draw();
 
         this.setCameras();
-    },
-    move: function (graphics, vector) {
+    }
+    move(graphics, vector) {
 
-    },
-    draw: function () {
+    }
+    draw() {
         this.graphics.clear();
         this.graphics.lineStyle(2, 0xffffff, 1);
         this.graphics.fillStyle(0xffffff, 1);
         this.path.draw(this.graphics, this.path.segments);
-    },
-    look : function (camera) {
+    }
+    look(camera) {
         camera.scrollY = (this.pointer.lastY - this.input.activePointer.y);
         camera.scrollX = (this.pointer.lastX - this.input.activePointer.x);
-    },
-    scroll: function(event)
+    }
+    scroll(event)
     {
         var delta = 0;
         if (event.wheelDelta) {
@@ -325,25 +332,25 @@ Scene.prototype = {
         this.supercamera.zoom += delta*0.1;
         
         return delta;
-    },
+    }
     resetView(){
         this.drawpanel.camera.zoom = 1;
         this.supercamera.zoom = 1;        
         this.drawpanel.camera.setScroll(0,0);
         this.supercamera.setScroll(0,0);
-    },
-    freeze: function () {
+    }
+    freeze () {
         this.scene.manager.scenes[0].scene.pause();
-    },
-    unfreeze: function () {
+    }
+    unfreeze() {
         this.scene.manager.scenes[0].scene.resume();
-    },
-    import: function () {
+    }
+    importJSON() {
         var data = this.cache.json.get('data');
         this.path = this.path.fromJSON(data);
         this.draw();
-    },
-    export: function () {
+    }
+    exportJON() {
         var data = JSON.stringify(this.path.toJSON());
         console.log(data);
         var file = new Blob([data], ["data.json"]);
@@ -353,8 +360,8 @@ Scene.prototype = {
         link.download = "data.json";
         link.click();
 
-    },
-    preview: function () {
+    }
+    preview() {
         if(this.path.curves.length !== 0){
             var follower = this.add.follower(this.path, 0, 0, 'dude');
 
@@ -371,12 +378,8 @@ Scene.prototype = {
                 ease: 'Cubic.easeInOut'
             });   
         }
-    },
-    destroy: function () {
     }
-};
 
-// Scene.prototype.constructor = Scene;
-
-module.exports = Scene;
-
+    destroy() {
+    }
+}

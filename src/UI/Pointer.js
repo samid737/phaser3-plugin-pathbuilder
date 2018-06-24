@@ -1,121 +1,118 @@
 
-var Element = require("./Element");
+import Element from "./Element";
 
-var Pointer = function (ui, x, y, key, frame) {
-    Element.call(this, ui, x, y);
-    Phaser.GameObjects.Image.call(this, ui.scene, x, y, key);
+export default class Pointer extends Phaser.GameObjects.Image(Element){
 
-    this.alpha = 0.5;
+    constructor(ui, x, y, key, frame){
+        Element.call(this, ui, x, y);
+        super(ui.scene, x, y, key);
 
-    this.snap = 50;
+        this.alpha = 0.5;
 
-    //global input listener 
-
-    this.scene.input.on('pointerdown', function (pointer, gameObject) {
-
-        if (this.scene.mode == "draw" && pointer.dragState ==0 && pointer.leftButtonDown()) {
-            if (gameObject.length ==0 && (pointer.x > 50 && pointer.x < this.scene.W - 100)) {
-                
-                var _dx = this.scene.drawpanel.camera.scrollX;
-                var _dy = this.scene.drawpanel.camera.scrollY;
-                
-                this.scene.place(this.scene.drawpanel, this.x + _dx, this.y +_dy);
-            }
-        } 
-
-
-        if(pointer.rightButtonDown() && pointer.dragState == 0)
-        {
-            this.lockX = pointer.x;
-            this.lockY = pointer.y;
-            
-            this.scene.switchmode("select");     
-        } 
-
-
-        if(pointer.middleButtonDown())
-        {
-            this.lastX = pointer.x + this.scene.drawpanel.camera.scrollX;
-            this.lastY = pointer.y + this.scene.drawpanel.camera.scrollY;
-            
-            this.scene.switchmode("hand");
-        }  
-
-    }, this);
-
-    this.scene.input.on('pointerup', function (pointer, gameObject) {
-        if(pointer.middleButtonDown())
-        {
-            this.scene.switchmode("normal");
-        }          
-    }, this);
+        this.snap = 50;
     
-    this.snapkey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
-
-    this.lbl = this.ui.add.label(x + 20, y + 20, "").setFontStyle(PathBuilder.UI.fonts["Label"]);
+        //global input listener 
     
-    this.menu = this.ui.add.menu(x, y);
-
-    this.menu.add(-50, -50, "Line", this.switchdrawmode,["Line"],this);
-    this.menu.add(0, -50, "Quadratic", this.switchdrawmode,["Quadratic"],this);
-    this.menu.add(50, -50, "Cubic", this.switchdrawmode,["Cubic"],this);
-    this.menu.add(-50, 50, "Spline", this.switchdrawmode,["Spline"],this);
-    this.menu.add(0, 50, "Ellipse", this.switchdrawmode,["Ellipse"],this);
-
-    this.scene.events.on('switchmode', this.switchmode, this);
-
-    this.scene.add.existing(this);
-
-}
-
-Pointer.prototype = Object.create(Phaser.GameObjects.Image.prototype);
-Object.assign(Pointer.prototype, Element.prototype);
-
-Pointer.prototype.constructor = Pointer;
-
-Pointer.prototype.switchmode = function (mode) {
-
-    if (mode == "draw") {
-        // TODO: abstraction
+        this.scene.input.on('pointerdown', function (pointer, gameObject) {
+    
+            if (this.scene.mode == "draw" && pointer.dragState ==0 && pointer.leftButtonDown()) {
+                if (gameObject.length ==0 && (pointer.x > 50 && pointer.x < this.scene.W - 100)) {
+                    
+                    var _dx = this.scene.drawpanel.camera.scrollX;
+                    var _dy = this.scene.drawpanel.camera.scrollY;
+                    
+                    this.scene.place(this.scene.drawpanel, this.x + _dx, this.y +_dy);
+                }
+            } 
+    
+    
+            if(pointer.rightButtonDown() && pointer.dragState == 0)
+            {
+                this.lockX = pointer.x;
+                this.lockY = pointer.y;
+                
+                this.scene.switchmode("select");     
+            } 
+    
+    
+            if(pointer.middleButtonDown())
+            {
+                this.lastX = pointer.x + this.scene.drawpanel.camera.scrollX;
+                this.lastY = pointer.y + this.scene.drawpanel.camera.scrollY;
+                
+                this.scene.switchmode("hand");
+            }  
+    
+        }, this);
+    
+        this.scene.input.on('pointerup', function (pointer, gameObject) {
+            if(pointer.middleButtonDown())
+            {
+                this.scene.switchmode("normal");
+            }          
+        }, this);
         
-        this.setVisible(true);
-        this.lbl.setVisible(true);
-        this.menu.hide();
-
-    }
-    if (mode == "normal") {        
+        this.snapkey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+    
+        this.lbl = this.ui.add.label(x + 20, y + 20, "").setFontStyle(PathBuilder.UI.fonts["Label"]);
         
-        this.setVisible(false);
-        this.menu.hide();        
+        this.menu = this.ui.add.menu(x, y);
+    
+        this.menu.add(-50, -50, "Line", this.switchdrawmode,["Line"],this);
+        this.menu.add(0, -50, "Quadratic", this.switchdrawmode,["Quadratic"],this);
+        this.menu.add(50, -50, "Cubic", this.switchdrawmode,["Cubic"],this);
+        this.menu.add(-50, 50, "Spline", this.switchdrawmode,["Spline"],this);
+        this.menu.add(0, 50, "Ellipse", this.switchdrawmode,["Ellipse"],this);
+    
+        this.scene.events.on('switchmode', this.switchmode, this);
+    
+        this.scene.add.existing(this);
 
     }
-    if (mode == "select"){        
-        this.setVisible(false);  
 
-        this.menu.setPosition(this.x , this.y);
-        this.menu.show();        
+    switchmode(mode) {
 
+        if (mode == "draw") {
+            // TODO: abstraction
+            
+            this.setVisible(true);
+            this.lbl.setVisible(true);
+            this.menu.hide();
+    
+        }
+        if (mode == "normal") {        
+            
+            this.setVisible(false);
+            this.menu.hide();        
+    
+        }
+        if (mode == "select"){        
+            this.setVisible(false);  
+    
+            this.menu.setPosition(this.x , this.y);
+            this.menu.show();        
+    
+        }
+        if(mode == "hand"){
+            game.canvas.style.cursor = "grab";
+            
+            this.setVisible(true);
+            this.lbl.setVisible(true);
+    
+        }
     }
-    if(mode == "hand"){
-        game.canvas.style.cursor = "grab";
-        
-        this.setVisible(true);
-        this.lbl.setVisible(true);
 
+    switchCursor(){
+        game.canvas.style.cursor = this.scene.cursors[this.scene.mode];
     }
-}
-Pointer.prototype.switchCursor = function(){
-    game.canvas.style.cursor = this.scene.cursors[this.scene.mode];
-}
 
-Pointer.prototype.switchdrawmode = function (mode) {
-    this.scene.drawmode = mode;
-    this.scene.drawmodelabel.setText("curve: " + mode);
-    this.menu.hide();            
-    this.scene.switchmode("draw");
-}
-
-Pointer.prototype.update = function () {
+    switchdrawmode(mode) {
+        this.scene.drawmode = mode;
+        this.scene.drawmodelabel.setText("curve: " + mode);
+        this.menu.hide();            
+        this.scene.switchmode("draw");
+    }
+    update() {
     
         this.x = this.scene.input.activePointer.x;
         this.y = this.scene.input.activePointer.y;
@@ -140,7 +137,5 @@ Pointer.prototype.update = function () {
             this.lbl.setPosition(this.x + 20, this.y + 20);
             this.lbl.setText("x: " + this.x + " y: " + this.y);
         }
-    
     }
-
-module.exports = Pointer;
+}
