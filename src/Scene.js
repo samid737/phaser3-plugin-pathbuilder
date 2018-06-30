@@ -152,10 +152,8 @@ export default class Scene extends Phaser.Scene{
     place(ui, x, y) {
         //TODO: extend A curve class for each case, add A factory entry for curves.
         
-        var vector = new Phaser.Math.Vector2(x, y);
-
         if (this.vectors.length == 0) {
-            this.point = ui.add.endpoint(vector, null,'endpoint');
+            this.point = ui.add.endpoint(x, y, null,'endpoint');
             return;
         }
 
@@ -172,7 +170,7 @@ export default class Scene extends Phaser.Scene{
                 c.controlpoints = [];                
             }
 
-            this.point = ui.add.endpoint(vector, c, 'endpoint');
+            this.point = ui.add.endpoint(x,y , c, 'endpoint');
 
         }
 
@@ -192,9 +190,9 @@ export default class Scene extends Phaser.Scene{
             this.path.add(c);
             c.controlpoints = [];
             
-            this.point = ui.add.controlpoint(control, c, 'controlpoint');
+            this.point = ui.add.controlpoint(control.x, control.y, c, 'controlpoint');
 
-            this.point = ui.add.endpoint(vector, c, 'endpoint');
+            this.point = ui.add.endpoint(x, y, c, 'endpoint');
 
         }
 
@@ -218,10 +216,10 @@ export default class Scene extends Phaser.Scene{
             this.path.add(c);
             c.controlpoints = [];
             
-            this.point = ui.add.controlpoint(control1, c, 'controlpoint');
-            this.point = ui.add.controlpoint(control2, c, 'controlpoint');
+            this.point = ui.add.controlpoint(control1.x, control1.y, c, 'controlpoint');
+            this.point = ui.add.controlpoint(control2.x, control2.y, c, 'controlpoint');
 
-            this.point = ui.add.endpoint(vector, c, 'endpoint');
+            this.point = ui.add.endpoint(x, y, c, 'endpoint');
 
         }
 
@@ -242,13 +240,13 @@ export default class Scene extends Phaser.Scene{
 
             if (this.vectors.length == 1) {
 
-                this.point = ui.add.controlpoint(vector, this.spline, 'controlpoint');
+                this.point = ui.add.controlpoint(x, y, this.spline, 'controlpoint');
                 
             } else {
 
-                this.point = ui.add.controlpoint(vector, this.spline, 'controlpoint');
+                this.point = ui.add.controlpoint(x, y, this.spline, 'controlpoint');
                 
-                this.spline.addPoints([vector.x, vector.y]);
+                this.spline.addPoints([x, y]);
 
             }
 

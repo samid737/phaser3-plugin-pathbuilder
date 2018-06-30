@@ -1,15 +1,15 @@
 
 let Element = (superclass) => class extends superclass{
 
-    constructor(ui, x, y){
-        super(ui, x, y);
+    constructor(ui,x,y,...args){
+        super(ui.scene, x, y, ...args);
         console.log(this);
-        Object.assign(this.prototype, Element.prototype);
         
         this.ui = ui;
-        this.scene = ui.scene;
         this.x = x;
         this.y = y;
+        this.scene  = this.ui.scene;
+
         this.ui.elements.push(this);
     
         this.scene.cameras.main.ignore(this);
@@ -30,7 +30,8 @@ let Element = (superclass) => class extends superclass{
     click(){
         var callbackcontext = this.callbackcontext;
         var args = this.args;
-    
+        
+        console.log()
         if (this.callbacks instanceof Array) {
             this.callbacks.forEach(function (callback, index) { callback.apply(callbackcontext[index], args) });
         } else {

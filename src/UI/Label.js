@@ -1,11 +1,11 @@
 
 import Element from "./Element";
+import UI from "./UI";
 
-export default class Label extends Phaser.GameObjects.Text{
+export default class Label extends Element(Phaser.GameObjects.Text) {
 
     constructor(ui, x, y, text, target, callbacks, args, context){
-        super(ui.scene, x, y, text, PathBuilder.UI.fonts["Label"]) 
-        Element.call(this, ui, x, y);
+        super(ui, x, y, text, UI.fonts["Label"]) 
 
         this.target = target;
         this.callbacks = callbacks;

@@ -1,11 +1,11 @@
 
 import Element from "./Element";
+import UI from "./UI";
 
-export default class Pointer extends Phaser.GameObjects.Image{
+export default class Pointer extends Element(Phaser.GameObjects.Image){
 
     constructor(ui, x, y, key, frame){
-        super(ui.scene, x, y, key);
-        Element.call(this, ui, x, y);
+        super(ui, x, y, key);
 
         this.alpha = 0.5;
 
@@ -54,7 +54,7 @@ export default class Pointer extends Phaser.GameObjects.Image{
         
         this.snapkey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
     
-        this.lbl = this.ui.add.label(x + 20, y + 20, "").setFontStyle(PathBuilder.UI.fonts["Label"]);
+        this.lbl = this.ui.add.label(x + 20, y + 20, "").setFontStyle(UI.fonts["Label"]);
         
         this.menu = this.ui.add.menu(x, y);
     

@@ -1,11 +1,13 @@
 
 import Element from "../Element";
+import UI from "../UI";
 
-export default class Point extends Phaser.GameObjects.Image{
+export default class Point extends Element(Phaser.GameObjects.Image){
 
-    constructor(ui, vector, curve,  key, mapping){
-        super(ui.scene, vector.x, vector.y, key);
-        Element.call(this, ui, vector.x, vector.y);
+    constructor(ui, x, y, curve,  key, mapping){
+        super(ui, x, y, key);
+
+        var vector = new Phaser.Math.Vector2(x, y);
 
         this.setInteractive();
         this.scene.input.setDraggable(this);
@@ -53,7 +55,7 @@ export default class Point extends Phaser.GameObjects.Image{
     
         });
     
-        this.lbl = this.ui.add.label(this.x + 10, this.y + 10, "").setFontStyle(PathBuilder.UI.fonts["Point"]);
+        this.lbl = this.ui.add.label(this.x + 10, this.y + 10, "").setFontStyle(UI.fonts["Point"]);
     
         return this;
     }

@@ -22,25 +22,25 @@ export default class UI {
                 this.ui.scene.add.existing(tb);
                 return tb;
             },
-            point: function (vector, curve, key, mapping) {
-                var p = new Point(this.ui, vector, curve, key, mapping);
-                this.ui.scene.add.existing(p);
-                return p;
-            },
-            endpoint: function (vector, curve, key, mapping) {
-                var p = new EndPoint(this.ui, vector, curve, key, mapping);
-                this.ui.scene.add.existing(p);
-                return p;
-            },
-            controlpoint: function (vector, curve, key, mapping) {
-                var p = new ControlPoint(this.ui, vector, curve, key, mapping);
-                this.ui.scene.add.existing(p);
-                return p;
-            },
             label: function (x, y, text, target, callback, args, context) {
                 var l = new Label(this.ui, x, y, text, target, callback, args, context);
                 this.ui.scene.add.existing(l);
                 return l;
+            },            
+            point: function (x, y, curve, key, mapping) {
+                var p = new Point(this.ui, x, y, curve, key, mapping);
+                this.ui.scene.add.existing(p);
+                return p;
+            },
+            endpoint: function (x, y, curve, key, mapping) {
+                var p = new EndPoint(this.ui, x, y, curve, key, mapping);
+                this.ui.scene.add.existing(p);
+                return p;
+            },
+            controlpoint: function (x, y, curve, key, mapping) {
+                var p = new ControlPoint(this.ui, x, y, curve, key, mapping);
+                this.ui.scene.add.existing(p);
+                return p;
             },
             // image: function (x, y, key, frame) {
             //     var i = new Image(this.ui, x, y, key, frame);

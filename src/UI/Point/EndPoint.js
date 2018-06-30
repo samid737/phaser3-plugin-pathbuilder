@@ -1,11 +1,12 @@
 import Point from "./Point";
+import UI from "../UI";
 
 export default class EndPoint extends Point{
 
-    constructor(ui, vector, curve, key, mapping){
-        super(ui, vector, curve, key, mapping);
+    constructor(ui, x, y, curve, key, mapping){
+        super(ui, x, y,  curve, key, mapping);
 
-        this.lbl.setFontStyle(PathBuilder.UI.fonts["EndPoint"]);
+        this.lbl.setFontStyle(UI.fonts["EndPoint"]);
     }
 
 }
