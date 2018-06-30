@@ -1,5 +1,9 @@
 # Phaser 3 Plugin Path Builder
 
+##Note:
+
+the ES5 branch can still be used, but is no longer maintained!
+
 A tool to build paths for [Pathfollowers](https://labs.phaser.io/index.html?dir=paths/followers/) and path [tweens](https://labs.phaser.io/index.html?dir=paths/). Draw and edit Lines, Bezier Curves, Splines and Ellipses during runtime and export them to Phaser. [Demo](https://samid737.github.io/pathbuilder/). 
 
 ![](https://media.giphy.com/media/5LekCe538coPfk6DgX/giphy.gif)
