@@ -1,6 +1,6 @@
 # Phaser 3 Plugin Path Builder
 
-##Note:
+## Note
 
 the ES5 branch can still be used, but is no longer maintained!
 
