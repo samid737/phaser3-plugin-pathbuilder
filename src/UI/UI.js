@@ -5,7 +5,7 @@ import EndPoint from "./Point/EndPoint";
 import ControlPoint from "./Point/ControlPoint";
 import Label from "./Label";
 
-export default class UI {
+export default class UI { 
 
     constructor(scene){
         this.scene = scene;
@@ -17,7 +17,7 @@ export default class UI {
                 this.ui.scene.add.existing(m);
                 return m;
             },
-            text: function (x, y, text, key, frame, target, callback, args, context) {
+            button: function (x, y, text, key, frame, target, callback, args, context) {
                 var tb = new Button(this.ui, x, y, text, key, frame, target, callback, args, context);
                 this.ui.scene.add.existing(tb);
                 return tb;

@@ -57,21 +57,21 @@ export default class Scene extends Phaser.Scene{
 
         //TODO: rewrite callback implementation
         //TODO: adjust to game size
-        this.hidebutton = this.top.add.text(10, 300, 'hide', null, null, null, [this.drawpanel.hide, this.middle.hide], [], [this.drawpanel, this.middle]);
-        this.showbutton = this.top.add.text(10, 350, 'show', null, null, null, [this.drawpanel.show, this.middle.show], [], [this.drawpanel, this.middle]);
-        this.viewbutton = this.top.add.text(this.W -100, this.H * 0.1, 'reset view', null, null, null, this.resetView, [], this);
+        this.hidebutton = this.top.add.button(10, 300, 'hide', null, null, null, [this.drawpanel.hide, this.middle.hide], [], [this.drawpanel, this.middle]);
+        this.showbutton = this.top.add.button(10, 350, 'show', null, null, null, [this.drawpanel.show, this.middle.show], [], [this.drawpanel, this.middle]);
+        this.viewbutton = this.top.add.button(this.W -100, this.H * 0.1, 'reset view', null, null, null, this.resetView, [], this);
                 
-        this.drawbutton = this.middle.add.text(10, 200, 'draw', null, null, null, this.switchmode, ["draw"], this);
-        this.clearbutton = this.middle.add.text(10,100,'clear',null,null,null, this.clear,[], this);  
-        this.undobutton = this.middle.add.text(10,50,'undo',null,null,null, this.undo,[], this);  
+        this.drawbutton = this.middle.add.button(10, 200, 'draw', null, null, null, this.switchmode, ["draw"], this);
+        this.clearbutton = this.middle.add.button(10,100,'clear',null,null,null, this.clear,[], this);  
+        this.undobutton = this.middle.add.button(10,50,'undo',null,null,null, this.undo,[], this);  
         
-        this.importbutton = this.middle.add.text(this.W -100, this.H - 200, 'import', null, null, null, this.import, [], this);
-        this.exportbutton = this.middle.add.text(this.W -100, this.H - 100, 'export', null, null, null, this.export, [], this);
+        this.importbutton = this.middle.add.button(this.W -100, this.H - 200, 'import', null, null, null, this.import, [], this);
+        this.exportbutton = this.middle.add.button(this.W -100, this.H - 100, 'export', null, null, null, this.export, [], this);
         
-        this.pausebutton = this.middle.add.text(10, this.H - 200,'pause',null,null,null, this.freeze,[], this);  
-        this.resumebutton = this.middle.add.text(10, this.H - 150,'resume',null,null,null, this.unfreeze,[], this);  
+        this.pausebutton = this.middle.add.button(10, this.H - 200,'pause',null,null,null, this.freeze,[], this);  
+        this.resumebutton = this.middle.add.button(10, this.H - 150,'resume',null,null,null, this.unfreeze,[], this);  
         
-        this.previewbutton = this.middle.add.text(10, this.H - 100, 'preview', null, null, null, this.preview, [], this);
+        this.previewbutton = this.middle.add.button(10, this.H - 100, 'preview', null, null, null, this.preview, [], this);
 
         this.modelabel = this.middle.add.label(100, 20, 'mode: ', null, null, null, null, this);
         this.drawmodelabel = this.middle.add.label(400, 20, 'curve: ' +this.drawmode, null, null, null, null, this);
