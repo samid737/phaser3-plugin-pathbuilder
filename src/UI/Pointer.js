@@ -18,8 +18,8 @@ export default class Pointer extends Element(Phaser.GameObjects.Image){
             if (this.scene.mode == "draw" && pointer.dragState ==0 && pointer.leftButtonDown()) {
                 if (gameObject.length ==0 && (pointer.x > 50 && pointer.x < this.scene.W - 100)) {
                     
-                    var _dx = this.scene.drawpanel.camera.scrollX;
-                    var _dy = this.scene.drawpanel.camera.scrollY;
+                    let _dx = this.scene.drawpanel.camera.scrollX;
+                    let _dy = this.scene.drawpanel.camera.scrollY;
                     
                     this.scene.place(this.scene.drawpanel, this.x + _dx, this.y +_dy);
                 }

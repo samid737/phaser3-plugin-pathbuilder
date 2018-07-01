@@ -7,7 +7,7 @@ export default class Point extends Element(Phaser.GameObjects.Image){
     constructor(ui, x, y, curve,  key, mapping){
         super(ui, x, y, key);
 
-        var vector = new Phaser.Math.Vector2(x, y);
+        let vector = new Phaser.Math.Vector2(x, y);
 
         this.setInteractive();
         this.scene.input.setDraggable(this);
@@ -42,10 +42,10 @@ export default class Point extends Element(Phaser.GameObjects.Image){
             this.data.get('vector').set(this.x, this.y);
     
             if (this.mapping) {
-                var m = this.mapping;
-                var _this = this;
+                let m = this.mapping;
+                let _this = this;
     
-                for (var t in m.data) {
+                for (let t in m.data) {
                     m.src[m.data[t].property] = m.data[t].operator(m.src, _this[t]);
                 }
             }
@@ -67,7 +67,6 @@ export default class Point extends Element(Phaser.GameObjects.Image){
     }
 
     destroy(){
-        //this.scene.drawpanel.elements.pop();
         this.lbl.destroy();
         super.destroy();    
     }

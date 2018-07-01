@@ -10,9 +10,8 @@ export default class Menu extends Element(Phaser.GameObjects.Container) {
 
     add(x, y, item, callback, args, context)
     {
-        this[item] = this.ui.add.text(x, y, item, null, null, null, callback, args, context).setFontStyle(UI.fonts["Button"]);
-        //TODO: es6
-        Phaser.GameObjects.Container.prototype.add.call(this, this[item]);
+        this[item] = this.ui.add.button(x, y, item, null, null, null, callback, args, context).setFontStyle(UI.fonts["Button"]);
+        super.add(this[item]);
         return this[item];
     }
 

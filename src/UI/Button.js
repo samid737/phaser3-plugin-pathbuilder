@@ -29,7 +29,6 @@ export default class Button extends Element(Phaser.GameObjects.Text){
     }
 
     click() {
-        console.log(this);
         super.click();
         this.tween = this.scene.tweens.add({ targets: this, scaleX: 1.2, scaleY: 1.2, duration: 100, ease: 'Linear', yoyo: true });
     }
