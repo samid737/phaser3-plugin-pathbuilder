@@ -42,9 +42,9 @@ export default class Scene extends Phaser.Scene{
         this.path.segments = 32;
         this.graphics = this.add.graphics();
 
-        this.drawpanel = new UI(this);
-        this.middle = new UI(this);
-        this.top = new UI(this);
+        this.drawpanel = this.add.ui(this);
+        this.middle = this.add.ui(this);
+        this.top = this.add.ui(this);
 
         //this.drawpanel.elements.push(this.graphics);
         this.graphics.fillStyle(0xff0000,1);
@@ -76,7 +76,7 @@ export default class Scene extends Phaser.Scene{
         this.modelabel = this.middle.add.label(100, 20, 'mode: ', null, null, null, null, this);
         this.drawmodelabel = this.middle.add.label(400, 20, 'curve: ' +this.drawmode, null, null, null, null, this);
         
-        this.pointer = new Pointer(this.middle, 100, 100, 'controlpoint');
+        this.pointer = this.add.superpointer(this.middle, 100, 100, 'controlpoint');
 
         this.setCameras();
 
