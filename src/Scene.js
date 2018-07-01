@@ -145,10 +145,11 @@ export default class Scene extends Phaser.Scene
     place(ui, x, y)
     {
         //TODO: extend A curve class for each case, add A factory entry for curves.
+        //TODO: add abstraction
 
         if (this.vectors.length == 0)
         {
-            this.point = ui.add.endpoint(x, y, null, 'endpoint');
+            let p0 = ui.add.endpoint(x, y);
             return;
         }
 
@@ -157,40 +158,48 @@ export default class Scene extends Phaser.Scene
 
             this.spline = null;
 
-            let previous = this.vectors[this.vectors.length - 1];
+            let p0 = this.vectors[this.vectors.length - 1];
+
+            let p1 = ui.add.endpoint(x, y);
 
             if (this.vectors.length > 0)
             {
-                let c = new this.curves[this.drawmode](previous, vector);
+                let c = new this.curves[this.drawmode](p0, p1.vec2);
 
                 this.path.add(c);
                 c.controlpoints = [];
+
+                p1.fuse(c);              
+
             }
 
-            this.point = ui.add.endpoint(x, y, c, 'endpoint');
 
         }
 
         if (this.drawmode == "QuadraticBezier")
         {
-
             this.spline = null;
 
-            let control = new Phaser.Math.Vector2(x, y);
+            let p0 = this.vectors[this.vectors.length - 1];
 
-            let previous = this.vectors[this.vectors.length - 1];
+            let p1 = ui.add.controlpoint(x, y);
 
-            control = control.add(previous);
-            control = control.divide(new Phaser.Math.Vector2(2, 2));
+            p1.vec2 = p1.vec2.add(p0);
+            p1.vec2 = p1.vec2.divide(new Phaser.Math.Vector2(2, 2));
 
-            let c = new this.curves[this.drawmode](previous, control, vector);
+            //TODO: mixin vector component
+            p1.x = p1.vec2.x;
+            p1.y = p1.vec2.y;
+
+            let p2 = ui.add.endpoint(x, y);
+
+            let c = new this.curves[this.drawmode](p0, p1.vec2, p2.vec2);
 
             this.path.add(c);
             c.controlpoints = [];
 
-            this.point = ui.add.controlpoint(control.x, control.y, c, 'controlpoint');
-
-            this.point = ui.add.endpoint(x, y, c, 'endpoint');
+            p1.fuse(c);
+            p2.fuse(c);
 
         }
 
@@ -199,37 +208,35 @@ export default class Scene extends Phaser.Scene
 
             this.spline = null;
 
-            let control1 = new Phaser.Math.Vector2(x, y);
-            let control2 = new Phaser.Math.Vector2(x, y);
+            let p0 = this.vectors[this.vectors.length - 1];
 
-            let previous = this.vectors[this.vectors.length - 1];
+            let p1 = ui.add.controlpoint(p0.x + (x - p0.x) * 0.25, p0.y + (y - p0.y) * 0.25);
+            let p2 = ui.add.controlpoint(p0.x + (x - p0.x) * 0.75, p0.y + (y - p0.y) * 0.75);
 
-            control1.x = previous.x + (x - previous.x) * 0.25;
-            control1.y = previous.y + (y - previous.y) * 0.25;
+            let p3 = ui.add.endpoint(x, y);
 
-            control2.x = previous.x + (x - previous.x) * 0.75;
-            control2.y = previous.y + (y - previous.y) * 0.75;
-
-            let c = new this.curves[this.drawmode](previous, control1, control2, vector);
+            let c = new this.curves[this.drawmode](p0, p1.vec2, p2.vec2, p3.vec2);
 
             this.path.add(c);
             c.controlpoints = [];
 
-            this.point = ui.add.controlpoint(control1.x, control1.y, c, 'controlpoint');
-            this.point = ui.add.controlpoint(control2.x, control2.y, c, 'controlpoint');
-
-            this.point = ui.add.endpoint(x, y, c, 'endpoint');
-
+            p1.fuse(c);
+            p2.fuse(c);
+            p3.fuse(c);
         }
 
         if (this.drawmode == "Spline")
         {
 
-            let previous = this.vectors[this.vectors.length - 1];
+            let p0 = this.vectors[this.vectors.length - 1];
+            let px = 0;
 
             if (this.spline == null)
             {
-                let c = new this.curves[this.drawmode]([previous.x, previous.y, vector.x, vector.y]);
+
+                px = ui.add.endpoint(x, y);
+
+                let c = new this.curves[this.drawmode]([p0.x, p0.y, px.vec2.x, px.vec2.y]);
                 this.spline = c;
 
                 this.path.add(c);
@@ -242,19 +249,20 @@ export default class Scene extends Phaser.Scene
             if (this.vectors.length == 1)
             {
 
-                this.point = ui.add.controlpoint(x, y, this.spline, 'controlpoint');
+                px = ui.add.controlpoint(x, y);
 
             } else
             {
 
-                this.point = ui.add.controlpoint(x, y, this.spline, 'controlpoint');
+                px = ui.add.controlpoint(x, y);
 
                 this.spline.addPoints([x, y]);
-
             }
 
-            this.spline.points[this.spline.points.length - 1] = vector;
-            this.spline.points[this.spline.points.length - 2] = previous;
+            this.spline.points[this.spline.points.length - 1] = px.vec2;
+            this.spline.points[this.spline.points.length - 2] = p0;
+
+            px.fuse(this.spline);
 
         }
 
@@ -263,31 +271,31 @@ export default class Scene extends Phaser.Scene
 
             this.spline = null;
 
-            let previous = this.vectors[this.vectors.length - 1];
+            let p0 = this.vectors[this.vectors.length - 1];
 
-            let c = new this.curves[this.drawmode](vector.x, vector.y, 100, 100);
+            let p1 = ui.add.endpoint(x,y);
+            let p2 = ui.add.controlpoint(x + 100, y + 100);
+
+            let c = new this.curves[this.drawmode](p1.vec2.x, p1.vec2.y, 100, 100);
 
             this.path.add(c);
             c.controlpoints = [];
 
-            c.p0 = vector;
+            p1.fuse(c);
+            p2.fuse(c);
 
-            let dist = new Phaser.Math.Vector2(vector.x + 100, vector.y + 100);
+            c.p0 = p1;
 
             //map control point coordinates to radii
-            this.point = ui.add.endpoint(vector, c, 'endpoint');
 
-            this.point = ui.add.controlpoint(dist, c, 'controlpoint',
+            p2.map(                {
+                "src": c,
+                "data":
                 {
-                    "src": c,
-                    "data":
-                    {
-                        "x": { "property": "xRadius", "operator": function (src, x) { return src.p0.x - x } },
-                        "y": { "property": "yRadius", "operator": function (src, y) { return src.p0.y - y } }
-                    }
-                });
-
-            let anglevec = new Phaser.Math.Vector2(c.p0.x, c.p0.y + c.yRadius);
+                    "x": { "property": "xRadius", "operator": function (src, x) { return src.p0.vec2.x - x } },
+                    "y": { "property": "yRadius", "operator": function (src, y) { return src.p0.vec2.y - y } }
+                }
+            })
 
         }
 
@@ -361,10 +369,10 @@ export default class Scene extends Phaser.Scene
         let data = JSON.stringify(this.path.toJSON());
         console.log(data);
         let file = new Blob([data], ["path.json"]);
-        let link = document.createElement('a');
-        link.href = URL.createObjectURL(file);
-        link.download = "path.json";
-        link.click();
+        let fuse = document.createElement('a');
+        fuse.href = URL.createObjectURL(file);
+        fuse.download = "path.json";
+        fuse.click();
 
     }
     preview()

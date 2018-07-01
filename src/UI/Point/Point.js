@@ -4,26 +4,20 @@ import UI from "../UI";
 
 export default class Point extends Element(Phaser.GameObjects.Image){
 
-    constructor(ui, x, y, curve,  key, mapping){
+    constructor(ui, x, y, key){
         super(ui, x, y, key);
 
-        let vector = new Phaser.Math.Vector2(x, y);
+        //TODO: mixin vec2
+        this.vec2 = new Phaser.Math.Vector2(x, y);
 
         this.setInteractive();
         this.scene.input.setDraggable(this);
     
-        this.setData('vector', vector);
-        this.scene.vectors.push(vector);
+        this.setData('vector', this.vec2);
+        this.scene.vectors.push(this.vec2);
     
         //TODO: abstract from point to A custom curve class.
-        if(curve !==null){
-            this.curve = curve;
-            this.curve.controlpoints.push(this);
-        }
     
-        if (mapping) {
-            this.mapping = mapping;
-        }
     
         this.on('pointerout', function (pointer, gameObject) {
             this.scene.pointer.switchCursor();                      
@@ -58,6 +52,15 @@ export default class Point extends Element(Phaser.GameObjects.Image){
         this.lbl = this.ui.add.label(this.x + 10, this.y + 10, "").setFontStyle(UI.fonts["Point"]);
     
         return this;
+    }
+    map(data){
+        this.mapping = data;
+    }
+    fuse(curve){
+        if(curve !==null){
+            this.curve = curve;
+            this.curve.controlpoints.push(this);
+        }
     }
 
     update() {

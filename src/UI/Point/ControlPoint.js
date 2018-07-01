@@ -4,9 +4,9 @@ import UI from "../UI";
 export default class ControlPoint extends Point
 {
 
-    constructor(ui, x, y, curve, key, mapping)
+    constructor(ui, x, y, key = 'controlpoint')
     {
-        super(ui, x, y, curve, key, mapping);
+        super(ui, x, y, key);
 
         this.setScale(0.75, 0.75);
 
@@ -27,5 +27,7 @@ export default class ControlPoint extends Point
         {
             this.lbl.visible = false;
         });
+
+        return this;
     }
 }

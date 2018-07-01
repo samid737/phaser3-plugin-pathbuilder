@@ -3,10 +3,12 @@ import UI from "../UI";
 
 export default class EndPoint extends Point{
 
-    constructor(ui, x, y, curve, key, mapping){
-        super(ui, x, y,  curve, key, mapping);
+    constructor(ui, x, y, key = 'endpoint'){
+        super(ui, x, y, key);
 
         this.lbl.setFontStyle(UI.fonts["EndPoint"]);
+
+        return this;
     }
 
 }

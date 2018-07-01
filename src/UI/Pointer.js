@@ -59,8 +59,8 @@ export default class Pointer extends Element(Phaser.GameObjects.Image){
         this.menu = this.ui.add.menu(x, y);
     
         this.menu.add(-50, -50, "Line", this.switchdrawmode,["Line"],this);
-        this.menu.add(0, -50, "Quadratic", this.switchdrawmode,["Quadratic"],this);
-        this.menu.add(50, -50, "Cubic", this.switchdrawmode,["Cubic"],this);
+        this.menu.add(0, -50, "Quadratic", this.switchdrawmode,["QuadraticBezier"],this);
+        this.menu.add(50, -50, "Cubic", this.switchdrawmode,["CubicBezier"],this);
         this.menu.add(-50, 50, "Spline", this.switchdrawmode,["Spline"],this);
         this.menu.add(0, 50, "Ellipse", this.switchdrawmode,["Ellipse"],this);
     

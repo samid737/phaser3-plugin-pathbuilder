@@ -27,18 +27,18 @@ export default class UI {
                 this.ui.scene.add.existing(l);
                 return l;
             },            
-            point: function (x, y, curve, key, mapping) {
-                let p = new Point(this.ui, x, y, curve, key, mapping);
+            point: function (x, y, key) {
+                let p = new Point(this.ui, x, y, key);
                 this.ui.scene.add.existing(p);
                 return p;
             },
-            endpoint: function (x, y, curve, key, mapping) {
-                let p = new EndPoint(this.ui, x, y, curve, key, mapping);
+            endpoint: function (x, y, key) {
+                let p = new EndPoint(this.ui, x, y, key);
                 this.ui.scene.add.existing(p);
                 return p;
             },
-            controlpoint: function (x, y, curve, key, mapping) {
-                let p = new ControlPoint(this.ui, x, y, curve, key, mapping);
+            controlpoint: function (x, y, key) {
+                let p = new ControlPoint(this.ui, x, y, key);
                 this.ui.scene.add.existing(p);
                 return p;
             },
