@@ -25,3 +25,4 @@ export class PathBuilder extends Phaser.Plugins.BasePlugin
     }
 }
 
+module.exports = PathBuilder;

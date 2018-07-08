@@ -9,27 +9,30 @@ module.exports = {
     context: `${__dirname}/src/`,
 
     entry: {
-        app: [
+        PathBuilder: [
             'babel-polyfill',
-            path.resolve(__dirname, 'src/PathBuilder.js')
+            path.resolve(__dirname, 'src/main.js')
         ],
 
-        //PathBuilder: './PathBuilder.js',
+        // PathBuilder: './main.js',
 
-        //'PathBuilder.min': './PathBuilder.js'
+        'PathBuilder.min': './main.js'
     },
 
     output: {
+        pathinfo: true,
+        path: path.resolve(__dirname, 'dev'),
         path: `${__dirname}/dist/`,
-        filename: '[name].js',
-        library: 'PathBuilder',
+        library: '[name]',
         libraryTarget: 'umd',
-        umdNamedDefine: true
+        filename: '[name].js'
     },
 
     module: {
         rules: [
-            { test: /\.js$/, use: ['babel-loader'], include: path.join(__dirname, 'src') },
+            { 
+                exclude: /node_modules/,
+                test: /\.js$/, use: ['babel-loader'], include: path.join(__dirname, 'src/') },
             //{ test: /phaser-split\.js$/, use: ['expose-loader?Phaser'] },
             //{ test: [/\.vert$/, /\.frag$/], use: 'raw-loader' }
         ]

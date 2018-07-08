@@ -1,14 +1,11 @@
 var config = {
-    type: Phaser.WEBGL,
+    type: Phaser.CANVAS,
     parent: 'phaser-example',
     scene: {
         preload: preload,
         create: create,
         update: update
     },
-    // plugins:{
-    //     scene:[{ key: 'PathBuilder', plugin: PathBuilder.PathBuilder, mapping: 'PathBuilder', start:true }]
-    // },    
 
     width: 800,
     height: 600
@@ -24,7 +21,7 @@ function preload()
     this.load.image('dude', 'assets/sprites/phaser-dude.png');
     this.load.json('data', 'assets/paths/data.json');
 
-    this.load.plugin('PathBuilder', PathBuilder.PathBuilder,'PathBuilder');
+    this.load.plugin('PathBuilder', "dist/PathBuilder.js",'PathBuilder');
 
 }
 
