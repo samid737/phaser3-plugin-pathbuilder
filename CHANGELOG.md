@@ -1,3 +1,24 @@
+## Version 1.7.0 - Juli 8th 2018
+
+### Features
+
+- Added snap button to toggle grid snapping.
+- Added toggle button class.
+
+### Updates
+
+- Switch to ES6 classes.
+- refactor place() function. 
+- Integrate ES6 plugin API.
+
+### Bug Fixes
+
+-
+
+### Thanks
+
+-
+
 ## Version 1.6.1 - June 17th 2018
 
 ### Features
