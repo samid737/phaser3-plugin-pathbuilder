@@ -51,12 +51,15 @@ export default class Scene extends Phaser.Scene
         this.graphics.fillStyle(0x00ff00, 1).fillCircle(10, 10, 8).generateTexture('controlpoint', 32, 32);
         this.graphics.clear();
         
+        this.pointer = this.add.superpointer(this.middle, 100, 100, 'controlpoint');
+
         this.W = this.cameras.main.width;
         this.H = this.cameras.main.height;
         //TODO: rewrite callback implementation
         this.hidebutton = this.top.add.button(10, 300, 'hide', null, null, null, [this.drawpanel.hide, this.middle.hide], [], [this.drawpanel, this.middle]);
         this.showbutton = this.top.add.button(10, 350, 'show', null, null, null, [this.drawpanel.show, this.middle.show], [], [this.drawpanel, this.middle]);
         this.viewbutton = this.top.add.button(this.W - 100, this.H * 0.1, 'reset view', null, null, null, this.resetView, [], this);
+        this.snapbutton = this.middle.add.toggle(this.W - 100, this.H * 0.2, 'snap', null, null, null, this.pointer.snap, [], this.pointer);
 
         this.drawbutton = this.middle.add.button(10, 200, 'draw', null, null, null, this.switchmode, ["draw"], this);
         this.clearbutton = this.middle.add.button(10, 100, 'clear', null, null, null, this.clear, [], this);
@@ -72,8 +75,6 @@ export default class Scene extends Phaser.Scene
 
         this.modelabel = this.middle.add.label(100, 20, 'mode: ', null, null, null, null, this);
         this.drawmodelabel = this.middle.add.label(400, 20, 'curve: ' + this.drawmode, null, null, null, null, this);
-
-        this.pointer = this.add.superpointer(this.middle, 100, 100, 'controlpoint');
 
         this.setCameras();
 

@@ -1,5 +1,6 @@
 import Menu from "./Menu";
 import Button from "./Button";
+import Toggle from "./Toggle";
 import Point from "./Point/Point";
 import EndPoint from "./Point/EndPoint";
 import ControlPoint from "./Point/ControlPoint";
@@ -19,6 +20,11 @@ export default class UI {
             },
             button: function (x, y, text, key, frame, target, callback, args, context) {
                 let tb = new Button(this.ui, x, y, text, key, frame, target, callback, args, context);
+                this.ui.scene.add.existing(tb);
+                return tb;
+            },
+            toggle: function (x, y, text, key, frame, target, callback, args, context) {
+                let tb = new Toggle(this.ui, x, y, text, key, frame, target, callback, args, context);
                 this.ui.scene.add.existing(tb);
                 return tb;
             },

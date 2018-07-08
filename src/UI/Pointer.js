@@ -9,7 +9,7 @@ export default class Pointer extends Element(Phaser.GameObjects.Image){
 
         this.alpha = 0.5;
 
-        this.snap = 50;
+        this.delta = 1;
     
         //global input listener 
     
@@ -112,6 +112,9 @@ export default class Pointer extends Element(Phaser.GameObjects.Image){
         this.menu.hide();            
         this.scene.switchmode("draw");
     }
+    snap(){
+        this.delta = this.delta == 1 ? 50: 1;
+    }
     update() {
     
         this.x = this.scene.input.activePointer.x;
@@ -130,10 +133,9 @@ export default class Pointer extends Element(Phaser.GameObjects.Image){
     
         if(this.scene.mode !== "select"){
         
-            if (this.snapkey.isDown) {
-                this.x = Math.round(this.x / this.snap) * this.snap;
-                this.y = Math.round(this.y / this.snap) * this.snap;
-            }
+            this.x = Math.round(this.x / this.delta) * this.delta;
+            this.y = Math.round(this.y / this.delta) * this.delta;
+
             this.lbl.setPosition(this.x + 20, this.y + 20);
             this.lbl.setText("x: " + this.x + " y: " + this.y);
         }
