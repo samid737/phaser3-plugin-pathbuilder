@@ -14,5 +14,7 @@ build/
 /npm-debug.log
 
 /gifs
+phaser.js
 
 UNRELEASED.MD
+.vscode/settings.json
