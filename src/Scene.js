@@ -182,14 +182,7 @@ export default class Scene extends Phaser.Scene
 
             let p0 = this.vectors[this.vectors.length - 1];
 
-            let p1 = ui.add.controlpoint(x, y);
-
-            p1.vec2 = p1.vec2.add(p0);
-            p1.vec2 = p1.vec2.divide(new Phaser.Math.Vector2(2, 2));
-
-            //TODO: mixin vector component
-            p1.x = p1.vec2.x;
-            p1.y = p1.vec2.y;
+            let p1 = ui.add.controlpoint(p0.x + (x - p0.x) * 0.5, p0.y + (y - p0.y) * 0.5);
 
             let p2 = ui.add.endpoint(x, y);
 
