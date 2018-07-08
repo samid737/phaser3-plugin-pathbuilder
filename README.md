@@ -30,8 +30,6 @@ function preload ()
         * Use left mouse to draw.
         * Zoom and move trough scene using middle mouse and mousewheel.
         * Use right mouse to select different curves.
-
-        * S key: Snap the mouse to fixed distance.
         
     * Buttons:
         * Undo          : Undo the previous path draw.
@@ -42,10 +40,11 @@ function preload ()
         * Pause         : Pause main scene.
         * Resume        : Resume main scene.
         * Reset view    : Reset the camera.
+        * Snap          : Snap mouse to a fixed grid.
         * Import        : Import existing path (JSON).
         * Export        : Save the current path as JSON file.  
 
-### Having problems with usage? Please submit an [Issue](https://github.com/samid737/phaser3-plugin-pathbuilder/issues/new).
+### Having questions or problems with usage, suggest a feature? Please submit an [Issue](https://github.com/samid737/phaser3-plugin-pathbuilder/issues/new).
 
 ## Requirements:
 
