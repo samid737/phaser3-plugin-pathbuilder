@@ -22,6 +22,9 @@ A tool to build paths for [Pathfollowers](https://labs.phaser.io/index.html?dir=
 function preload ()
 {
     this.load.plugin('PathBuilder', "<path-to-plugin>/PathBuilder.js",'PathBuilder');
+    //or if using minified:
+    //this.load.plugin('PathBuilder.min', "<path-to-plugin>/PathBuilder.min.js",'PathBuilder');
+
 }
 ```
 * UI:
