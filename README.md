@@ -21,7 +21,7 @@ A tool to build paths for [Pathfollowers](https://labs.phaser.io/index.html?dir=
 ```
 function preload ()
 {
-    this.load.scenePlugin('PathBuilder', 'path/to/PathBuilder.js');
+    this.load.plugin('PathBuilder', "<path-to-plugin>/PathBuilder.js",'PathBuilder');
 }
 ```
 * UI:
@@ -45,8 +45,6 @@ function preload ()
         * Import        : Import existing path (JSON).
         * Export        : Save the current path as JSON file.  
 
-
-
 ### Having problems with usage? Please submit an [Issue](https://github.com/samid737/phaser3-plugin-pathbuilder/issues/new).
 
 ## Requirements:
@@ -58,6 +56,11 @@ function preload ()
 ## Dev notes
 
 Run `npm install` and then `npm run build` to build the plugin.
+
+There is a legacy ES5 branch:
+
+https://github.com/samid737/phaser3-plugin-pathbuilder/tree/ES5
+
 The plugin is in active development and features will be added over time. Contributions, optimizations, suggestions are very welcome. All changes are found in the [Changelog](https://github.com/samid737/phaser3-plugin-pathbuilder/blob/master/CHANGELOG.md);
 
 Honour the [Phaser Code](https://github.com/photonstorm/phaser). 

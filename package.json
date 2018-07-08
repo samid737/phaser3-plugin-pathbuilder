@@ -1,7 +1,7 @@
 {
   "name": "phaser3-plugin-pathbuilder",
-  "version": "1.6.0",
-  "description": "Draw and edit Lines, Bezier Curves, Splines during runtime and export them for path tweens and PathFollowers in Phaser 3",
+  "version": "1.7.0",
+  "description": "Draw and edit Lines, Bezier Curves, Splines during runtime, explore your scene and export path tweens and PathFollowers",
   "main": "src/main.js",
   "scripts": {
     "build": "webpack",
@@ -28,7 +28,10 @@
     "tweens",
     "animation",
     "motion",
-    "drawing"
+    "drawing",
+    "scene",
+    "explore",
+    "editor"
   ],
   "repository": {
     "type": "git",
