@@ -1,3 +1,22 @@
+## Version 1.7.1 - August 4th 2018
+
+### Features
+
+- 
+
+### Updates
+
+- Upgrade to Phaser 3.1.1. 
+- Integrate Phaser 3.1.1 Camera API.
+
+### Bug Fixes
+
+-
+
+### Thanks
+
+-
+
 ## Version 1.7.0 - Juli 8th 2018
 
 ### Features
