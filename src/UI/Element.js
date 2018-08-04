@@ -11,9 +11,8 @@ let Element = (superclass) => class extends superclass{
 
         this.ui.elements.push(this);
     
-        this.scene.cameras.main.ignore(this);
-        let l = 1 << this.scene.cameras.cameras.length - 1;
-        this.cameraFilter = l & ~this.ui.camera._id;
+        let l = (1 << this.scene.cameras.cameras.length) - 1;
+        this.cameraFilter = l & ~this.ui.camera.id;
     
         return this;
     }
