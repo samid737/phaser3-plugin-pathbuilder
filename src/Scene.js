@@ -360,7 +360,7 @@ export default class Scene extends Phaser.Scene
         this.path = this.path.fromJSON(data);
         this.draw();
     }
-    exportJON()
+    exportJSON()
     {
         let data = JSON.stringify(this.path.toJSON());
         console.log(data);
