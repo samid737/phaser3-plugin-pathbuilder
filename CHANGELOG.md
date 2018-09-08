@@ -1,3 +1,21 @@
+## Version 1.7.2 - September 8th 2018
+
+### Features
+
+- 
+
+### Updates
+
+- Upgrade to Phaser 3.1.2. 
+
+### Bug Fixes
+
+- Fixed import and export buttons by correcting callback function reference. Fix #1 (thanks @FeH9).
+
+### Thanks
+
+- @FeH9
+
 ## Version 1.7.1 - August 4th 2018
 
 ### Features
