@@ -65,8 +65,8 @@ export default class Scene extends Phaser.Scene
         this.clearbutton = this.middle.add.button(10, 100, 'clear', null, null, null, this.clear, [], this);
         this.undobutton = this.middle.add.button(10, 50, 'undo', null, null, null, this.undo, [], this);
 
-        this.importbutton = this.middle.add.button(this.W - 100, this.H - 200, 'import', null, null, null, this.import, [], this);
-        this.exportbutton = this.middle.add.button(this.W - 100, this.H - 100, 'export', null, null, null, this.export, [], this);
+        this.importbutton = this.middle.add.button(this.W - 100, this.H - 200, 'import', null, null, null, this.importJSON, [], this);
+        this.exportbutton = this.middle.add.button(this.W - 100, this.H - 100, 'export', null, null, null, this.exportJSON, [], this);
 
         this.pausebutton = this.middle.add.button(10, this.H - 200, 'pause', null, null, null, this.freeze, [], this);
         this.resumebutton = this.middle.add.button(10, this.H - 150, 'resume', null, null, null, this.unfreeze, [], this);
@@ -309,6 +309,7 @@ export default class Scene extends Phaser.Scene
     }
     look(camera)
     {
+
         camera.scrollY = (this.pointer.lastY - this.input.activePointer.y);
         camera.scrollX = (this.pointer.lastX - this.input.activePointer.x);
     }
@@ -322,6 +323,7 @@ export default class Scene extends Phaser.Scene
         {
             delta = -event.detail / 3;
         }
+
         // TODO: move to pointer 
         if (delta > 0)
         {
@@ -334,9 +336,9 @@ export default class Scene extends Phaser.Scene
 
         this.time.delayedCall(250, this.pointer.switchCursor, [], this.pointer);
 
+        this.drawpanel.camera.setZoom(this.drawpanel.camera.zoom +delta * 0.1);
         this.drawpanel.camera.zoom += delta * 0.1;
         this.supercamera.zoom += delta * 0.1;
-
         return delta;
     }
     resetView()
