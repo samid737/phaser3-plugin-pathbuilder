@@ -26,7 +26,7 @@ export default class Point extends Element(Phaser.GameObjects.Image){
         });
     
         this.on('drag', function (pointer, gameObject) {
-            game.canvas.style.cursor = "pointer";                        
+            this.scene.gameCanvas.style.cursor = "pointer";                        
             
             this.x = this.scene.pointer.x + this.scene.drawpanel.camera.scrollX;
             this.y = this.scene.pointer.y + this.scene.drawpanel.camera.scrollY;

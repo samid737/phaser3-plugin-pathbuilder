@@ -34,7 +34,7 @@ export default class Button extends Element(Phaser.GameObjects.Text){
     }
 
     hover() {
-        game.canvas.style.cursor = "pointer";
+        this.scene.gameCanvas.style.cursor = "pointer";
         this.setScale(1.1, 1.1);
         super.hover();
     }

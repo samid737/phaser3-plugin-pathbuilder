@@ -94,7 +94,7 @@ export default class Pointer extends Element(Phaser.GameObjects.Image){
     
         }
         if(mode == "hand"){
-            game.canvas.style.cursor = "grab";
+            this.scene.gameCanvas.style.cursor = "grab";
             
             this.setVisible(true);
             this.lbl.setVisible(true);
@@ -103,7 +103,7 @@ export default class Pointer extends Element(Phaser.GameObjects.Image){
     }
 
     switchCursor(){
-        game.canvas.style.cursor = this.scene.cursors[this.scene.mode];
+        this.scene.gameCanvas.style.cursor = this.scene.cursors[this.scene.mode];
     }
 
     switchdrawmode(mode) {

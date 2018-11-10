@@ -21,6 +21,7 @@ export default class Scene extends Phaser.Scene
 
     create()
     {
+        this.gameCanvas =   this.sys.canvas;
         //TODO: event driven modes, move
         this.tool = { "normal": null, "draw": this.place };
         this.mode = "normal";
@@ -327,11 +328,11 @@ export default class Scene extends Phaser.Scene
         // TODO: move to pointer 
         if (delta > 0)
         {
-            game.canvas.style.cursor = "zoom-in";
+            this.gameCanvas.style.cursor = "zoom-in";
         }
         if (delta < 0)
         {
-            game.canvas.style.cursor = "zoom-out";
+            this.gameCanvas.style.cursor = "zoom-out";
         }
 
         this.time.delayedCall(250, this.pointer.switchCursor, [], this.pointer);
