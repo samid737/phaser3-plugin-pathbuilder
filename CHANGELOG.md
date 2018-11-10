@@ -1,4 +1,23 @@
-## Version 1.7.2 - September 8th 2018
+
+## Version 1.7.5 -November 10th 2018
+
+### Features
+
+- 
+
+### Updates
+
+- Upgrade to Phaser 3.15. 
+
+### Bug Fixes
+
+- Fixed global reference to game object causing undefined errors.
+
+### Thanks
+
+- 
+
+## Version 1.7.3 - September 8th 2018
 
 ### Features
 
