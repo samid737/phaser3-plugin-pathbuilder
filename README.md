@@ -6,11 +6,11 @@ A tool to build paths for [Pathfollowers](https://labs.phaser.io/index.html?dir=
 
 ## Description
 
-* Path Builder is A useful tool for editing and building paths. 
-* Draw your path in-game during runtime.
-* Explore your scene while building paths.
-* Export path as JSON Data.
-* Load them into Phaser and create awesome animations.
+* Draw your path in-game.
+* Pause, resume and explore your scene while drawing paths.
+* Export created path to JSON.
+* Import existing paths from JSON.
+* Load path into Phaser and create awesome animations.
 * 90% Phaser API code.
 
 ## Usage
@@ -59,11 +59,11 @@ function preload ()
 
 Run `npm install` and then `npm run build` to build the plugin.
 
-There is a legacy ES5 branch:
+There is an existing ES5 branch, but it is no longer maintained since v.1.6.1:
 
 https://github.com/samid737/phaser3-plugin-pathbuilder/tree/ES5
 
 The plugin is in active development and features will be added over time. Contributions, optimizations, suggestions are very welcome. All changes are found in the [Changelog](https://github.com/samid737/phaser3-plugin-pathbuilder/blob/master/CHANGELOG.md);
 
-Honour the [Phaser Code](https://github.com/photonstorm/phaser). 
+[Phaser 3](https://github.com/photonstorm/phaser). 
 
