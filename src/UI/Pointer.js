@@ -12,21 +12,21 @@ export default class Pointer extends Element(Phaser.GameObjects.Image){
         this.delta = 1;
     
         //global input listener 
-    
+     
         this.scene.input.on('pointerdown', function (pointer, gameObject) {
-    
-            if (this.scene.mode == "draw" && pointer.dragState ==0 && pointer.leftButtonDown()) {
+     
+            if (this.scene.mode == "draw" && this.scene.input.getDragState(pointer) == 0 && pointer.leftButtonDown()) {
                 if (gameObject.length ==0 && (pointer.x > 50 && pointer.x < this.scene.W - 100)) {
-                    
+                     
                     let _dx = this.scene.drawpanel.camera.scrollX;
                     let _dy = this.scene.drawpanel.camera.scrollY;
                     
                     this.scene.place(this.scene.drawpanel, this.x + _dx, this.y +_dy);
-                }
+                } 
             } 
     
     
-            if(pointer.rightButtonDown() && pointer.dragState == 0)
+            if(pointer.rightButtonDown() && this.scene.input.getDragState(pointer) == 0)
             {
                 this.lockX = pointer.x;
                 this.lockY = pointer.y;
@@ -46,7 +46,8 @@ export default class Pointer extends Element(Phaser.GameObjects.Image){
         }, this);
     
         this.scene.input.on('pointerup', function (pointer, gameObject) {
-            if(pointer.middleButtonDown())
+            
+            if(this.scene.mode == "hand")
             {
                 this.scene.switchmode("normal");
             }          
