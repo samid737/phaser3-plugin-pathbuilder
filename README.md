@@ -57,7 +57,7 @@ function preload ()
 
 ## Dev notes
 
-Run `npm install` and then `npm run build` to build the plugin. Use 'npm run dev' to run webpack-dev-server on port 8000. 
+Run `npm install` and then `npm run build` to build the plugin. Use `npm run dev` to run webpack-dev-server on port 8000. 
 
 There is an existing ES5 branch, but it is no longer maintained since v.1.6.1:
 
