@@ -1,4 +1,25 @@
 
+
+## Version 1.8.0 - March 24th 2019
+
+### Features
+
+- 
+
+### Updates
+
+- Upgrade to Phaser 3.16.2. 
+
+### Bug Fixes
+
+- Fixed pointer problems due to API changes since 3.16.2, related to the dragState property. described in [3.16.1| https://github.com/photonstorm/phaser/releases/tag/v3.16.1] release notes.
+
+-
+
+### Thanks
+
+- 
+
 ## Version 1.7.5 -November 10th 2018
 
 ### Features

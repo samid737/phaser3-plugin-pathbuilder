@@ -57,13 +57,13 @@ function preload ()
 
 ## Dev notes
 
-Run `npm install` and then `npm run build` to build the plugin.
+Run `npm install` and then `npm run build` to build the plugin. Use 'npm run dev' to run webpack-dev-server on port 8000. 
 
 There is an existing ES5 branch, but it is no longer maintained since v.1.6.1:
 
 https://github.com/samid737/phaser3-plugin-pathbuilder/tree/ES5
 
-The plugin is in active development and features will be added over time. Contributions, optimizations, suggestions are very welcome. All changes are found in the [Changelog](https://github.com/samid737/phaser3-plugin-pathbuilder/blob/master/CHANGELOG.md);
+Contributions, optimizations, suggestions are very welcome. All changes are found in the [Changelog](https://github.com/samid737/phaser3-plugin-pathbuilder/blob/master/CHANGELOG.md);
 
 [Phaser 3](https://github.com/photonstorm/phaser). 
 
