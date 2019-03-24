@@ -1,6 +1,7 @@
 export default class State
 {
     constructor(gameObject){
+        console.log(gameObject);
         this.gameObject = gameObject;
     }
 

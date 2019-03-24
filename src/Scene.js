@@ -1,5 +1,9 @@
 import UI from "./UI/UI";
 import Pointer from "./UI/Pointer";
+import Composable from "./Components/Composable";
+import StateManager from "./States/StateManager";
+import Modes from "./States/Modes";
+
 
 export default class Scene extends Phaser.Scene
 {
@@ -10,8 +14,17 @@ export default class Scene extends Phaser.Scene
         if (window.addEventListener)
         {
             window.addEventListener('DOMMouseScroll', this.scroll, false);
-            window.onmousewheel = this.scroll.bind(this);
+            window.onmousewheel =  this.scroll.bind(this);
         }
+
+        console.log("drol");
+        console.log("Drollerol");
+  
+        this.addComponent = Composable.prototype.addComponent;
+        console.log(Modes);
+        this.addComponent(StateManager, Modes, "Normal");
+        console.log(this);
+
     }
 
     preload()

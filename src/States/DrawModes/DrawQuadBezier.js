@@ -1,7 +1,8 @@
-export default class DrawQuadBezier extends State
+import State from "../State";
+class DrawQuadBezier extends State
 {
     constructor(gameObject){
-        this.gameObject = gameObject;
+        super(gameObject);
     }
 
     enter (oldState)

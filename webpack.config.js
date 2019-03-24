@@ -45,7 +45,7 @@ module.exports = {
             parallel: true,
             sourceMap: false,
             uglifyOptions: {
-                compress: true,
+                compress: false,
                 ie8: false,
                 ecma: 5,
                 output: {

@@ -1,7 +1,8 @@
-export default class DrawCircle extends State
+import State from "../State";
+class DrawCircle extends State
 {
     constructor(gameObject){
-        this.gameObject = gameObject;
+        super(gameObject);
     }
 
     enter (oldState)

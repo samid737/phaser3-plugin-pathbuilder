@@ -1,7 +1,8 @@
-export default class Draw extends State
+import State from "../State";
+class Draw extends State
 {
     constructor(gameObject){
-        this.gameObject = gameObject;
+        super(gameObject);
     }
 
     enter (oldState)
