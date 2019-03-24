@@ -14,14 +14,14 @@ module.exports = {
             path.resolve(__dirname, 'src/main.js')
         ],
 
-        // PathBuilder: './main.js',
+        PathBuilder: './main.js',
 
         'PathBuilder.min': './main.js'
     },
 
     output: {
         pathinfo: true,
-        path: path.resolve(__dirname, 'dev'),
+        publicPath: '/dist/',
         path: `${__dirname}/dist/`,
         library: '[name]',
         libraryTarget: 'umd',

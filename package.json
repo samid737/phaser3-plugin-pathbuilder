@@ -9,7 +9,9 @@
     "dist": "webpack --config webpack.dist.config.js",
     "lint": "eslint --config .eslintrc.json \"src/**/*.js\"",
     "lintfix": "eslint --config .eslintrc.json \"src/**/*.js\" --fix",
-    "sloc": "node-sloc './src' --include-extensions \"js\""
+    "sloc": "node-sloc './src' --include-extensions \"js\"",
+    "dev": "npm run build && webpack-dev-server --port=8000"
+
   },
   "keywords": [
     "curves",
@@ -59,6 +61,7 @@
     "babel-core": "^6.26.3",
     "babel-eslint": "^8.2.6",
     "babel-loader": "^7.1.5",
-    "babel-polyfill": "^6.26.0"
+    "babel-polyfill": "^6.26.0",
+    "webpack-dev-server": "^3.2.1"
   }
 }
