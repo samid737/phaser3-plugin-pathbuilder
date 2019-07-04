@@ -10,8 +10,9 @@
     "lint": "eslint --config .eslintrc.json \"src/**/*.js\"",
     "lintfix": "eslint --config .eslintrc.json \"src/**/*.js\" --fix",
     "sloc": "node-sloc './src' --include-extensions \"js\"",
-    "dev": "npm run build && webpack-dev-server --port=8000"
-
+    "dev": "npm run build && webpack-dev-server --port=8000",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "keywords": [
     "curves",
@@ -62,6 +63,8 @@
     "babel-eslint": "^8.2.6",
     "babel-loader": "^7.1.5",
     "babel-polyfill": "^6.26.0",
-    "webpack-dev-server": "^3.2.1"
-  }
+    "webpack-dev-server": "^3.2.1",
+    "snyk": "^1.189.0"
+  },
+  "snyk": true
 }
