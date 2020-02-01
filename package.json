@@ -64,7 +64,7 @@
     "babel-loader": "^7.1.5",
     "babel-polyfill": "^6.26.0",
     "webpack-dev-server": "^3.2.1",
-    "snyk": "^1.189.0"
+    "snyk": "^1.290.1"
   },
   "snyk": true
 }
