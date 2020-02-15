@@ -1,13 +1,15 @@
 
-let Element = (superclass) => class extends superclass{
+let Element = (superclass) => class extends superclass
+{
 
-    constructor(ui,x,y,...args){
+    constructor (ui,x,y,...args)
+    {
         super(ui.scene, x, y, ...args);
         
         this.ui = ui;
         this.x = x;
         this.y = y;
-        this.scene  = this.ui.scene;
+        this.scene = this.ui.scene;
 
         this.ui.elements.push(this);
     
@@ -17,33 +19,41 @@ let Element = (superclass) => class extends superclass{
         return this;
     }
 
-    update(){
+    update ()
+    {
 
     }
 
-    toggle(){
+    toggle ()
+    {
         this.visible = !this.visible;
     }
 
-    click(){
+    click ()
+    {
         let callbackcontext = this.callbackcontext;
         let args = this.args;
         
-        if (this.callbacks instanceof Array) {
-            this.callbacks.forEach(function (callback, index) { callback.apply(callbackcontext[index], args) });
-        } else {
+        if (this.callbacks instanceof Array)
+        {
+            this.callbacks.forEach(function (callback, index) { callback.apply(callbackcontext[index], args); });
+        }
+        else
+        {
             this.callbacks.apply(this.callbackcontext, this.args);
         }
     }
 
-    hover(){
+    hover ()
+    {
 
     }
 
-    out(){
+    out ()
+    {
 
     }
 
-}
+};
 
 export default Element;

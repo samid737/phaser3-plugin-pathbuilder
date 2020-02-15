@@ -1,12 +1,12 @@
 
-import Scene from "./Scene";
-import UI from "./UI/UI";
-import Pointer from "./UI/Pointer";
+import Scene from './Scene';
+import UI from './UI/UI';
+import Pointer from './UI/Pointer';
 
 export class PathBuilder extends Phaser.Plugins.BasePlugin
 {
 
-    constructor(pluginManager)
+    constructor (pluginManager)
     {
         super(pluginManager);
 
@@ -16,11 +16,13 @@ export class PathBuilder extends Phaser.Plugins.BasePlugin
         this.game.scene.add('UI',Scene, true);
     }
 
-    addUI(scene){
+    addUI (scene)
+    {
         return new UI(scene);
     }
 
-    addPointer(ui, x, y, key){
+    addPointer (ui, x, y, key)
+    {
         return new Pointer(ui, x, y, key);
     }
 }

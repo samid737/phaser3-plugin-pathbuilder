@@ -1,11 +1,13 @@
 
-import Element from "./Element";
-import UI from "./UI";
+import Element from './Element';
+import UI from './UI';
 
-export default class Label extends Element(Phaser.GameObjects.Text) {
+export default class Label extends Element(Phaser.GameObjects.Text)
+{
 
-    constructor(ui, x, y, text, target, callbacks, args, context){
-        super(ui, x, y, text, UI.fonts["Label"]) 
+    constructor (ui, x, y, text, target, callbacks, args, context)
+    {
+        super(ui, x, y, text, UI.fonts['Label']);
 
         this.target = target;
         this.callbacks = callbacks;
@@ -17,5 +19,5 @@ export default class Label extends Element(Phaser.GameObjects.Text) {
     
         return this;
         
-    } 
+    }
 }

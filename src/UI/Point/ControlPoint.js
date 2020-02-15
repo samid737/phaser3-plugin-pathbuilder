@@ -1,16 +1,16 @@
-import Point from "./Point";
-import UI from "../UI";
+import Point from './Point';
+import UI from '../UI';
 
 export default class ControlPoint extends Point
 {
 
-    constructor(ui, x, y, key = 'controlpoint')
+    constructor (ui, x, y, key = 'controlpoint')
     {
         super(ui, x, y, key);
 
         this.setScale(0.75, 0.75);
 
-        this.lbl.setFontStyle(UI.fonts["ControlPoint"]);
+        this.lbl.setFontStyle(UI.fonts['ControlPoint']);
         this.lbl.visible = false;
 
         this.on('pointermove', function (pointer, gameObject)
