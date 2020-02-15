@@ -55,16 +55,16 @@
     "raw-loader": "^0.5.1",
     "uglifyjs-webpack-plugin": "^1.2.7",
     "uuid": "^3.3.2",
-    "webpack": "^4.16.5",
-    "webpack-cli": "^2.1.5"
+    "webpack": "^4.20.2",
+    "webpack-cli": "^3.3.11"
   },
   "dependencies": {
     "babel-core": "^6.26.3",
     "babel-eslint": "^9.0.0",
     "babel-loader": "^7.1.5",
     "babel-polyfill": "^6.26.0",
-    "webpack-dev-server": "^3.2.1",
-    "snyk": "^1.290.1"
+    "snyk": "^1.290.1",
+    "webpack-dev-server": "^3.10.3"
   },
   "snyk": true
 }
