@@ -1,5 +1,7 @@
 # Phaser 3 Plugin Path Builder
 
+NOTE: I notice there is not much activity on issues and can imagine issues exist. Should you encounter issues, please do submit them and I will look into it! Also any suggestions or feature requests that you would like to see, feel free to submit them via issues. Much appreciated.
+
 A tool to build paths for [Pathfollowers](https://labs.phaser.io/index.html?dir=paths/followers/) and path [tweens](https://labs.phaser.io/index.html?dir=paths/). Draw and edit Lines, Bezier Curves, Splines and Ellipses during runtime and export them to Phaser. [Demo](https://samid737.github.io/pathbuilder/). 
 
 ![](https://media.giphy.com/media/p3AwdolG7NFjTGTE3P/giphy.gif)
