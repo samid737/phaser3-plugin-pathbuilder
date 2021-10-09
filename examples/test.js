@@ -21,7 +21,8 @@ function preload()
     this.load.image('dude', 'assets/sprites/phaser-dude.png');
     this.load.json('data', 'assets/paths/data.json');
 
-    this.load.plugin('PathBuilder.min', "dist/PathBuilder.min.js",'PathBuilder');
+    // this.load.plugin({key:'PathBuilder.min', url:"dist/PathBuilder.min.js",mapping:'PathBuilder'});
+    this.load.plugin({key:'PathBuilder.min', url:"dist/PathBuilder.min.js",mapping:'PathBuilder'});
 
 }
 
