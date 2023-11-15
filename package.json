@@ -63,7 +63,7 @@
     "babel-eslint": "^9.0.0",
     "babel-loader": "^7.1.5",
     "babel-polyfill": "^6.26.0",
-    "snyk": "^1.290.1",
+    "snyk": "^1.518.0",
     "webpack-dev-server": "^3.10.3"
   },
   "snyk": true
