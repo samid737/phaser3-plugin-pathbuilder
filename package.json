@@ -61,10 +61,10 @@
   "dependencies": {
     "babel-core": "^6.26.3",
     "babel-eslint": "^9.0.0",
-    "babel-loader": "^7.1.5",
+    "babel-loader": "^9.0.0",
     "babel-polyfill": "^6.26.0",
     "snyk": "^1.290.1",
-    "webpack-dev-server": "^3.10.3"
+    "webpack-dev-server": "^5.1.0"
   },
   "snyk": true
 }
